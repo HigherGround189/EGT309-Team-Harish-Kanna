@@ -7,7 +7,16 @@ requires-python = ">=3.9"
 name = "egt309_pipeline"
 readme = "README.md"
 dynamic = [ "version",]
-dependencies = [ "ipython>=8.10", "jupyterlab>=3.0", "notebook", "kedro~=1.0.0",]
+dependencies = [
+ "ipython>=8.10",
+ "jupyterlab>=3.0",
+ "notebook",
+ "kedro~=1.0.0",
+ "pandas>=2.3.3",
+ "kedro-datasets>=4.1.0",
+ "polars>=1.35.2",
+ "sqlalchemy>=2.0.44",
+]
 
 [project.scripts]
 egt309-pipeline = "egt309_pipeline.__main__:main"
@@ -50,3 +59,6 @@ attr = "egt309_pipeline.__version__"
 [tool.setuptools.packages.find]
 where = [ "src",]
 namespaces = false
+
+[tool.kedro_telemetry]
+project_id = "5a5c795011e04bec9922bdc383fffd6d"
