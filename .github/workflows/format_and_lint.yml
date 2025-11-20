@@ -8,7 +8,7 @@ on:
 
 jobs:
   format-and-lint:
-    runs-on: ghcr.io/astral-sh/uv:alpine3.22
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
