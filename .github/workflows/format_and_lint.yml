@@ -5,12 +5,15 @@ on:
     branches: [main]
     paths:
       - '**/*.py'
-      - '**/*.ipynb'
   pull_request:
     branches: [main]
     paths:
       - '**/*.py'
-      - '**/*.ipynb'
+  workflow_run:
+    workflows: ["Move Notebooks to notebooks/"]
+    branches: [main]
+    types: [completed]
+    
 
 permissions:
   contents: write

@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - "*.ipynb" # run only when .ipynb files are in root
+  pull_request:
+    branches: [main]
+    paths:
+      - "*.ipynb" # run only when .ipynb files are in root
 
 permissions:
   contents: write
