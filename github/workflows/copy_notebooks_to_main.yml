@@ -3,12 +3,8 @@ name: copy-notebooks-to-main
 on:
   push:
     branches: [eda]
-    paths:
-      - '*.ipynb' 
   pull_request:
     branches: [eda]
-    paths:
-      - '*.ipynb'
 
 permissions:
   contents: write
