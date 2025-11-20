@@ -54,7 +54,7 @@ docstring-code-format = true
 
 [tool.ruff.lint]
 select = [ "F", "W", "E", "I", "UP", "PL", "T201",]
-ignore = [ "E501", "T201"]
+ignore = [ "E501", "T201", "PLR2004"]
 
 [tool.setuptools.dynamic.version]
 attr = "egt309_pipeline.__version__"
