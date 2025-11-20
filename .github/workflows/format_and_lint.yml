@@ -1,4 +1,4 @@
-name: format-and-lint_action
+name: Format and Lint .py or .ipynb files
 
 on:
   push:
