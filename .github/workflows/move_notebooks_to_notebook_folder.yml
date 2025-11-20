@@ -6,6 +6,9 @@ on:
     paths:
       - "*.ipynb" # run only when .ipynb files are in root
 
+permissions:
+  contents: write
+
 jobs:
   move-notebooks:
     runs-on: ubuntu-latest
