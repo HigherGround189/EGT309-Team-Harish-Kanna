@@ -1,0 +1,29 @@
+name: format-and-lint_action
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  format-and-lint:
+    runs-on: ghcr.io/astral-sh/uv:alpine3.22
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Format code with Ruff
+        run: uvx ruff format .
+
+      - name: Lint code with Ruff
+        run: uvx ruff check .
+
+      
+
+      
+
