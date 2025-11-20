@@ -22,4 +22,4 @@ jobs:
         run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.20.0
       
       - name: Run yamlfmt
-        run: yamlfmt .
+        run: yamlfmt -dstar **/*.{yaml,yml}
