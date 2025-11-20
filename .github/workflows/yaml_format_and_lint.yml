@@ -13,5 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Use yamlft
+      - name: Use yamlfmt
         uses: yk-lab/yamlfmt-action@v1.0.0
+        with:
+          args: '.'
