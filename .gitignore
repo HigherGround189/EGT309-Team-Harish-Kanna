@@ -15,6 +15,9 @@ data/**
 # except their sub-folders
 !data/**/
 
+# except the dataset
+!data/01_raw/bmarket.db
+
 # also keep all .gitkeep files
 !.gitkeep
 
