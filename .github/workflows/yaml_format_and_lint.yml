@@ -12,6 +12,9 @@ on:
       - "**/*.yml"
       - "**/*.yaml"
 
+permissions:
+  contents: write
+
 jobs:
   yamlfmt:
     runs-on: ubuntu-latest
