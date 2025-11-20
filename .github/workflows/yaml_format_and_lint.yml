@@ -2,12 +2,12 @@ name: Format and Lint YAML files
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - "**/*.yml"
       - "**/*.yaml"
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
       - "**/*.yml"
       - "**/*.yaml"
@@ -16,22 +16,16 @@ permissions:
   contents: write
 
 jobs:
-  yamlfmt:
+  prettier:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Go
-        uses: actions/setup-go@v6
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.6
         with:
-          go-version: '1.23'
-      
-      - name: Install Run yamlfmt
-        run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.17.2
-      
-      - name: Run yamlfmt
-        run: yamlfmt -v . --exclude .github/workflows/*.yml --gitignore-excludes
+          prettier_options: --write **/*.{yml,yaml} --ignore-path .github/
 
       - name: Commit & push changes
         uses: EndBug/add-and-commit@v9
