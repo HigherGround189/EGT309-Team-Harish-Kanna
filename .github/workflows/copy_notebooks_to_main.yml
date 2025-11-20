@@ -1,0 +1,69 @@
+name: copy-notebooks-to-main
+
+on:
+  push:
+    branches: [eda]
+    paths:
+      - '*.ipynb' 
+  pull_request:
+    branches: [eda]
+    paths:
+      - '*.ipynb'
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: 'main'
+  TARGET_FOLDER: 'notebooks/'
+
+jobs:
+  find-and-upload-notebooks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+
+      - name: Collect all .ipynb files
+        run: |
+          mkdir notebooks_to_copy
+          mv *.ipynb notebooks_to_copy/
+          ls -la notebooks_to_copy
+
+      - name: Upload notebooks as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: notebook-artifact
+          path: notebooks_to_copy
+
+  copy_and_push_notebooks:
+    runs-on: ubuntu-latest
+    needs: find-and-upload-notebooks
+
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+
+      - name: Download notebook artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: notebook-artifact
+          path: temp_notebooks
+
+      - name: Copy notebooks to target folder
+        run: |
+          mkdir -p "${{ env.TARGET_FOLDER }}"
+          rm -rf "${{ env.TARGET_FOLDER }}"/*
+          cp -r temp_notebooks/* "${{ env.TARGET_FOLDER }}/"
+          ls -la "${{ env.TARGET_FOLDER }}"
+
+      - name: Commit & push notebooks
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.'
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: 'chore: Copied notebooks from eda branch'
