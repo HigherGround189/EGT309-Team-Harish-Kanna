@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  workflows: write
 
 jobs:
   yamlfmt:
@@ -31,7 +32,7 @@ jobs:
         run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.20.0
       
       - name: Run yamlfmt
-        run: yamlfmt -v . --gitignore-excludes
+        run: yamlfmt -v . --gitignore-excludes --exclude ".github/workflows"
 
       - name: Commit & push changes
         uses: EndBug/add-and-commit@v9
