@@ -1,4 +1,4 @@
-name: YAML Formatting
+name: Format and Lint YAML files
 
 on:
   push:
@@ -7,13 +7,19 @@ on:
     branches: [ main ]
 
 jobs:
-  format:
+  yamlfmt:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Use yamlfmt
-        uses: yk-lab/yamlfmt-action@v1.0.0
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          path: '.'
+          go-version: '1.23'
+      
+      - name: Install Run yamlfmt
+        run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.20.0
+      
+      - name: Run yamlfmt
+        run: yamlfmt .
