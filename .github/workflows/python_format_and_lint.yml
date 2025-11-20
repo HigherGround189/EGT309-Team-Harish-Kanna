@@ -43,7 +43,7 @@ jobs:
           add: '.'
           author_name: github-actions[bot]
           author_email: github-actions[bot]@users.noreply.github.com
-          message: 'chore: Apply Ruff fixes/formatting'
+          message: 'chore: Applied Ruff fixes/formatting'
 
 
 

@@ -3,8 +3,14 @@ name: Format and Lint YAML files
 on:
   push:
     branches: [ main ]
+    paths:
+      - "**/*.yml"
+      - "**/*.yaml"
   pull_request:
     branches: [ main ]
+    paths:
+      - "**/*.yml"
+      - "**/*.yaml"
 
 jobs:
   yamlfmt:
@@ -22,4 +28,12 @@ jobs:
         run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.20.0
       
       - name: Run yamlfmt
-        run: yamlfmt -v .
+        run: yamlfmt -v . --gitignore-excludes
+
+      - name: Commit & push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.'
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: 'chore: Applied yamlfmt formatting'
