@@ -26,6 +26,7 @@ jobs:
         uses: creyD/prettier_action@v4.6
         with:
           prettier_options: --write **/*.{yml,yaml} --check !.github/workflows/**
+          no_commit: true
 
       - name: Commit & push changes
         uses: EndBug/add-and-commit@v9
@@ -33,4 +34,4 @@ jobs:
           add: '.'
           author_name: github-actions[bot]
           author_email: github-actions[bot]@users.noreply.github.com
-          message: 'chore: Applied yamlfmt formatting'
+          message: 'chore: Applied Prettier formatting'
