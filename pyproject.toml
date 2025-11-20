@@ -65,3 +65,4 @@ namespaces = false
 
 [tool.kedro_telemetry]
 project_id = "5a5c795011e04bec9922bdc383fffd6d"
+
