@@ -28,10 +28,10 @@ jobs:
           go-version: '1.23'
       
       - name: Install Run yamlfmt
-        run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.20.0
+        run: go install github.com/google/yamlfmt/cmd/yamlfmt@v0.17.2
       
       - name: Run yamlfmt
-        run: yamlfmt --exclude .github/workflows/** -v . --gitignore-excludes
+        run: yamlfmt -v . --exclude .github/workflows/** --gitignore-excludes
 
       - name: Commit & push changes
         uses: EndBug/add-and-commit@v9
