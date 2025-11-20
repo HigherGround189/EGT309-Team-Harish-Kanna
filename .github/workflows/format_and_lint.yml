@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-permissions:
-  contents: write
-
 jobs:
   format-and-lint:
     runs-on: ubuntu-latest
@@ -26,16 +23,11 @@ jobs:
       - name: Lint code with Ruff
         run: uvx ruff check --fix-only .
 
-      - name: Commit & push code changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "Chore: Linted and Formatted Python Files."
-            git push origin main
-          fi 
+      - name: Commit & push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.'
+          message: 'chore: Apply Ruff fixes/formatting'
 
 
 
