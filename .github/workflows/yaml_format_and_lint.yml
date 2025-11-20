@@ -1,0 +1,17 @@
+name: YAML Formatting
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use yamlft
+        uses: yk-lab/yamlfmt-action@v1.0.0
