@@ -58,6 +58,7 @@ jobs:
           mkdir -p "${{ env.TARGET_FOLDER }}"
           rm -rf "${{ env.TARGET_FOLDER }}"/*
           cp -r temp_notebooks/* "${{ env.TARGET_FOLDER }}/"
+          rm -rf temp_notebooks/
           ls -la "${{ env.TARGET_FOLDER }}"
 
       - name: Commit & push notebooks
