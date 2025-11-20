@@ -6,11 +6,15 @@ on:
     paths:
       - "**/*.yml"
       - "**/*.yaml"
+    paths-ignore:
+      - ".github/workflows/**"
   pull_request:
     branches: [main]
     paths:
       - "**/*.yml"
       - "**/*.yaml"
+    paths-ignore:
+      - ".github/workflows/**"
 
 permissions:
   contents: write
