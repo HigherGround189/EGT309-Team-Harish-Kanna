@@ -3,8 +3,14 @@ name: format-and-lint_action
 on:
   push:
     branches: [main]
+    paths:
+      - '**/*.py'
+      - '**/*.ipynb'
   pull_request:
     branches: [main]
+    paths:
+      - '**/*.py'
+      - '**/*.ipynb'
 
 permissions:
   contents: write
