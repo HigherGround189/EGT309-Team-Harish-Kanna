@@ -16,4 +16,4 @@ jobs:
       - name: Use yamlfmt
         uses: yk-lab/yamlfmt-action@v1.0.0
         with:
-          formatter: '.'
+          path: '.'
