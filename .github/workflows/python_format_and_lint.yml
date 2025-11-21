@@ -12,7 +12,7 @@ on:
       - '**/*.py'
       - 'notebook/*.ipynb'
   workflow_run:
-    workflows: ["Move Notebooks to notebooks/"]
+    workflows: ["Move Notebooks to notebooks/", "Copy Notebooks to Main"]
     branches: [main]
     types: [completed]
     
