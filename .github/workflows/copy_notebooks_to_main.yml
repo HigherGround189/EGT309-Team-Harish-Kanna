@@ -1,4 +1,4 @@
-name: copy-notebooks-to-main
+name: Copy Notebooks to Main
 
 on:
   push:
