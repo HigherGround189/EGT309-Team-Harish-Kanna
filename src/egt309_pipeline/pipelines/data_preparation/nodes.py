@@ -18,3 +18,8 @@ logger.debug("Useful information for debugging")
 conf_loader = OmegaConfigLoader(conf_source="conf", base_env="base", default_run_env="local")
 conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
+
+def load_dataset_from_catalog() -> pd.DataFrame:
+    df = catalog.load("bmarket")
+    return df
+    
