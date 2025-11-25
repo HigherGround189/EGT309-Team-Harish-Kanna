@@ -22,7 +22,9 @@ conf_loader = OmegaConfigLoader(
 conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
 
+
 def load_dataset_from_catalog(dataset_name: str = "bmarket") -> pd.DataFrame:
     df = catalog.load(dataset_name)
     logger.info(f"Loaded dataframe from {dataset_name}")
     return df
+
