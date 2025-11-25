@@ -4,16 +4,11 @@ generated using Kedro 1.0.0
 """
 
 import logging
+logger = logging.getLogger(__name__)
 
 import pandas as pd
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
-
-# Logger Config
-logger = logging.getLogger(__name__)
-# logger.warning("Issue warning")
-# logger.info("Send information")
-# logger.debug("Useful information for debugging")
 
 # Define catalog to load dataset
 conf_loader = OmegaConfigLoader(
@@ -27,3 +22,4 @@ def load_dataset_from_catalog(dataset_name: str = "bmarket") -> pd.DataFrame:
     df = catalog.load(dataset_name)
     logger.info(f"Loaded dataframe from {dataset_name}")
     return df
+
