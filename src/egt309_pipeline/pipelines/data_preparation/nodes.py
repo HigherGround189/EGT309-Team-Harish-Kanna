@@ -4,6 +4,7 @@ generated using Kedro 1.0.0
 """
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 import pandas as pd
@@ -22,4 +23,3 @@ def load_dataset_from_catalog(dataset_name: str = "bmarket") -> pd.DataFrame:
     df = catalog.load(dataset_name)
     logger.info(f"Loaded dataframe from {dataset_name}")
     return df
-
