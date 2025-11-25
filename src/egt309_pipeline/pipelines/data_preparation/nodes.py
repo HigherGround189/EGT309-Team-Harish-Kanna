@@ -7,12 +7,13 @@ import logging
 
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
+import pandas as pd
 
 # Logger Config
 logger = logging.getLogger(__name__)
-logger.warning("Issue warning")
-logger.info("Send information")
-logger.debug("Useful information for debugging")
+# logger.warning("Issue warning")
+# logger.info("Send information")
+# logger.debug("Useful information for debugging")
 
 # Define catalog to load dataset
 conf_loader = OmegaConfigLoader(
@@ -21,7 +22,7 @@ conf_loader = OmegaConfigLoader(
 conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
 
-def load_dataset_from_catalog() -> pd.DataFrame:
-    df = catalog.load("bmarket")
+def load_dataset_from_catalog(dataset_name: str = "bmarket") -> pd.DataFrame:
+    df = catalog.load(dataset_name)
+    logger.info(f"Loaded dataframe from {dataset_name}")
     return df
-    
