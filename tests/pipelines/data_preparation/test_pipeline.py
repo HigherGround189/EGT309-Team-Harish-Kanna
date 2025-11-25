@@ -1,5 +1,5 @@
 """
-This is a boilerplate test file for pipeline 'kessokue_pipeline'
+This is a boilerplate test file for pipeline 'data_preparation'
 generated using Kedro 1.0.0.
 Please add your pipeline tests here.
 
