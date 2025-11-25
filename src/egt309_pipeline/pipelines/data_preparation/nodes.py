@@ -5,9 +5,9 @@ generated using Kedro 1.0.0
 
 import logging
 
+import pandas as pd
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
-import pandas as pd
 
 # Logger Config
 logger = logging.getLogger(__name__)
@@ -27,4 +27,3 @@ def load_dataset_from_catalog(dataset_name: str = "bmarket") -> pd.DataFrame:
     df = catalog.load(dataset_name)
     logger.info(f"Loaded dataframe from {dataset_name}")
     return df
-
