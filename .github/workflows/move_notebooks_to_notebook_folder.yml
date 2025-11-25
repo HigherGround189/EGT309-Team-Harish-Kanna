@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - "*.ipynb" # run only when .ipynb files are in root
+      - "!eda.ipynb"
   pull_request:
     branches: [main]
     paths:
       - "*.ipynb" # run only when .ipynb files are in root
+      - "!eda.ipynb"
 
 permissions:
   contents: write
