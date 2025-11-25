@@ -21,7 +21,7 @@ conf_loader = OmegaConfigLoader(
 conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
 
+
 def load_dataset_from_catalog() -> pd.DataFrame:
     df = catalog.load("bmarket")
     return df
-    
