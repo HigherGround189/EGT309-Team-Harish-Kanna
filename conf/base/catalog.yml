@@ -12,3 +12,5 @@ bmarket:
 cleaned_bmarket:
   type: pandas.CSVDataset
   filepath: data/03_primary/cleaned_bmarket.csv
+  save_args:
+    lineterminator: "\\n"
