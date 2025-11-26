@@ -20,6 +20,7 @@ dependencies = [
  "pyarrow>=21.0.0",
  "pytest>=7.4.4",
  "numpy>=2.0.2",
+ "kedro-viz>=12.1.0",
 ]
 
 [project.scripts]
