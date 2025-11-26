@@ -10,6 +10,8 @@ logger = logging.getLogger(__name__)
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
 
+import numpy as np
+
 # Define catalog to load dataset
 conf_loader = OmegaConfigLoader(
     conf_source="conf", base_env="base", default_run_env="local"
