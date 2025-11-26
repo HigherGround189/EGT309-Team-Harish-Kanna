@@ -9,7 +9,8 @@ from .nodes import *
 
 def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline(
-        [
+        namespace="Data Preparation",
+        nodes=[
             Node(
                 func=clean_clientId,
                 inputs="bmarket",
