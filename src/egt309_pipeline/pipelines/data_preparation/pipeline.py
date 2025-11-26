@@ -61,6 +61,6 @@ def create_pipeline(**kwargs) -> Pipeline:
         
         Node(func=clean_subscriptionStatus, 
              inputs="df_previousContactDays_cleaned", 
-             outputs="df_subscriptionStatus_cleaned",
+             outputs="cleaned_bmarket",
              name="clean_subscriptionStatus_node"),
     ])

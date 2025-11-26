@@ -19,12 +19,6 @@ conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
 
 
-def load_dataset_from_catalog(dataset_name: str = "bmarket") -> pd.DataFrame:
-    df = catalog.load(dataset_name)
-    logger.info(f"Loaded dataframe from {dataset_name}")
-    return df
-
-
 def random_distribution(df, target, val="none"):
     df_temp = df.copy()
     col = df_temp[target]
@@ -37,7 +31,7 @@ def random_distribution(df, target, val="none"):
     distribution = temp_col.value_counts(normalize=True).tolist()
     labels = temp_col.value_counts().index.tolist()
     fill_mask = tobe_fill
-    fill = np.random.choice(labels, size=fill_mask.sum(), p=distribution)
+    fill = np.random.choice(labels, size=fill_mask.sum(), p=distribution) # type: ignore
     df_temp.loc[fill_mask, target] = fill
     return df_temp
 

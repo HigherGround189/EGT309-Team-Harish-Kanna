@@ -8,3 +8,7 @@ bmarket:
   table_name: bank_marketing
   credentials:
     con: "sqlite:///data/01_raw/bmarket.db"
+
+cleaned_bmarket:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/cleaned_bmarket.csv
