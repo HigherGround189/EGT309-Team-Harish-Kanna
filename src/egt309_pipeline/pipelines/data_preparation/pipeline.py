@@ -77,5 +77,5 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="cleaned_bmarket",
                 name="clean_subscriptionStatus_node",
             ),
-        ]
+        ],
     )
