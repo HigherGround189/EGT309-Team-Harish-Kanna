@@ -19,7 +19,7 @@ conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
 
 
-def random_distribution(df, target, val="none"):
+def _random_distribution(df, target, val="none"):
     df_temp = df.copy()
     col = df_temp[target]
     if val == "none":
@@ -36,7 +36,7 @@ def random_distribution(df, target, val="none"):
     return df_temp
 
 
-def reindex_target_col(df):
+def _reindex_target_col(df):
     cols = df.columns.tolist()
     cols.remove("Subscription Status")
     cols.append("Subscription Status")
@@ -53,7 +53,7 @@ def clean_age(df):
     df_temp = df.copy()
     df_temp["Age"] = df_temp["Age"].map(lambda x: x.split()[0])
     df_temp["Age"] = df_temp["Age"].astype(int)
-    df_new = random_distribution(df_temp, target="Age", val=150)
+    df_new = _random_distribution(df_temp, target="Age", val=150)
     return df_new
 
 
@@ -79,7 +79,7 @@ def clean_housingLoan(df):
 
 def clean_personalLoan(df):
     df_temp = df.copy()
-    df_new = random_distribution(df_temp, target="Personal Loan")
+    df_new = _random_distribution(df_temp, target="Personal Loan")
     return df_new
 
 
@@ -101,7 +101,7 @@ def clean_previousContactDays(df):
     df_new = df.copy()
     df_new["Previously Contacted"] = df_new["Previous Contact Days"] != 999
     df_new.replace({"Previous Contact Days": 999}, -1, inplace=True)
-    df_new = reindex_target_col(df_new)
+    df_new = _reindex_target_col(df_new)
     return df_new
 
 
