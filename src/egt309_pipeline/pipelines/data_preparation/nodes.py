@@ -7,7 +7,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-import pandas as pd
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
 
@@ -31,7 +30,7 @@ def random_distribution(df, target, val="none"):
     distribution = temp_col.value_counts(normalize=True).tolist()
     labels = temp_col.value_counts().index.tolist()
     fill_mask = tobe_fill
-    fill = np.random.choice(labels, size=fill_mask.sum(), p=distribution) # type: ignore
+    fill = np.random.choice(labels, size=fill_mask.sum(), p=distribution)  # type: ignore
     df_temp.loc[fill_mask, target] = fill
     return df_temp
 
