@@ -10,6 +10,7 @@ from .nodes import *
 def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline(
         namespace="Data Preparation",
+        prefix_datasets_with_namespace=False,
         nodes=[
             Node(
                 func=clean_clientId,
