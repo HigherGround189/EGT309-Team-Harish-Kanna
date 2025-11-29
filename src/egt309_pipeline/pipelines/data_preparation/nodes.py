@@ -103,8 +103,6 @@ def clean_previousContactDays(df):
     df_new.replace({"Previous Contact Days": 999}, -1, inplace=True)
     df_new = _reindex_target_col(df_new)
     return df_new
-
-
 def clean_subscriptionStatus(df):
     df_new = df.copy()
     df_new["Subscription Status"].replace({"yes": 1, "no": 0}, inplace=True)
