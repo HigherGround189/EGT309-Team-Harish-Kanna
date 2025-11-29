@@ -23,6 +23,9 @@ dependencies = [
  "kedro-viz>=12.1.0",
  "scikit-learn>=1.6.1",
  "imbalanced-learn>=0.12.4",
+ "scikit-optimize>=0.10.2",
+ "seaborn>=0.13.2",
+ "joblib>=1.5.2",
 ]
 
 [project.scripts]
