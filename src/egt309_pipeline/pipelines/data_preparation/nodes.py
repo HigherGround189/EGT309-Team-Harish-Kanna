@@ -14,11 +14,11 @@ from kedro.io import DataCatalog
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 # Define catalog to load dataset
-conf_loader = OmegaConfigLoader(
-    conf_source="conf", base_env="base", default_run_env="local"
-)
-conf_catalog = conf_loader["catalog"]
-catalog = DataCatalog.from_config(conf_catalog)
+# conf_loader = OmegaConfigLoader(
+#     conf_source="conf", base_env="base", default_run_env="local"
+# )
+# conf_catalog = conf_loader["catalog"]
+# catalog = DataCatalog.from_config(conf_catalog)
 
 
 def _random_distribution(df, target, val="none"):
