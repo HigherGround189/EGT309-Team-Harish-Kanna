@@ -7,7 +7,7 @@ on:
       - "dockerfile"
 
 jobs:
-  docker:
+  build_and_push_notebook:
     runs-on: ubuntu-latest
     steps:
       -
