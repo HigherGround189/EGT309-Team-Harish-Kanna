@@ -22,6 +22,8 @@ dependencies = [
  "numpy>=2.0.2",
  "kedro-viz>=12.1.0",
  "scikit-learn>=1.6.1",
+ "icecream>=2.1.8",
+ "gdown>=5.2.0",
 ]
 
 [project.scripts]

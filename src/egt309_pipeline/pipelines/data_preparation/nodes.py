@@ -9,20 +9,17 @@ logger = logging.getLogger(__name__)
 
 import numpy as np
 import pandas as pd
-
-from typing import Any, Union
-
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
 
 # Define catalog to load dataset
-conf_loader = OmegaConfigLoader(
-    conf_source="conf", base_env="base", default_run_env="local"
-)
-conf_catalog = conf_loader["catalog"]
-catalog = DataCatalog.from_config(conf_catalog)
+# conf_loader = OmegaConfigLoader(
+#     conf_source="conf", base_env="base", default_run_env="local"
+# )
+# conf_catalog = conf_loader["catalog"]
+# catalog = DataCatalog.from_config(conf_catalog)
 
 
 def _random_distribution(df: pd.DataFrame, target: str, val: Any ="none") -> pd.DataFrame:
@@ -247,12 +244,8 @@ def clean_subscriptionStatus(df: pd.DataFrame) -> pd.DataFrame:
     df_new["Subscription Status"] = df_new["Subscription Status"].astype(bool)
     return df_new
 
-def _encoder_selection(encoder: str="ohe") -> Union[OneHotEncoder, LabelEncoder]:
+def encoder_selection(encoder="ohe"):
   """
-  Select One Hot Encoding or Integer Encoding method
-
-  parameters:
-  -----------
   encoder: "ohe" (default) or "int"
     ohe: one hot encoding
     int: integer encoding
@@ -266,45 +259,29 @@ def _encoder_selection(encoder: str="ohe") -> Union[OneHotEncoder, LabelEncoder]
       raise ValueError("encoder must be 'ohe' or 'int'")
   return encoder
 
-def ohe_encode(df: pd.DataFrame) -> pd.DataFrame:
-  """
-  One hot encode all object type columns in input DataFrame
-
-  parameters:
-  -----------
-  df: pd.DataFrame
-    Input DataFrame
-  """
-  encoder = _encoder_selection("ohe")
+def ohe_encode(df):
+  encoder = encoder_selection("ohe")
   df_copy = df.copy()
   df_encode = pd.DataFrame()
 
-  for col in df_copy.columns:
-    if df_copy[col].dtype == "object":
-      encoded = encoder.fit_transform(df_copy[[col]])
-      value_col = encoder.get_feature_names_out([col])
-      encoded_df = pd.DataFrame(encoded, columns=value_col)
-      df_encode = pd.concat([df_encode, encoded_df], axis=1)
-    else:
-      df_encode[col] = df_copy[col]
-  return df_encode
+    for col in df_copy.columns:
+        if df_copy[col].dtype == "object":
+            encoded = encoder.fit_transform(df_copy[[col]])
+            value_col = encoder.get_feature_names_out([col])
+            encoded_df = pd.DataFrame(encoded, columns=value_col)
+            df_encode = pd.concat([df_encode, encoded_df], axis=1)
+        else:
+            df_encode[col] = df_copy[col]
+    return df_encode
 
-def int_encode(df: pd.DataFrame) -> pd.DataFrame:
-  """
-  Integer encode all object type columns in input DataFrame
-
-  parameters:
-  -----------
-  df: pd.DataFrame
-    Input DataFrame
-  """
-  encoder = _encoder_selection("int")
+def int_encode(df):
+  encoder = encoder_selection("int")
   df_copy = df.copy()
   df_encode = pd.DataFrame()
 
-  for col in df_copy.columns:
-      if df_copy[col].dtype == "object":
-          df_encode[col] = encoder.fit_transform(df_copy[col])
-      else:
-          df_encode[col] = df_copy[col]
-  return df_encode
+    for col in df_copy.columns:
+        if df_copy[col].dtype == "object":
+            df_encode[col] = encoder.fit_transform(df_copy[col])
+        else:
+            df_encode[col] = df_copy[col]
+    return df_encode
