@@ -9,10 +9,9 @@ logger = logging.getLogger(__name__)
 
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-
 from kedro.config import OmegaConfigLoader
 from kedro.io import DataCatalog
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 # Define catalog to load dataset
 conf_loader = OmegaConfigLoader(
@@ -114,44 +113,47 @@ def clean_subscriptionStatus(df):
     df_new["Subscription Status"] = df_new["Subscription Status"].astype(bool)
     return df_new
 
+
 def encoder_selection(encoder="ohe"):
-  """
-  encoder: "ohe" (default) or "int"
-    ohe: one hot encoding
-    int: integer encoding
-  """
-  match encoder:
-    case "ohe":
-      encoder = OneHotEncoder()
-    case "int":
-      encoder = LabelEncoder()
-    case _:
-      raise ValueError("encoder must be 'ohe' or 'int'")
-  return encoder
+    """
+    encoder: "ohe" (default) or "int"
+      ohe: one hot encoding
+      int: integer encoding
+    """
+    match encoder:
+        case "ohe":
+            encoder = OneHotEncoder()
+        case "int":
+            encoder = LabelEncoder()
+        case _:
+            raise ValueError("encoder must be 'ohe' or 'int'")
+    return encoder
+
 
 def ohe_encode(df):
-  encoder = encoder_selection("ohe")
-  df_copy = df.copy()
-  df_encode = pd.DataFrame()
+    encoder = encoder_selection("ohe")
+    df_copy = df.copy()
+    df_encode = pd.DataFrame()
 
-  for col in df_copy.columns:
-    if df_copy[col].dtype == "object":
-      encoded = encoder.fit_transform(df_copy[[col]])
-      value_col = encoder.get_feature_names_out([col])
-      encoded_df = pd.DataFrame(encoded, columns=value_col)
-      df_encode = pd.concat([df_encode, encoded_df], axis=1)
-    else:
-      df_encode[col] = df_copy[col]
-  return df_encode
+    for col in df_copy.columns:
+        if df_copy[col].dtype == "object":
+            encoded = encoder.fit_transform(df_copy[[col]])
+            value_col = encoder.get_feature_names_out([col])
+            encoded_df = pd.DataFrame(encoded, columns=value_col)
+            df_encode = pd.concat([df_encode, encoded_df], axis=1)
+        else:
+            df_encode[col] = df_copy[col]
+    return df_encode
+
 
 def int_encode(df):
-  encoder = encoder_selection("int")
-  df_copy = df.copy()
-  df_encode = pd.DataFrame()
+    encoder = encoder_selection("int")
+    df_copy = df.copy()
+    df_encode = pd.DataFrame()
 
-  for col in df_copy.columns:
-      if df_copy[col].dtype == "object":
-          df_encode[col] = encoder.fit_transform(df_copy[col])
-      else:
-          df_encode[col] = df_copy[col]
-  return df_encode
+    for col in df_copy.columns:
+        if df_copy[col].dtype == "object":
+            df_encode[col] = encoder.fit_transform(df_copy[col])
+        else:
+            df_encode[col] = df_copy[col]
+    return df_encode
