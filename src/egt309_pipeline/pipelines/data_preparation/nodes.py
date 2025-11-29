@@ -142,8 +142,6 @@ def ohe_encode(df):
         else:
             df_encode[col] = df_copy[col]
     return df_encode
-
-
 def int_encode(df):
     encoder = encoder_selection("int")
     df_copy = df.copy()
