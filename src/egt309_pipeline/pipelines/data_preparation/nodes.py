@@ -7,15 +7,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-import numpy as np
-import pandas as pd
-
 from typing import Any, Union
 
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-
-from kedro.config import OmegaConfigLoader
-from kedro.io import DataCatalog
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 # Define catalog to load dataset
 # conf_loader = OmegaConfigLoader(
@@ -25,7 +21,9 @@ from kedro.io import DataCatalog
 # catalog = DataCatalog.from_config(conf_catalog)
 
 
-def _random_distribution(df: pd.DataFrame, target: str, val: Any ="none") -> pd.DataFrame:
+def _random_distribution(
+    df: pd.DataFrame, target: str, val: Any = "none"
+) -> pd.DataFrame:
     """
     Apply random distribution imputation to selected column
 
@@ -36,11 +34,11 @@ def _random_distribution(df: pd.DataFrame, target: str, val: Any ="none") -> pd.
 
     target: str
         Selected column to impute
-    
+
     val: Any
         Selected value (data) to be impute
         input: "none" (default) or specific value from column
-        example: 
+        example:
         "none"    : imputes all the np.nan or None in specified column
         150       : imputes all values with 150 in the specified column
         "unknown" : imputes all values with unknown in the specified column
@@ -215,7 +213,7 @@ def clean_campaignCalls(df: pd.DataFrame) -> pd.DataFrame:
 def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
     """
     Data cleaning on Previous Contact Days column
-    Function action: Rename 999 to -1 and added a Previously Contacted column 
+    Function action: Rename 999 to -1 and added a Previously Contacted column
                     as boolean:
                     False = no prior contact
                     True = got prior contact
@@ -247,7 +245,8 @@ def clean_subscriptionStatus(df: pd.DataFrame) -> pd.DataFrame:
     df_new["Subscription Status"] = df_new["Subscription Status"].astype(bool)
     return df_new
 
-def encoder_selection(encoder: str="ohe") -> Union[OneHotEncoder, LabelEncoder]:
+
+def encoder_selection(encoder: str = "ohe") -> Union[OneHotEncoder, LabelEncoder]:
     """
     Select One Hot Encoding or Integer Encoding method
 
@@ -265,6 +264,7 @@ def encoder_selection(encoder: str="ohe") -> Union[OneHotEncoder, LabelEncoder]:
         case _:
             raise ValueError("encoder must be 'ohe' or 'int'")
     return encoder
+
 
 def ohe_encode(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -288,6 +288,7 @@ def ohe_encode(df: pd.DataFrame) -> pd.DataFrame:
         else:
             df_encode[col] = df_copy[col]
     return df_encode
+
 
 def int_encode(df: pd.DataFrame) -> pd.DataFrame:
     """
