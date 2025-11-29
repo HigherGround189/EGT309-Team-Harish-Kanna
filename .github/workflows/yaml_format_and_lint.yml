@@ -17,6 +17,9 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: global
+
 jobs:
   prettier:
     runs-on: ubuntu-latest

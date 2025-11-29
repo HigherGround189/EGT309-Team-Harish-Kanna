@@ -19,6 +19,9 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: global
+
 jobs:
   format-and-lint:
     runs-on: ubuntu-latest

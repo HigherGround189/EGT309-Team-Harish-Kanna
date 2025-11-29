@@ -15,6 +15,9 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: global
+
 jobs:
   move-notebooks:
     runs-on: ubuntu-latest
