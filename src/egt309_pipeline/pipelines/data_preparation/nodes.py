@@ -7,11 +7,14 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from typing import Any, Union
+from typing import Any, Union, Tuple
 
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.model_selection import train_test_split
+
+from imblearn.over_sampling import SMOTE
 
 # Define catalog to load dataset
 # conf_loader = OmegaConfigLoader(
@@ -309,3 +312,50 @@ def int_encode(df: pd.DataFrame) -> pd.DataFrame:
         else:
             df_encode[col] = df_copy[col]
     return df_encode
+
+def my_train_test_split(df: pd.DataFrame, val_sample: bool=False, test_size: int=0.2, rs: int=42) -> Union[Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series],                                                                                             Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, pd.Series]]:
+  """
+  Split input DataFrame into train, test and val(optional)
+
+  parameters:
+  -----------
+  df: pd.DataFrame
+    Input DataFrame
+  
+  val_sample: bool
+    State whether to generate validation data sample
+
+  test_size: int
+    State the size of test dataset
+  
+  rs: int
+    Set random state for randomness
+  """
+  label = "Subscription Status"
+  X, y = df.drop(label, axis=1), df[label]
+  if val_sample:
+    X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=test_size, random_state=rs, stratify=y)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=rs, stratify=y_temp)
+    return X_train, X_val, X_test, y_train, y_val, y_test
+    
+  else:
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=rs, stratify=y)
+    return X_train, X_test, y_train, y_test
+
+def smote(X_train: pd.DataFrame, y_train: pd.Series, rs: int=42) -> Tuple[pd.DataFrame, pd.Series]:
+  """
+  Apply SMOTE to training dataset
+
+  X_train: pd.DataFrame
+    Input features training dataset
+  
+  y_train: pd.Series
+    Input label training dataset
+  
+  rs: int
+    Set random state for randomness
+  """
+  smote = SMOTE(random_state=rs)
+  X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
+  X_train_res, y_train_res = pd.DataFrame(X_train_res), pd.Series(y_train_res)
+  return X_train_res, y_train_res

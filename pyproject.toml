@@ -22,6 +22,7 @@ dependencies = [
  "numpy>=2.0.2",
  "kedro-viz>=12.1.0",
  "scikit-learn>=1.6.1",
+ "imbalanced-learn>=0.12.4",
 ]
 
 [project.scripts]
