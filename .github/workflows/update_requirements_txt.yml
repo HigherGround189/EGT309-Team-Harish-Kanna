@@ -29,17 +29,13 @@ jobs:
 
       - name: Pull latest changes (rebase)
         run: |
+          BRANCH="${GITHUB_REF##refs/heads/}"
+
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add requirements.txt
-          git commit -m "temp commit"
-          git pull --rebase origin "${GITHUB_REF##refs/heads/}"
+          git add .
+          git commit -m "chore: Updated requirements.txt"
+          git pull --rebase origin $BRANCH
 
-      - name: Commit & push changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: '.'
-          author_name: github-actions[bot]
-          author_email: github-actions[bot]@users.noreply.github.com
-          message: 'chore: Updated requirements.txt'
+          git push origin "$BRANCH"
