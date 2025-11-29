@@ -126,6 +126,8 @@ def encoder_selection(encoder="ohe"):
         case _:
             raise ValueError("encoder must be 'ohe' or 'int'")
     return encoder
+
+
 def ohe_encode(df):
     encoder = encoder_selection("ohe")
     df_copy = df.copy()
@@ -140,6 +142,8 @@ def ohe_encode(df):
         else:
             df_encode[col] = df_copy[col]
     return df_encode
+
+
 def int_encode(df):
     encoder = encoder_selection("int")
     df_copy = df.copy()
