@@ -9,6 +9,9 @@ logger = logging.getLogger(__name__)
 
 import numpy as np
 import pandas as pd
+
+from typing import Any, Union
+
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
 from kedro.config import OmegaConfigLoader
@@ -22,7 +25,26 @@ conf_catalog = conf_loader["catalog"]
 catalog = DataCatalog.from_config(conf_catalog)
 
 
-def _random_distribution(df, target, val="none"):
+def _random_distribution(df: pd.DataFrame, target: str, val: Any ="none") -> pd.DataFrame:
+    """
+    Apply random distribution imputation to selected column
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+
+    target: str
+        Selected column to impute
+    
+    val: Any
+        Selected value (data) to be impute
+        input: "none" (default) or specific value from column
+        example: 
+        "none"    : imputes all the np.nan or None in specified column
+        150       : imputes all values with 150 in the specified column
+        "unknown" : imputes all values with unknown in the specified column
+    """
     df_temp = df.copy()
     col = df_temp[target]
     if val == "none":
@@ -39,7 +61,15 @@ def _random_distribution(df, target, val="none"):
     return df_temp
 
 
-def _reindex_target_col(df):
+def _reindex_target_col(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Move position of Subscription Status column (target/label) to the back
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     cols = df.columns.tolist()
     cols.remove("Subscription Status")
     cols.append("Subscription Status")
@@ -47,12 +77,31 @@ def _reindex_target_col(df):
     return df_reorganized
 
 
-def clean_clientId(df):
+def clean_clientId(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Client ID column
+    Function action: Drop Client Id column
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.drop("Client ID", axis=1)
     return df_new
 
 
-def clean_age(df):
+def clean_age(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Age column
+    Function actions: Remove 'years' and keep the age number as integer,
+    then apply random distribution imputation to Age column.
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_temp = df.copy()
     df_temp["Age"] = df_temp["Age"].map(lambda x: x.split()[0])
     df_temp["Age"] = df_temp["Age"].astype(int)
@@ -60,33 +109,87 @@ def clean_age(df):
     return df_new
 
 
-def clean_occupation(df):
+def clean_occupation(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Occupation column
+    Function action: Drop rows with 'unknown'
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.drop(df[df["Occupation"] == "unknown"].index, axis=0)
     return df_new
 
 
-def clean_maritalStatus(df):
+def clean_maritalStatus(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Marital Status column
+    Function action: drop rows with 'unknown'
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.drop(df[df["Marital Status"] == "unknown"].index, axis=0)
     return df_new
 
 
-def clean_creditDefault(df):
+def clean_creditDefault(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Credit Default column
+    Function action: 'Drop Credit Default Column
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.drop("Credit Default", axis=1)
     return df_new
 
 
-def clean_housingLoan(df):
+def clean_housingLoan(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Housing Loan column
+    Function action: Drop Housing Loan Column
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.drop("Housing Loan", axis=1)
     return df_new
 
 
-def clean_personalLoan(df):
+def clean_personalLoan(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Personal Loan column
+    Function action: Apply random distribution imputation to Personal Loan column
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_temp = df.copy()
     df_new = _random_distribution(df_temp, target="Personal Loan")
     return df_new
 
 
-def clean_contactMethod(df):
+def clean_contactMethod(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Contact Method column
+    Function action: Rename 'Cell' value with 'cellular' and 'Telephone' with 'telephone'
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.copy()
     df_new["Contact Method"].replace(
         ["Cell", "Telephone"], ["cellular", "telephone"], inplace=True
@@ -94,13 +197,34 @@ def clean_contactMethod(df):
     return df_new
 
 
-def clean_campaignCalls(df):
+def clean_campaignCalls(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Campaign Calls column
+    Function action: Absolute/Convert all negative values to positive
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.copy()
     df_new["Campaign Calls"] = df_new["Campaign Calls"].apply(lambda x: abs(x))
     return df_new
 
 
-def clean_previousContactDays(df):
+def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Previous Contact Days column
+    Function action: Rename 999 to -1 and added a Previously Contacted column 
+                    as boolean:
+                    False = no prior contact
+                    True = got prior contact
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.copy()
     df_new["Previously Contacted"] = df_new["Previous Contact Days"] != 999
     df_new.replace({"Previous Contact Days": 999}, -1, inplace=True)
@@ -108,14 +232,27 @@ def clean_previousContactDays(df):
     return df_new
 
 
-def clean_subscriptionStatus(df):
+def clean_subscriptionStatus(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data cleaning on Subscription Status column
+    Function action: Rename 'yes' with 1 and 'no' with 0 and convert to boolean type
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+    """
     df_new = df.copy()
     df_new["Subscription Status"].replace({"yes": 1, "no": 0}, inplace=True)
     df_new["Subscription Status"] = df_new["Subscription Status"].astype(bool)
     return df_new
 
-def encoder_selection(encoder="ohe"):
+def _encoder_selection(encoder: str="ohe") -> Union[OneHotEncoder, LabelEncoder]:
   """
+  Select One Hot Encoding or Integer Encoding method
+
+  parameters:
+  -----------
   encoder: "ohe" (default) or "int"
     ohe: one hot encoding
     int: integer encoding
@@ -129,8 +266,16 @@ def encoder_selection(encoder="ohe"):
       raise ValueError("encoder must be 'ohe' or 'int'")
   return encoder
 
-def ohe_encode(df):
-  encoder = encoder_selection("ohe")
+def ohe_encode(df: pd.DataFrame) -> pd.DataFrame:
+  """
+  One hot encode all object type columns in input DataFrame
+
+  parameters:
+  -----------
+  df: pd.DataFrame
+    Input DataFrame
+  """
+  encoder = _encoder_selection("ohe")
   df_copy = df.copy()
   df_encode = pd.DataFrame()
 
@@ -144,8 +289,16 @@ def ohe_encode(df):
       df_encode[col] = df_copy[col]
   return df_encode
 
-def int_encode(df):
-  encoder = encoder_selection("int")
+def int_encode(df: pd.DataFrame) -> pd.DataFrame:
+  """
+  Integer encode all object type columns in input DataFrame
+
+  parameters:
+  -----------
+  df: pd.DataFrame
+    Input DataFrame
+  """
+  encoder = _encoder_selection("int")
   df_copy = df.copy()
   df_encode = pd.DataFrame()
 
