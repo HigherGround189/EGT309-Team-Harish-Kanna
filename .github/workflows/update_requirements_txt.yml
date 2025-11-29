@@ -13,6 +13,9 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: global
+
 jobs:
   update-requirements:
     runs-on: ubuntu-latest
@@ -27,15 +30,10 @@ jobs:
       - name: Compile requirements.txt
         run: uv pip compile pyproject.toml -o requirements.txt
 
-      - name: Pull latest changes (rebase) & push
-        run: |
-          BRANCH="${GITHUB_REF##refs/heads/}"
-
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add .
-          git commit -m "chore: Updated requirements.txt"
-          git pull --rebase origin $BRANCH
-
-          git push origin "$BRANCH"
+      - name: Commit & push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: '.'
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: 'chore: Updated requirements.txt'

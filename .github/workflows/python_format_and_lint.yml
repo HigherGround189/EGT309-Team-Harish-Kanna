@@ -16,9 +16,11 @@ on:
     branches: [main]
     types: [completed]
     
-
 permissions:
   contents: write
+
+concurrency:
+  group: global
 
 jobs:
   format-and-lint:
