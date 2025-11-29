@@ -47,8 +47,6 @@ def _reindex_target_col(df):
 def clean_clientId(df):
     df_new = df.drop("Client ID", axis=1)
     return df_new
-
-
 def clean_age(df):
     df_temp = df.copy()
     df_temp["Age"] = df_temp["Age"].map(lambda x: x.split()[0])
