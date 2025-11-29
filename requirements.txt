@@ -38,7 +38,9 @@ attrs==25.4.0
 babel==2.17.0
     # via jupyterlab-server
 beautifulsoup4==4.14.2
-    # via nbconvert
+    # via
+    #   gdown
+    #   nbconvert
 binaryornot==0.4.4
     # via cookiecutter
 bleach==6.3.0
@@ -88,12 +90,16 @@ fastapi==0.122.0
     # via kedro-viz
 fastjsonschema==2.21.2
     # via nbformat
+filelock==3.20.0
+    # via gdown
 fqdn==1.5.1
     # via jsonschema
 fsspec==2025.10.0
     # via
     #   kedro
     #   kedro-viz
+gdown==5.2.0
+    # via egt309-pipeline (pyproject.toml)
 gitdb==4.0.12
     # via gitpython
 gitpython==3.1.45
@@ -328,6 +334,8 @@ pygments==2.19.2
     #   rich
 pyproject-hooks==1.2.0
     # via build
+pysocks==1.7.1
+    # via requests
 pytest==9.0.1
     # via egt309-pipeline (pyproject.toml)
 python-dateutil==2.9.0.post0
@@ -363,6 +371,7 @@ referencing==0.37.0
 requests==2.32.5
     # via
     #   cookiecutter
+    #   gdown
     #   jupyterlab-server
     #   kedro-telemetry
 rfc3339-validator==0.1.4
@@ -433,6 +442,8 @@ tornado==6.5.2
     #   jupyterlab
     #   notebook
     #   terminado
+tqdm==4.67.1
+    # via gdown
 traitlets==5.14.3
     # via
     #   ipykernel
