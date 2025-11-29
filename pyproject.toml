@@ -21,6 +21,7 @@ dependencies = [
  "pytest>=7.4.4",
  "numpy>=2.0.2",
  "kedro-viz>=12.1.0",
+ "scikit-learn>=1.6.1",
 ]
 
 [project.scripts]
