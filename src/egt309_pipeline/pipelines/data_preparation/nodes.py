@@ -9,8 +9,6 @@ logger = logging.getLogger(__name__)
 
 import numpy as np
 import pandas as pd
-from kedro.config import OmegaConfigLoader
-from kedro.io import DataCatalog
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 # Define catalog to load dataset
