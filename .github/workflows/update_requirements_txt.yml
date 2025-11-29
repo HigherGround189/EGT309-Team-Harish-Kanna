@@ -27,7 +27,7 @@ jobs:
       - name: Compile requirements.txt
         run: uv pip compile pyproject.toml -o requirements.txt
 
-      - name: Pull latest changes (rebase)
+      - name: Pull latest changes (rebase) & push
         run: |
           BRANCH="${GITHUB_REF##refs/heads/}"
 
