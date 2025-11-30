@@ -15,6 +15,7 @@ from sklearn.metrics import (
     roc_curve,
 )
 
+
 def measure_error(y_true, y_pred, y_pred_proba, label):
     return pd.Series(
         {
@@ -27,14 +28,17 @@ def measure_error(y_true, y_pred, y_pred_proba, label):
         name=label,
     )
 
+
 def save_model_weights(save_dir, title, model):
     model_path = os.path.join(save_dir, f"{title}.pkl")
     joblib.dump(model, model_path)
+
 
 def write_hyperparam_to_file(save_dir, best_params):
     params_path = os.path.join(save_dir, "parameters.json")
     with open(params_path, "w") as f:
         json.dump(best_params, f, indent=4)
+
 
 def plot_auc_roc(save_dir, title, y, y_pred_proba):
     fpr, tpr, _ = roc_curve(y, y_pred_proba)
@@ -53,6 +57,7 @@ def plot_auc_roc(save_dir, title, y, y_pred_proba):
     plt.savefig(plot_path)
     plt.close()
 
+
 def plot_cm(save_dir, title, y, y_pred):
     cm = confusion_matrix(y, y_pred)
 
@@ -68,6 +73,7 @@ def plot_cm(save_dir, title, y, y_pred):
     plot_path = os.path.join(save_dir, "cmatrix.png")
     plt.savefig(plot_path)
     plt.close()
+
 
 def save_model_scores(save_dir, y, y_pred, y_pred_proba):
     test_error = pd.concat([measure_error(y, y_pred, y_pred_proba, "test")], axis=1)
