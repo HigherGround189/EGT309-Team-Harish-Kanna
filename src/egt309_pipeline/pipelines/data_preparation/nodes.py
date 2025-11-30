@@ -72,7 +72,7 @@ def _random_distribution(
     df: pd.DataFrame
         Input DataFrame
 
-    target: str
+    target_col: str
         Selected column to impute
 
     target_val: Any
