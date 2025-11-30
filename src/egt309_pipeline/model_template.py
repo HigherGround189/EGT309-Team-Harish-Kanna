@@ -76,7 +76,7 @@ class ModelWrapper:
         plot_cm(save_dir=save_dir, title=self.title, y=y, y_pred=y_pred)
 
         # Plot AUC-ROC
-        plot_auc_roc(save_dir=save_dir, title=self.title, y=y, y_pred=y_pred)
+        plot_auc_roc(save_dir=save_dir, title=self.title, y=y, y_pred_proba=y_pred_proba)
 
         # Save metrics in dataframe
         save_model_scores(
