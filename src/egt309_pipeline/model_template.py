@@ -6,7 +6,17 @@ from skopt import BayesSearchCV
 
 
 class ModelWrapper:
-    def __init__(self, title, model, hyperparameters, param_grid, cv, n_iterations=50, n_repeats=5, random_state=42):
+    def __init__(
+        self,
+        title,
+        model,
+        hyperparameters,
+        param_grid,
+        cv,
+        n_iterations=50,
+        n_repeats=5,
+        random_state=42,
+    ):
         self.title = title
         self.model = model(**hyperparameters)
         self.param_grid = param_grid
