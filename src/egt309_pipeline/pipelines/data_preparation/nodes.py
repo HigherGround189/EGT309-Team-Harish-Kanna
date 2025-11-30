@@ -23,9 +23,46 @@ from sklearn.impute import KNNImputer
 # conf_catalog = conf_loader["catalog"]
 # catalog = DataCatalog.from_config(conf_catalog)
 
+def _my_knnimputer(df: pd.DataFrame, target_col: str, target_val: Any=None, corr_cols: list=None, n_neighbors: int=5):
+  """
+  Impute target values such as missing data with KNN
+  Ensure all columns in corr_cols are encoded or numeric
+
+  paramters:
+  ----------
+  df: pd.DataFrame
+    Input DataFrame
+
+  target_col: str
+    Column to be impute
+
+  target_val: Any
+    Value in target column to be impute
+
+  corr_cols: list
+    Correlated columns to assist in KNN imputation
+  
+  n_neighbors: int
+    Set the number of similar groups (nearest neighbours) to look 
+    at when estimating a missing value.
+  """
+  df_copy = df.copy()
+  imputer = KNNImputer(n_neighbors=n_neighbors)
+
+  if target_val is not None:
+    df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+
+  if corr_cols is not None:
+    final_corr_cols = corr_cols if target_col in corr_cols else corr_cols.append(target_col)
+    df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
+  else:
+    df_copy[target_col] = imputer.fit_transform(df_copy[[target_col]])
+
+  return df_copy
+
 
 def _random_distribution(
-    df: pd.DataFrame, target: str, val: Any = "none"
+    df: pd.DataFrame, target_col: str, target_val: Any = None
 ) -> pd.DataFrame:
     """
     Apply random distribution imputation to selected column
@@ -38,7 +75,7 @@ def _random_distribution(
     target: str
         Selected column to impute
 
-    val: Any
+    target_val: Any
         Selected value (data) to be impute
         input: "none" (default) or specific value from column
         example:
@@ -47,18 +84,18 @@ def _random_distribution(
         "unknown" : imputes all values with unknown in the specified column
     """
     df_temp = df.copy()
-    col = df_temp[target]
-    if val == "none":
+    col = df_temp[target_col]
+    if target_val is None:
         temp_col = col[~col.isna()]
         tobe_fill = col.isna()
     else:
-        temp_col = col[col != val]
-        tobe_fill = col == val
+        temp_col = col[col != target_val]
+        tobe_fill = col == target_val
     distribution = temp_col.value_counts(normalize=True).tolist()
     labels = temp_col.value_counts().index.tolist()
     fill_mask = tobe_fill
     fill = np.random.choice(labels, size=fill_mask.sum(), p=distribution)  # type: ignore
-    df_temp.loc[fill_mask, target] = fill
+    df_temp.loc[fill_mask, target_col] = fill
     return df_temp
 
 
@@ -92,11 +129,10 @@ def clean_clientId(df: pd.DataFrame) -> pd.DataFrame:
     return df_new
 
 
-def clean_age(df: pd.DataFrame) -> pd.DataFrame:
+def extract_age(df: pd.DataFrame) -> pd.DataFrame:
     """
     Data cleaning on Age column
-    Function actions: Remove 'years' and keep the age number as integer,
-    then apply random distribution imputation to Age column.
+    Function actions: Remove 'years' and keep the age number as integer
 
     parameters:
     -----------
@@ -106,7 +142,36 @@ def clean_age(df: pd.DataFrame) -> pd.DataFrame:
     df_temp = df.copy()
     df_temp["Age"] = df_temp["Age"].map(lambda x: x.split()[0])
     df_temp["Age"] = df_temp["Age"].astype(int)
-    df_new = _random_distribution(df_temp, target="Age", val=150)
+    return df_temp
+
+def impute_age(df: pd.DataFrame, impute_method: str = "randdist") -> pd.DataFrame:
+    """
+    Impute the value 150 in Age.
+    This function includes two techniques of imputing are random distribution and KNN
+    1. Random Distribution can be applied right after extract age
+    2. (!) KNN can only be applied after all the data cleaning is completed (!)
+        interger encoding will be performed only within KNN automatically
+
+    parameters:
+    -----------
+    df: pd.DataFrame
+        Input DataFrame
+
+    impute_method: str
+        "randdist" (default) or "knn"
+            randdist: random distribution imputation
+            knn: KNN imputation
+    """
+    df_temp = df.copy()
+    match impute_method:
+        case "randdist":
+            df_new = _random_distribution(df_temp, target_col="Age", target_val=150)
+    
+        case "knn":
+            corr_cols = ['Occupation', 'Marital Status', 'Education Level', 'Subscription Status','Previous Contact Days']
+            df_encoded_temp = int_encode(df_temp)
+            df_new = _my_knnimputer(df_encoded_temp, target_col="Age", target_val=150, corr_cols=corr_cols) 
+
     return df_new
 
 
@@ -374,40 +439,3 @@ def smote(
     X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
     X_train_res, y_train_res = pd.DataFrame(X_train_res), pd.Series(y_train_res)
     return X_train_res, y_train_res
-
-def my_knnimputer(df: pd.DataFrame, target_col: str, target_val: Any=None, corr_cols: list=None, n_neighbors: int=5):
-  """
-  Impute target values such as missing data with KNN
-  Ensure all columns in corr_cols are encoded or numeric
-
-  paramters:
-  ----------
-  df: pd.DataFrame
-    Input DataFrame
-
-  target_col: str
-    Column to be impute
-
-  target_val: Any
-    Value in target column to be impute
-
-  corr_cols: list
-    Correlated columns to assist in KNN imputation
-  
-  n_neighbors: int
-    Set the number of similar groups (nearest neighbours) to look 
-    at when estimating a missing value.
-  """
-  df_copy = df.copy()
-  imputer = KNNImputer(n_neighbors=n_neighbors)
-
-  if target_val is not None:
-    df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
-
-  if corr_cols is not None:
-    final_corr_cols = corr_cols if target_col in corr_cols else corr_cols.append(target_col)
-    df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
-  else:
-    df_copy[target] = imputer.fit_transform(df_copy[[target_col]])
-
-  return df_copy
