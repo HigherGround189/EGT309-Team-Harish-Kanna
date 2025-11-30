@@ -12,9 +12,9 @@ from typing import Any, Tuple, Union
 import numpy as np
 import pandas as pd
 from imblearn.over_sampling import SMOTE
+from sklearn.impute import KNNImputer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.impute import KNNImputer
 
 # Define catalog to load dataset
 # conf_loader = OmegaConfigLoader(
@@ -375,39 +375,48 @@ def smote(
     X_train_res, y_train_res = pd.DataFrame(X_train_res), pd.Series(y_train_res)
     return X_train_res, y_train_res
 
-def my_knnimputer(df: pd.DataFrame, target_col: str, target_val: Any=None, corr_cols: list=None, n_neighbors: int=5):
-  """
-  Impute target values such as missing data with KNN
-  Ensure all columns in corr_cols are encoded or numeric
 
-  paramters:
-  ----------
-  df: pd.DataFrame
-    Input DataFrame
+def my_knnimputer(
+    df: pd.DataFrame,
+    target_col: str,
+    target_val: Any = None,
+    corr_cols: list = None,
+    n_neighbors: int = 5,
+):
+    """
+    Impute target values such as missing data with KNN
+    Ensure all columns in corr_cols are encoded or numeric
 
-  target_col: str
-    Column to be impute
+    paramters:
+    ----------
+    df: pd.DataFrame
+      Input DataFrame
 
-  target_val: Any
-    Value in target column to be impute
+    target_col: str
+      Column to be impute
 
-  corr_cols: list
-    Correlated columns to assist in KNN imputation
-  
-  n_neighbors: int
-    Set the number of similar groups (nearest neighbours) to look 
-    at when estimating a missing value.
-  """
-  df_copy = df.copy()
-  imputer = KNNImputer(n_neighbors=n_neighbors)
+    target_val: Any
+      Value in target column to be impute
 
-  if target_val is not None:
-    df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+    corr_cols: list
+      Correlated columns to assist in KNN imputation
 
-  if corr_cols is not None:
-    final_corr_cols = corr_cols if target_col in corr_cols else corr_cols.append(target_col)
-    df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
-  else:
-    df_copy[target] = imputer.fit_transform(df_copy[[target_col]])
+    n_neighbors: int
+      Set the number of similar groups (nearest neighbours) to look
+      at when estimating a missing value.
+    """
+    df_copy = df.copy()
+    imputer = KNNImputer(n_neighbors=n_neighbors)
 
-  return df_copy
+    if target_val is not None:
+        df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+
+    if corr_cols is not None:
+        final_corr_cols = (
+            corr_cols if target_col in corr_cols else corr_cols.append(target_col)
+        )
+        df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
+    else:
+        df_copy[target] = imputer.fit_transform(df_copy[[target_col]])
+
+    return df_copy
