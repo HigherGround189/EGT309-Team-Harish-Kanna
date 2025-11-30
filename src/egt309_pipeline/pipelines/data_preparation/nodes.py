@@ -14,6 +14,7 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.impute import KNNImputer
 
 # Define catalog to load dataset
 # conf_loader = OmegaConfigLoader(
@@ -279,13 +280,13 @@ def ohe_encode(df: pd.DataFrame) -> pd.DataFrame:
     """
     encoder = encoder_selection("ohe")
     df_copy = df.copy()
-    df_encode = pd.DataFrame()
+    df_encode = pd.DataFrame(index=df_copy.index)
 
     for col in df_copy.columns:
         if df_copy[col].dtype == "object":
             encoded = encoder.fit_transform(df_copy[[col]])
             value_col = encoder.get_feature_names_out([col])
-            encoded_df = pd.DataFrame(encoded, columns=value_col)
+            encoded_df = pd.DataFrame(encoded, columns=value_col, index=df_copy.index)
             df_encode = pd.concat([df_encode, encoded_df], axis=1)
         else:
             df_encode[col] = df_copy[col]
@@ -303,7 +304,7 @@ def int_encode(df: pd.DataFrame) -> pd.DataFrame:
     """
     encoder = encoder_selection("int")
     df_copy = df.copy()
-    df_encode = pd.DataFrame()
+    df_encode = pd.DataFrame(index=df_copy.index)
 
     for col in df_copy.columns:
         if df_copy[col].dtype == "object":
@@ -373,3 +374,40 @@ def smote(
     X_train_res, y_train_res = smote.fit_resample(X_train, y_train)
     X_train_res, y_train_res = pd.DataFrame(X_train_res), pd.Series(y_train_res)
     return X_train_res, y_train_res
+
+def my_knnimputer(df: pd.DataFrame, target_col: str, target_val: Any=None, corr_cols: list=None, n_neighbors: int=5):
+  """
+  Impute target values such as missing data with KNN
+  Ensure all columns in corr_cols are encoded or numeric
+
+  paramters:
+  ----------
+  df: pd.DataFrame
+    Input DataFrame
+
+  target_col: str
+    Column to be impute
+
+  target_val: Any
+    Value in target column to be impute
+
+  corr_cols: list
+    Correlated columns to assist in KNN imputation
+  
+  n_neighbors: int
+    Set the number of similar groups (nearest neighbours) to look 
+    at when estimating a missing value.
+  """
+  df_copy = df.copy()
+  imputer = KNNImputer(n_neighbors=n_neighbors)
+
+  if target_val is not None:
+    df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+
+  if corr_cols is not None:
+    final_corr_cols = corr_cols if target_col in corr_cols else corr_cols.append(target_col)
+    df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
+  else:
+    df_copy[target] = imputer.fit_transform(df_copy[[target_col]])
+
+  return df_copy
