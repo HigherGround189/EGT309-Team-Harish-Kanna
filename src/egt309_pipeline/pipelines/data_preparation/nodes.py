@@ -23,42 +23,51 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 # conf_catalog = conf_loader["catalog"]
 # catalog = DataCatalog.from_config(conf_catalog)
 
-def _my_knnimputer(df: pd.DataFrame, target_col: str, target_val: Any=None, corr_cols: list=None, n_neighbors: int=5):
-  """
-  Impute target values such as missing data with KNN
-  Ensure all columns in corr_cols are encoded or numeric
 
-  paramters:
-  ----------
-  df: pd.DataFrame
-    Input DataFrame
+def _my_knnimputer(
+    df: pd.DataFrame,
+    target_col: str,
+    target_val: Any = None,
+    corr_cols: list = None,
+    n_neighbors: int = 5,
+):
+    """
+    Impute target values such as missing data with KNN
+    Ensure all columns in corr_cols are encoded or numeric
 
-  target_col: str
-    Column to be impute
+    paramters:
+    ----------
+    df: pd.DataFrame
+      Input DataFrame
 
-  target_val: Any
-    Value in target column to be impute
+    target_col: str
+      Column to be impute
 
-  corr_cols: list
-    Correlated columns to assist in KNN imputation
-  
-  n_neighbors: int
-    Set the number of similar groups (nearest neighbours) to look 
-    at when estimating a missing value.
-  """
-  df_copy = df.copy()
-  imputer = KNNImputer(n_neighbors=n_neighbors)
+    target_val: Any
+      Value in target column to be impute
 
-  if target_val is not None:
-    df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+    corr_cols: list
+      Correlated columns to assist in KNN imputation
 
-  if corr_cols is not None:
-    final_corr_cols = corr_cols if target_col in corr_cols else corr_cols.append(target_col)
-    df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
-  else:
-    df_copy[target_col] = imputer.fit_transform(df_copy[[target_col]])
+    n_neighbors: int
+      Set the number of similar groups (nearest neighbours) to look
+      at when estimating a missing value.
+    """
+    df_copy = df.copy()
+    imputer = KNNImputer(n_neighbors=n_neighbors)
 
-  return df_copy
+    if target_val is not None:
+        df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+
+    if corr_cols is not None:
+        final_corr_cols = (
+            corr_cols if target_col in corr_cols else corr_cols.append(target_col)
+        )
+        df_copy[final_corr_cols] = imputer.fit_transform(df_copy[final_corr_cols])
+    else:
+        df_copy[target_col] = imputer.fit_transform(df_copy[[target_col]])
+
+    return df_copy
 
 
 def _random_distribution(
@@ -144,6 +153,7 @@ def extract_age(df: pd.DataFrame) -> pd.DataFrame:
     df_temp["Age"] = df_temp["Age"].astype(int)
     return df_temp
 
+
 def impute_age(df: pd.DataFrame, impute_method: str = "randdist") -> pd.DataFrame:
     """
     Impute the value 150 in Age.
@@ -166,11 +176,19 @@ def impute_age(df: pd.DataFrame, impute_method: str = "randdist") -> pd.DataFram
     match impute_method:
         case "randdist":
             df_new = _random_distribution(df_temp, target_col="Age", target_val=150)
-    
+
         case "knn":
-            corr_cols = ['Occupation', 'Marital Status', 'Education Level', 'Subscription Status','Previous Contact Days']
+            corr_cols = [
+                "Occupation",
+                "Marital Status",
+                "Education Level",
+                "Subscription Status",
+                "Previous Contact Days",
+            ]
             df_encoded_temp = int_encode(df_temp)
-            df_new = _my_knnimputer(df_encoded_temp, target_col="Age", target_val=150, corr_cols=corr_cols) 
+            df_new = _my_knnimputer(
+                df_encoded_temp, target_col="Age", target_val=150, corr_cols=corr_cols
+            )
 
     return df_new
 
