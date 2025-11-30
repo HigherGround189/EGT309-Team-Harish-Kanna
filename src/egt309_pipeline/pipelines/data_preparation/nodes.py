@@ -12,9 +12,9 @@ from typing import Any, Tuple, Union
 import numpy as np
 import pandas as pd
 from imblearn.over_sampling import SMOTE
+from sklearn.impute import KNNImputer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.impute import KNNImputer
 
 # Define catalog to load dataset
 # conf_loader = OmegaConfigLoader(
