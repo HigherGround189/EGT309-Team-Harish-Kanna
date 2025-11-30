@@ -63,16 +63,20 @@ class ModelWrapper:
         save_dir = os.path.join(folder_path, self.title)
         os.makedirs(save_dir, exist_ok=True)
 
+        y_pred = self.best_model.predict(X)
+        y_pred_proba = self.best_model.predict_proba(X)[:, 1]
+
         # Save model weights
         save_model_weights(save_dir=save_dir, title=self.title, model=self.best_model)
 
         # Write hyperparameters in JSON file
         write_hyperparam_to_file(save_dir=save_dir, best_params=self.best_params)
 
-        y_pred = self.best_model.predict(X)
-
         # Plot confusion matrix
         plot_cm(save_dir=save_dir, title=self.title, y=y, y_pred=y_pred)
 
+        # Plot AUC-ROC
+        plot_auc_roc(save_dir=save_dir, title=self.title, y=y, y_pred=y_pred)
+
         # Save metrics in dataframe
-        save_model_scores(save_dir=save_dir, y=y, y_pred=y_pred)
+        save_model_scores(save_dir=save_dir, y=y, y_pred=y_pred, y_pred_proba=y_pred_proba)
