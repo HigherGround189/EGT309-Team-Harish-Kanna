@@ -40,11 +40,12 @@ def write_hyperparam_to_file(save_dir, best_params):
         json.dump(best_params, f, indent=4)
 
 
-def plot_auc_roc(save_dir, y, y_pred_proba):
+def plot_auc_roc(save_dir, title, y, y_pred_proba):
     fpr, tpr, _ = roc_curve(y, y_pred_proba)
     auc_score = roc_auc_score(y, y_pred_proba)
 
     plt.figure(figsize=(8, 6))
+    plt.title(f"AUC-ROC Curve: {title}")
     plt.plot(fpr, tpr, label=f"AUC = {auc_score:.2f}")
     plt.plot([0, 1], [0, 1], linestyle="--")
     plt.xlabel("False Positive Rate")
