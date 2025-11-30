@@ -75,19 +75,24 @@ def plot_cm(save_dir, title, y, y_pred):
     plt.savefig(plot_path)
     plt.close()
 
-def plot_permutation_importance(save_dir, title, model, X, y, n_repeats, random_state):
-    r = permutation_importance(model, X, y, n_repeats=n_repeats, random_state=random_state)
 
-    perm_importance_rf_df = pd.DataFrame({
-        'Feature': X.columns,
-        'Importance': r.importances_mean,
-        'Std': r.importances_std
-    }).sort_values(by='Importance', ascending=False)
+def plot_permutation_importance(save_dir, title, model, X, y, n_repeats, random_state):
+    r = permutation_importance(
+        model, X, y, n_repeats=n_repeats, random_state=random_state
+    )
+
+    perm_importance_rf_df = pd.DataFrame(
+        {
+            "Feature": X.columns,
+            "Importance": r.importances_mean,
+            "Std": r.importances_std,
+        }
+    ).sort_values(by="Importance", ascending=False)
 
     plt.figure(figsize=(8, 6))
-    sns.barplot(data=perm_importance_rf_df, x='Importance', y='Feature')
+    sns.barplot(data=perm_importance_rf_df, x="Importance", y="Feature")
     plt.title(f"{title} Permutation Importance (Test Set)")
-    
+
     plot_path = os.path.join(save_dir, "feature_importance.png")
     plt.savefig(plot_path)
     plt.close()
