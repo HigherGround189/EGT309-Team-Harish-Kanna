@@ -1,8 +1,8 @@
 import os
 
 from model_template_utils import *
-from skopt import BayesSearchCV
 from sklearn.model_selection import GridSearchCV
+from skopt import BayesSearchCV
 
 
 class ModelWrapper:
@@ -82,9 +82,17 @@ class ModelWrapper:
         plot_auc_roc(
             save_dir=save_dir, title=self.title, y=y, y_pred_proba=y_pred_proba
         )
-        
+
         # Plot feature importance
-        plot_permutation_importance(save_dir=save_dir, title=self.title, model=self.best_model, X=X, y=y, n_repeats=self.n_repeats, random_state=self.random_state)
+        plot_permutation_importance(
+            save_dir=save_dir,
+            title=self.title,
+            model=self.best_model,
+            X=X,
+            y=y,
+            n_repeats=self.n_repeats,
+            random_state=self.random_state,
+        )
 
         # Save metrics in dataframe
         save_model_scores(
