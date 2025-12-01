@@ -25,8 +25,8 @@ def list_models():
         
         model_name = model_folder.name
 
-        # Collect all files in each model folder (guard against directories, although there shouldn't be any)
-        files = [f.name for f in model_folder.iterdir() if f.is_file()]
+        # Collect all files in each model folder (guard against directories & .pkl files, although there shouldn't be any)
+        files = [file.name for file in model_folder.iterdir() if file.is_file() and file.suffix != ".pkl"]
 
         # Construct API Urls for frontend to fetch
         file_urls = {file: f"/api/{model_name}/{file}" for file in files}
