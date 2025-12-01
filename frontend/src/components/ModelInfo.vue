@@ -32,6 +32,7 @@
           // Acutal text content should be stored in .content.
           // However, if the file is an image, it can't have text content, so we leaeve it as null
 
+          
           // Iterate through all model folders
           const processedModels = {}
           for (const modelName in data) {
