@@ -111,8 +111,8 @@ jobs:
       - name: Copy dist to target folder
         run: |
           mkdir -p ${{ env.FRONTEND_TARGET }}
-          rm -rf ${{ env.FRONTEND_TARGET }}/*
           cp -R ./temp_dist/* ${{ env.FRONTEND_TARGET }}/
+          rm -rf ./temp_dist/*
 
       - name: Commit & push dist
         uses: actions-js/push@master
