@@ -60,6 +60,7 @@ jobs:
           mkdir -p ${{ env.TARGET_FOLDER }}/dist
           rm -rf ${{ env.TARGET_FOLDER }}/dist/*
           cp -R source_branch/frontend/dist/* ${{ env.TARGET_FOLDER }}/dist/
+          rm -rf source_branch/
 
       # Push using actions-js/push@master
       - name: Commit & push files to main
