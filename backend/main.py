@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, send_file, abort
+from flask_socketio import SocketIO, emit
 from pathlib import Path
 
 app = Flask(__name__, static_folder="dist")
+socketio = SocketIO(app)
 
 # Directory containing saved models
 SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
@@ -51,5 +53,14 @@ def serve_file(model, filename):
 
     return send_file(file_path)
 
+@app.route('/connection-test')
+def connection_test():
+    socketio.emit('connectionTest', {'message': 'Hello from Flask!'})
+    return 'Event sent!'
+
+@app.route("/training-complete")
+def update_frontend():
+    socketio.emit("trainingComplete", {"key": False})
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
