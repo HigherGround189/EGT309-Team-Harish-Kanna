@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, emit
 from pathlib import Path
 
 app = Flask(__name__, static_folder="dist")
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:5173")
 
 # Directory containing saved models
 SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
@@ -61,6 +61,7 @@ def connection_test():
 @app.route("/training-complete")
 def update_frontend():
     socketio.emit("trainingComplete", {"key": False})
+    return "Updated Frontend that training is complete"
 
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0', port=5000, debug=True)

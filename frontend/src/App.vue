@@ -1,6 +1,6 @@
 <template>
-  <TrainingInProgress/>
-  <ModelInfo/>
+  <TrainingInProgress v-if="!trainingComplete"/>
+  <ModelInfo v-if="trainingComplete"/>
 </template>
 
 <script>
