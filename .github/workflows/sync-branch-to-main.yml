@@ -2,7 +2,7 @@ name: Sync Model Visualisation Server to Main
 
 env:
   SOURCE_BRANCH: model-visualisation   
-  TARGET_FOLDER: flask/
+  TARGET_FOLDER: flask
 
 on:
   workflow_dispatch:
