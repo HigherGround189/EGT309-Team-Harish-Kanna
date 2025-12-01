@@ -1,0 +1,38 @@
+######################
+# XGBoost Parameters #
+######################
+
+xgboost_config:
+  class: xgboost.XGBClassifier
+
+  params:
+    n_jobs: -1
+    objective: "binary:logistic"
+    device: "auto"
+
+  search_space:
+    learning_rate:
+      type: Real
+      low: 0.01
+      high: 0.3
+      prior: log-uniform
+    max_depth:
+      type: Integer
+      low: 3
+      high: 100
+    n_estimators:
+      type: Integer
+      low: 100
+      high: 1000
+    subsample:
+      type: Real
+      low: 0.6
+      high: 1.0
+    colsample_bytree:
+      type: Real
+      low: 0.6
+      high: 1.0
+    scale_pos_weight:
+      type: Real
+      low: 4
+      high: 20

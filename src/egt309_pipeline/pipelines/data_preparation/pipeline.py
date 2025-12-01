@@ -18,12 +18,12 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="df_clientID_cleaned",
                 name="clean_clientID_node",
             ),
-            Node(
-                func=clean_age,
-                inputs="df_clientID_cleaned",
-                outputs="df_age_cleaned",
-                name="clean_age_node",
-            ),
+            # Node(
+            #     func=clean_age,
+            #     inputs="df_clientID_cleaned",
+            #     outputs="df_age_cleaned",
+            #     name="clean_age_node",
+            # ),
             Node(
                 func=clean_occupation,
                 inputs="df_age_cleaned",

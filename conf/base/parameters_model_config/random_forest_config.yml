@@ -1,0 +1,35 @@
+############################
+# Random Forest Parameters #
+############################
+
+random_forest_config:
+  class: sklearn.ensemble.RandomForestClassifier
+
+  params:
+    n_jobs: 1
+    oob_score: True
+    warm_start: False
+
+  search_space:
+    max_features:
+      type: Categorical
+      categories: ["sqrt", "log2", null]
+    min_samples_split:
+      type: Integer
+      low: 2
+      high: 25
+    max_samples:
+      type: Real
+      low: 0.5
+      high: 1.0
+    class_weight:
+      type: Categorical
+      categories: ["balanced", null]
+    max_depth:
+      type: Integer
+      low: 10
+      high: 300
+    n_estimators:
+      type: Integer
+      low: 200
+      high: 1000

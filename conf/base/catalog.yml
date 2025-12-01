@@ -14,3 +14,34 @@ cleaned_bmarket:
   filepath: data/03_primary/cleaned_bmarket.csv
   save_args:
     lineterminator: "\n"
+
+# https://docs.kedro.org/en/0.19.12/data/kedro_dataset_factories.html
+"{model_name}_model_weights":
+  type: pickle.PickleDataset
+  filepath: data/06_models/{model_name}/{model_name}.pkl
+
+"{model_name}_best_params":
+  type: json.JSONDataset
+  filepath: data/06_models/{model_name}/{model_name}_best_params.json
+
+"{model_name}_metrics":
+  type: json.JSONDataset
+  filepath: data/06_models/{model_name}/{model_name}_metrics.json
+
+"{model_name}_confusion_matrix":
+  type: matplotlib.MatplotlibDataset
+  filepath: data/06_models/{model_name}/{model_name}_confusion_matrix.png
+  save_args:
+    format: png
+
+"{model_name}_uc_roc_curve":
+  type: matplotlib.MatplotlibDataset
+  filepath: data/06_models/{model_name}/{model_name}_auc_roc_curve.png
+  save_args:
+    format: png
+
+"{model_name}_feature_importance":
+  type: matplotlib.MatplotlibDataset
+  filepath: data/06_models/{model_name}/{model_name}_feature_importance.png
+  save_args:
+    format: png
