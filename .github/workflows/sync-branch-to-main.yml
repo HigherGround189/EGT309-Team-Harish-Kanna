@@ -1,7 +1,7 @@
 name: Sync Model Visualisation Server to Main
 
 env:
-  SOURCE_BRANCH: model-visualisation   
+  SOURCE_BRANCH: model-visualisation
   TARGET_FOLDER: flask
 
 on:
@@ -19,54 +19,73 @@ concurrency:
   group: global
 
 jobs:
-  sync-app:
+  sync-backend:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout main branch
       - name: Checkout MAIN branch
         uses: actions/checkout@v4
         with:
           ref: main
 
-      # Checkout source branch
       - name: Checkout source branch
         uses: actions/checkout@v4
         with:
           ref: ${{ env.SOURCE_BRANCH }}
           path: source_branch
 
-      # Copy backend/ to TARGET_FOLDER
       - name: Sync backend
         run: |
           mkdir -p ${{ env.TARGET_FOLDER }}
           cp -R source_branch/backend/* ${{ env.TARGET_FOLDER }}/
 
-      # Build frontend
+      - name: Clean source folder
+        run: rm -rf source_branch/
+
+      - name: Commit & push backend changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          rebase: true
+          branch: main
+          message: "chore: Sync backend updates"
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout MAIN branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_BRANCH }}
+          path: source_branch
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Install frontend dependencies and build
+      - name: Install frontend dependencies & build
         working-directory: source_branch/frontend
         run: |
           npm ci
           npm run build
 
-      # Copy dist/ to TARGET_FOLDER/dist/
-      - name: Sync frontend dist
+      - name: Sync frontend dist to target folder
         run: |
           mkdir -p ${{ env.TARGET_FOLDER }}/dist
           rm -rf ${{ env.TARGET_FOLDER }}/dist/*
           cp -R source_branch/frontend/dist/* ${{ env.TARGET_FOLDER }}/dist/
           rm -rf source_branch/
 
-      # Push using actions-js/push@master
-      - name: Commit & push files to main
+      - name: Commit & push dist build
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           rebase: true
           branch: main
-          message: 'chore: Updated model visualisation server'
+          message: "chore: Updated frontend build files"
