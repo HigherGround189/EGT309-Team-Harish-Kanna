@@ -4,11 +4,9 @@ model_registry:
     yaml_header: random_forest_config
     train_now: True
     evaluate_now: True
-    
+
   xgboost:
     name: XGBoostClassifier
     yaml_header: xgboost_config
     train_now: True
     evaluate_now: True
-  
-
