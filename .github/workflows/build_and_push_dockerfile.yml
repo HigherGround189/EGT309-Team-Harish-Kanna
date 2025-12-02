@@ -5,10 +5,18 @@ on:
     branches: [main]
     paths:
       - "dockerfile"
+      - "visualisation-server/dockerfile"
 
 jobs:
-  build_and_push_notebook:
+  build_and_push_docker_image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: dockerfile
+            tag: egt309-team-harish-kanna-kedro-pipeline:latest
+          - dockerfile: visualisation-server/dockerfile
+            tag: egt309-team-harish-kanna-kedro-visualisation-server:latest
     steps:
       -
         name: Login to Docker Hub
@@ -26,5 +34,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
+          file: ${{ matrix.dockerfile }}
           push: true
-          tags: higherground189/egt309-team-harish-kanna-kedro-pipeline:latest
+          tags: higherground189/egt309-team:${{ matrix.tag }}
