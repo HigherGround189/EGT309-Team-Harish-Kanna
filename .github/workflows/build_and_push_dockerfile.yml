@@ -11,13 +11,7 @@ on:
 jobs:
   build_and_push_docker_image:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - context: .
-            tag: egt309-team-harish-kanna-kedro-pipeline:latest
-          - context: "{{defaultContext}}:visualisation-server"
-            tag: egt309-team-harish-kanna-kedro-visualisation-server:latest
+
     steps:
       -
         name: Login to Docker Hub
@@ -35,7 +29,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ matrix.context }}
+          context: .
           push: true
           tags: higherground189/egt309-team-harish-kanna-kedro-pipeline:latest
 
