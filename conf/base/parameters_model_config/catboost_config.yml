@@ -6,12 +6,12 @@ catboost_config:
   class: catboost.CatBoostClassifier
   requires_scaling: False
   data_encoding: None
-  
+
   model_params:
-    loss_function: "Logloss" 
+    loss_function: "Logloss"
     eval_metric: "AUC"
     auto_class_weights: "Balanced"
-    verbose: 0             
+    verbose: 0
 
   search_space:
     iterations:
