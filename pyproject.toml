@@ -13,7 +13,6 @@ dependencies = [
  "notebook",
  "kedro~=1.0.0",
  "pandas>=2.3.3",
- "kedro-datasets[matplotlib,pandas,tracking]>=4.1.0",
  "polars>=1.35.2",
  "sqlalchemy>=2.0.44",
  "plotly==5.24.1",
@@ -28,6 +27,7 @@ dependencies = [
  "joblib>=1.5.2",
  "xgboost>=2.1.4",
  "gputil>=1.4.0",
+ "kedro-datasets>=4.1.0",
 ]
 
 [project.scripts]
