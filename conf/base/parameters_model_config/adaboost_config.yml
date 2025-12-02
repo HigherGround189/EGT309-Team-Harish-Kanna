@@ -5,9 +5,9 @@
 adaboost_config:
   class: sklearn.ensemble.AdaBoostClassifier
   requires_scaling: False
-  
+
   model_params:
-    algorithm: "SAMME.R" 
+    algorithm: "SAMME.R"
 
   search_space:
     n_estimators:
