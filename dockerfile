@@ -1,6 +1,7 @@
 # Default Python trixie slim image with uv built in
 FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim
 
+# Set workdir
 WORKDIR /app
 
 # Copy all files
