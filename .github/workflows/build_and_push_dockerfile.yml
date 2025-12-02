@@ -14,9 +14,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - context: .
+          - dockerfile: Dockerfile
+            context: .
             tag: egt309-team-harish-kanna-kedro-pipeline:latest
-          - context: ./visualisation-server/
+          - dockerfile: visualisation-server/Dockerfile
+            context: ./visualisation-server/
             tag: egt309-team-harish-kanna-kedro-visualisation-server:latest
     steps:
       -
