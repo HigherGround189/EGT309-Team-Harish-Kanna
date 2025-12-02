@@ -1,5 +1,7 @@
 FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim
 
+WORKDIR /app
+
 # Copy all files
 COPY . .
 

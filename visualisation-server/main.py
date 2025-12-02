@@ -4,7 +4,7 @@ from flask import Flask, abort, jsonify, send_file, send_from_directory
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_folder="vue-dist/", static_url_path="")
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Directory containing saved models
 SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
@@ -79,4 +79,4 @@ def update_frontend():
 
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+    socketio.run(app, host="0.0.0.0", port=5500, debug=True, allow_unsafe_werkzeug=True)
