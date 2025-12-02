@@ -9,14 +9,11 @@ from kedro.config import (
     OmegaConfigLoader,  # https://docs.kedro.org/en/0.19.10/api/kedro.config.OmegaConfigLoader.html
 )
 from kedro.framework.project import settings
-<<<<<<< HEAD
 from .nodes import split_dataset, train_model
-=======
 from kedro.pipeline import Node, Pipeline
 
 from .nodes import evaluate_model, split_dataset, train_model
 
->>>>>>> d899abe7056c911961d43a8837215865f0f60752
 
 def create_pipeline(**kwargs) -> Pipeline:
     conf_loader = OmegaConfigLoader(
@@ -56,21 +53,6 @@ def create_pipeline(**kwargs) -> Pipeline:
             )
         )
 
-<<<<<<< HEAD
-        # nodes.append(
-        #     Node(
-        #         func=evaluate_model,
-        #         inputs=[f"{model_name}_model_weights", "X_test", "y_test"],
-        #         outputs=[
-        #             f"{model_name}_metrics",
-        #             f"{model_name}_confusion_matrix",
-        #             f"{model_name}_auc_roc_curve",
-        #             f"{model_name}_feature_importance"
-        #         ],
-        #         name=f"evaluate_{model_name}_node",
-        #     )
-        # )
-=======
         nodes.append(
             Node(
                 func=evaluate_model,
@@ -84,6 +66,5 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name=f"evaluate_{model_name}_node",
             )
         )
->>>>>>> d899abe7056c911961d43a8837215865f0f60752
 
     return Pipeline(nodes)
