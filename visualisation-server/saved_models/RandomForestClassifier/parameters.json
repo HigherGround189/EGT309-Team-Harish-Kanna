@@ -1,8 +1,0 @@
-{
-    "class_weight": "balanced",
-    "max_depth": 56,
-    "max_features": "log2",
-    "max_samples": 0.5862106003318138,
-    "min_samples_split": 8,
-    "n_estimators": 327
-}
