@@ -37,7 +37,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          file: Dockerfile
+          file: ${{ matrix.dockerfile }}
           context: ${{ matrix.context }}
           push: true
           tags: higherground189/${{ matrix.tag }}
