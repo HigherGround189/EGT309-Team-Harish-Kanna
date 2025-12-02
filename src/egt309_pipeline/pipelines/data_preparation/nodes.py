@@ -57,7 +57,9 @@ def _my_knnimputer(
     imputer = KNNImputer(n_neighbors=n_neighbors)
 
     if target_val is not None:
-        df_copy[target_col] = df_copy[target_col].replace({target_val: np.nan})
+        df_copy[target_col] = df_copy[target_col].map(
+            lambda x: np.nan if x == target_val else x
+        )
 
     if corr_cols is not None:
         final_corr_cols = (
@@ -275,8 +277,8 @@ def clean_contactMethod(df: pd.DataFrame) -> pd.DataFrame:
         Input DataFrame
     """
     df_new = df.copy()
-    df_new["Contact Method"].replace(
-        ["Cell", "Telephone"], ["cellular", "telephone"], inplace=True
+    df_new["Contact Method"] = df_new["Contact Method"].map(
+        lambda x: "cellular" if x[0].lower() == "c" else "telephone"
     )
     return df_new
 
@@ -311,7 +313,9 @@ def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
     """
     df_new = df.copy()
     df_new["Previously Contacted"] = df_new["Previous Contact Days"] != 999
-    df_new.replace({"Previous Contact Days": 999}, -1, inplace=True)
+    df_new["Previous Contact Days"] = df_new["Previous Contact Days"].map(
+        lambda x: -1 if x == 999 else x
+    )
     df_new = _reindex_target_col(df_new)
     return df_new
 
@@ -327,8 +331,9 @@ def clean_subscriptionStatus(df: pd.DataFrame) -> pd.DataFrame:
         Input DataFrame
     """
     df_new = df.copy()
-    df_new["Subscription Status"].replace({"yes": 1, "no": 0}, inplace=True)
-    df_new["Subscription Status"] = df_new["Subscription Status"].astype(bool)
+    df_new["Subscription Status"] = df_new["Subscription Status"].map(
+        lambda x: True if x == "yes" else False
+    )
     return df_new
 
 

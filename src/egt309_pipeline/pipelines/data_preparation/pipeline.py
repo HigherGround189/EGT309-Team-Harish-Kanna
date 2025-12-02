@@ -25,14 +25,8 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="age_extracted_node",
             ),
             Node(
-                func=impute_age,
-                inputs="df_age_extracted",
-                outputs="df_age_imputed",
-                name="age_imputed_node",
-            ),
-            Node(
                 func=clean_occupation,
-                inputs="df_age_imputed",
+                inputs="df_age_extracted",
                 outputs="df_occupation_cleaned",
                 name="clean_occupation_node",
             ),
@@ -81,8 +75,14 @@ def create_pipeline(**kwargs) -> Pipeline:
             Node(
                 func=clean_subscriptionStatus,
                 inputs="df_previousContactDays_cleaned",
-                outputs="cleaned_bmarket",
+                outputs="df_subscriptionStatus_cleaned",
                 name="clean_subscriptionStatus_node",
+            ),
+            Node(
+                func=impute_age,
+                inputs="df_subscriptionStatus_cleaned",
+                outputs="cleaned_bmarket",
+                name="age_imputed_node",
             ),
         ],
     )

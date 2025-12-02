@@ -1,0 +1,36 @@
+model_registry:
+  random_forest:
+    name: RandomForestClassifier
+    yaml_header: random_forest_config
+    train_now: False
+    evaluate_now: False
+
+  xgboost:
+    name: XGBoostClassifier
+    yaml_header: xgboost_config
+    train_now: False
+    evaluate_now: False
+
+  lightgbm:
+    name: LightGBMClassifier
+    yaml_header: xgboost_config
+    train_now: False
+    evaluate_now: False
+
+  svm:
+    name: SVCClassifier
+    yaml_header: svc_config
+    train_now: False
+    evaluate_now: False
+
+  adaboost:
+    name: AdaBoostClassifier
+    yaml_header: adaboost_config
+    train_now: False
+    evaluate_now: False
+
+  catboost:
+    name: CatBoostClassifier
+    yaml_header: catboost_config
+    train_now: True
+    evaluate_now: True

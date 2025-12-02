@@ -5,7 +5,7 @@
 random_forest_config:
   class: sklearn.ensemble.RandomForestClassifier
 
-  params:
+  model_params:
     n_jobs: 1
     oob_score: True
     warm_start: False
