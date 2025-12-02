@@ -15,7 +15,7 @@ jobs:
         include:
           - context: .
             tag: egt309-team-harish-kanna-kedro-pipeline:latest
-          - context: ${{ github.workspace }}/visualisation-server/
+          - context: ./visualisation-server/
             tag: egt309-team-harish-kanna-kedro-visualisation-server:latest
     steps:
       -
