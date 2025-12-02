@@ -33,7 +33,7 @@ CONFIG_LOADER_ARGS = {
     "default_run_env": "local",
     "config_patterns": {
         "parameters": ["parameters*", "parameters*/**", "**/parameters*"],
-    }
+    },
 }
 
 # Class that manages Kedro's library components.
