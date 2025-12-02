@@ -14,8 +14,10 @@ jobs:
       matrix:
         include:
           - dockerfile: dockerfile
+            context: .
             tag: egt309-team-harish-kanna-kedro-pipeline:latest
           - dockerfile: visualisation-server/dockerfile
+            context: visualisation-server/
             tag: egt309-team-harish-kanna-kedro-visualisation-server:latest
     steps:
       -
@@ -35,5 +37,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           file: ${{ matrix.dockerfile }}
+          context: ${{ matrix.context }}
           push: true
           tags: higherground189/${{ matrix.tag }}
