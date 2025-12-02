@@ -9,10 +9,10 @@ from typing import Any, Dict, Tuple
 import GPUtil
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold, train_test_split
-from skopt import BayesSearchCV
-from skopt.space import Categorical, Integer, Real
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from skopt import BayesSearchCV
+from skopt.space import Categorical, Integer, Real
 
 #################
 # Miscellaneous #
@@ -83,17 +83,12 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
 
     if model_config.get("requires_scaling", False):
         print("Model requires scaling. Creating Pipeline with StandardScaler.")
-        model_to_tune = Pipeline(steps=[
-            ('scaler', StandardScaler()),
-            ('model', model)
-        ])
-        
+        model_to_tune = Pipeline(steps=[("scaler", StandardScaler()), ("model", model)])
+
         search_space = model_config["search_space"]
-        search_space_prefixed = {
-            f"model__{k}": v for k, v in search_space.items()
-        }
+        search_space_prefixed = {f"model__{k}": v for k, v in search_space.items()}
         param_grid = _parse_search_space(search_space_prefixed)
-        
+
     else:
         model_to_tune = model
         search_space = model_config["search_space"]
