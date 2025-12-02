@@ -41,14 +41,10 @@ binaryornot==0.4.4
     # via cookiecutter
 bleach==6.3.0
     # via nbconvert
-blosc2==3.11.1
-    # via tables
 build==1.3.0
     # via kedro
 cachetools==6.2.2
-    # via
-    #   google-auth
-    #   kedro
+    # via kedro
 certifi==2025.11.12
     # via
     #   httpcore
@@ -76,20 +72,14 @@ cookiecutter==2.6.0
     # via kedro
 cycler==0.12.1
     # via matplotlib
-db-dtypes==1.4.4
-    # via pandas-gbq
 debugpy==1.8.17
     # via ipykernel
 decorator==5.2.1
     # via ipython
 defusedxml==0.7.1
     # via nbconvert
-deltalake==0.25.5
-    # via kedro-datasets
 dynaconf==3.2.12
     # via kedro
-et-xmlfile==2.0.0
-    # via openpyxl
 executing==2.2.1
     # via stack-data
 fastapi==0.122.0
@@ -108,45 +98,10 @@ gitdb==4.0.12
     # via gitpython
 gitpython==3.1.45
     # via kedro
-google-api-core==2.28.1
-    # via
-    #   google-cloud-bigquery
-    #   google-cloud-core
-    #   pandas-gbq
-google-auth==2.43.0
-    # via
-    #   google-api-core
-    #   google-auth-oauthlib
-    #   google-cloud-bigquery
-    #   google-cloud-core
-    #   pandas-gbq
-    #   pydata-google-auth
-google-auth-oauthlib==1.2.2
-    # via
-    #   pandas-gbq
-    #   pydata-google-auth
-google-cloud-bigquery==3.38.0
-    # via pandas-gbq
-google-cloud-core==2.5.0
-    # via google-cloud-bigquery
-google-crc32c==1.7.1
-    # via google-resumable-media
-google-resumable-media==2.8.0
-    # via google-cloud-bigquery
-googleapis-common-protos==1.72.0
-    # via
-    #   google-api-core
-    #   grpcio-status
 gputil==1.4.0
     # via egt309-pipeline (pyproject.toml)
 greenlet==3.2.4
     # via sqlalchemy
-grpcio==1.76.0
-    # via
-    #   google-api-core
-    #   grpcio-status
-grpcio-status==1.76.0
-    # via google-api-core
 h11==0.16.0
     # via
     #   httpcore
@@ -263,8 +218,6 @@ lark==1.3.1
     # via rfc3987-syntax
 lazy-loader==0.4
     # via kedro-datasets
-lxml==4.9.4
-    # via kedro-datasets
 markdown-it-py==4.0.0
     # via rich
 markupsafe==3.0.3
@@ -273,9 +226,7 @@ markupsafe==3.0.3
     #   nbconvert
     #   werkzeug
 matplotlib==3.10.7
-    # via
-    #   kedro-datasets
-    #   seaborn
+    # via seaborn
 matplotlib-inline==0.2.1
     # via
     #   ipykernel
@@ -286,8 +237,6 @@ mistune==3.1.4
     # via nbconvert
 more-itertools==10.8.0
     # via kedro
-msgpack==1.1.2
-    # via blosc2
 nbclient==0.10.2
     # via nbconvert
 nbconvert==7.16.6
@@ -297,8 +246,6 @@ nbformat==5.10.4
     #   jupyter-server
     #   nbclient
     #   nbconvert
-ndindex==1.10.1
-    # via blosc2
 nest-asyncio==1.6.0
     # via ipykernel
 networkx==3.6
@@ -309,42 +256,27 @@ notebook-shim==0.2.4
     # via
     #   jupyterlab
     #   notebook
-numexpr==2.14.1
-    # via
-    #   blosc2
-    #   tables
 numpy==2.3.5
     # via
     #   egt309-pipeline (pyproject.toml)
-    #   blosc2
     #   contourpy
-    #   db-dtypes
     #   imbalanced-learn
     #   matplotlib
-    #   numexpr
     #   pandas
-    #   pandas-gbq
     #   scikit-learn
     #   scikit-optimize
     #   scipy
     #   seaborn
-    #   tables
     #   xgboost
 nvidia-nccl-cu12==2.28.9
     # via xgboost
-oauthlib==3.3.1
-    # via requests-oauthlib
 omegaconf==2.3.0
     # via kedro
-openpyxl==3.1.5
-    # via kedro-datasets
 orjson==3.11.4
     # via kedro-viz
 packaging==25.0
     # via
     #   build
-    #   db-dtypes
-    #   google-cloud-bigquery
     #   ipykernel
     #   jupyter-events
     #   jupyter-server
@@ -354,21 +286,14 @@ packaging==25.0
     #   lazy-loader
     #   matplotlib
     #   nbconvert
-    #   pandas-gbq
     #   plotly
     #   pytest
     #   scikit-optimize
-    #   tables
 pandas==2.3.3
     # via
     #   egt309-pipeline (pyproject.toml)
-    #   db-dtypes
-    #   kedro-datasets
     #   kedro-viz
-    #   pandas-gbq
     #   seaborn
-pandas-gbq==0.31.0
-    # via kedro-datasets
 pandocfilters==1.5.1
     # via nbconvert
 parse==1.20.2
@@ -382,9 +307,7 @@ pexpect==4.9.0
 pillow==12.0.0
     # via matplotlib
 platformdirs==4.5.0
-    # via
-    #   blosc2
-    #   jupyter-core
+    # via jupyter-core
 plotly==5.24.1
     # via
     #   egt309-pipeline (pyproject.toml)
@@ -401,43 +324,18 @@ prometheus-client==0.23.1
     # via jupyter-server
 prompt-toolkit==3.0.52
     # via ipython
-proto-plus==1.26.1
-    # via google-api-core
-protobuf==6.33.1
-    # via
-    #   google-api-core
-    #   googleapis-common-protos
-    #   grpcio-status
-    #   proto-plus
 psutil==7.1.3
-    # via
-    #   ipykernel
-    #   pandas-gbq
+    # via ipykernel
 ptyprocess==0.7.0
     # via
     #   pexpect
     #   terminado
 pure-eval==0.2.3
     # via stack-data
-py-cpuinfo==9.0.0
-    # via
-    #   blosc2
-    #   tables
 pyaml==25.7.0
     # via scikit-optimize
 pyarrow==22.0.0
-    # via
-    #   egt309-pipeline (pyproject.toml)
-    #   db-dtypes
-    #   deltalake
-    #   kedro-datasets
-    #   pandas-gbq
-pyasn1==0.6.1
-    # via
-    #   pyasn1-modules
-    #   rsa
-pyasn1-modules==0.4.2
-    # via google-auth
+    # via egt309-pipeline (pyproject.toml)
 pycparser==2.23
     # via cffi
 pydantic==2.12.4
@@ -446,16 +344,12 @@ pydantic==2.12.4
     #   kedro-viz
 pydantic-core==2.41.5
     # via pydantic
-pydata-google-auth==1.9.1
-    # via pandas-gbq
 pygments==2.19.2
     # via
     #   ipython
     #   nbconvert
     #   pytest
     #   rich
-pyodbc==5.3.0
-    # via kedro-datasets
 pyparsing==3.2.5
     # via matplotlib
 pyproject-hooks==1.2.0
@@ -465,7 +359,6 @@ pytest==9.0.1
 python-dateutil==2.9.0.post0
     # via
     #   arrow
-    #   google-cloud-bigquery
     #   jupyter-client
     #   matplotlib
     #   pandas
@@ -497,15 +390,9 @@ referencing==0.37.0
     #   jupyter-events
 requests==2.32.5
     # via
-    #   blosc2
     #   cookiecutter
-    #   google-api-core
-    #   google-cloud-bigquery
     #   jupyterlab-server
     #   kedro-telemetry
-    #   requests-oauthlib
-requests-oauthlib==2.0.0
-    # via google-auth-oauthlib
 rfc3339-validator==0.1.4
     # via
     #   jsonschema
@@ -524,8 +411,6 @@ rpds-py==0.29.0
     # via
     #   jsonschema
     #   referencing
-rsa==4.9.1
-    # via google-auth
 scikit-learn==1.7.2
     # via
     #   egt309-pipeline (pyproject.toml)
@@ -546,10 +431,7 @@ secure==1.0.1
 send2trash==1.8.3
     # via jupyter-server
 setuptools==80.9.0
-    # via
-    #   jupyterlab
-    #   pandas-gbq
-    #   pydata-google-auth
+    # via jupyterlab
 six==1.17.0
     # via
     #   python-dateutil
@@ -561,15 +443,11 @@ sniffio==1.3.1
 soupsieve==2.8
     # via beautifulsoup4
 sqlalchemy==2.0.44
-    # via
-    #   egt309-pipeline (pyproject.toml)
-    #   kedro-datasets
+    # via egt309-pipeline (pyproject.toml)
 stack-data==0.6.3
     # via ipython
 starlette==0.50.0
     # via fastapi
-tables==3.10.2
-    # via kedro-datasets
 tenacity==9.1.2
     # via plotly
 terminado==0.18.1
@@ -614,14 +492,12 @@ typing-extensions==4.15.0
     #   anyio
     #   beautifulsoup4
     #   fastapi
-    #   grpcio
     #   kedro
     #   pydantic
     #   pydantic-core
     #   referencing
     #   sqlalchemy
     #   starlette
-    #   tables
     #   typing-inspection
 typing-inspection==0.4.2
     # via pydantic
