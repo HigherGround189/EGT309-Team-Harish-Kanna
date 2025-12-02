@@ -36,4 +36,4 @@ jobs:
         with:
           file: ${{ matrix.dockerfile }}
           push: true
-          tags: higherground189/egt309-team:${{ matrix.tag }}
+          tags: higherground189/${{ matrix.tag }}
