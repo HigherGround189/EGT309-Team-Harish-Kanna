@@ -11,7 +11,7 @@ from kedro.config import (
 from kedro.framework.project import settings
 from kedro.pipeline import Node, Pipeline
 
-from .nodes import evaluate_model, split_dataset, train_model
+from .nodes import split_dataset, train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -49,20 +49,6 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs=[f"{model_name}_model_weights", f"{model_name}_best_params"],
                 name=f"train_{model_name}_node",
-            )
-        )
-
-        nodes.append(
-            Node(
-                func=evaluate_model,
-                inputs=[f"{model_name}_model_weights", "X_test", "y_test"],
-                outputs=[
-                    f"{model_name}_metrics",
-                    f"{model_name}_confusion_matrix",
-                    f"{model_name}_auc_roc_curve",
-                    f"{model_name}_feature_importance",
-                ],
-                name=f"evaluate_{model_name}_node",
             )
         )
 
