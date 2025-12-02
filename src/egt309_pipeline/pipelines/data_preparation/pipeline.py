@@ -26,7 +26,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             Node(
                 func=impute_age,
-                inputs=["df_age_extracted", "randdist"],
+                inputs="df_age_extracted",
                 outputs="df_age_imputed",
                 name="age_imputed_node",
             ),

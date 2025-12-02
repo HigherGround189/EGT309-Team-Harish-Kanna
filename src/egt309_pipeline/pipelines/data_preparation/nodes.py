@@ -260,7 +260,7 @@ def clean_personalLoan(df: pd.DataFrame) -> pd.DataFrame:
         Input DataFrame
     """
     df_temp = df.copy()
-    df_new = _random_distribution(df_temp, target="Personal Loan")
+    df_new = _random_distribution(df_temp, target_col="Personal Loan")
     return df_new
 
 
