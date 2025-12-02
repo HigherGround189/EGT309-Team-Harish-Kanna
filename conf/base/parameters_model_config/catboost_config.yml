@@ -9,8 +9,9 @@ catboost_config:
 
   model_params:
     loss_function: "Logloss"
-    eval_metric: "AUC"
+    eval_metric: "F1"
     auto_class_weights: "Balanced"
+    allow_writing_files: False
     verbose: 0
 
   search_space:
