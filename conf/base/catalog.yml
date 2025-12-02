@@ -15,6 +15,14 @@ cleaned_bmarket:
   save_args:
     lineterminator: "\n"
 
+X_test:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_test.pkl
+
+y_test:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_test.pkl
+
 # https://docs.kedro.org/en/0.19.12/data/kedro_dataset_factories.html
 "{model_name}_model_weights":
   type: pickle.PickleDataset
@@ -34,7 +42,7 @@ cleaned_bmarket:
   save_args:
     format: png
 
-"{model_name}_uc_roc_curve":
+"{model_name}_auc_roc_curve":
   type: matplotlib.MatplotlibDataset
   filepath: data/06_models/{model_name}/{model_name}_auc_roc_curve.png
   save_args:
