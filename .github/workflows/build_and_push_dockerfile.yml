@@ -54,4 +54,4 @@ jobs:
         with:
           context: "{{defaultContext}}:visualisation-server"
           push: true
-          tags: egt309-team-harish-kanna-kedro-visualisation-server:latest
+          tags: higherground189/egt309-team-harish-kanna-kedro-visualisation-server:latest
