@@ -26,9 +26,9 @@ def _parse_search_space(search_space: dict) -> Dict[str, Any]:
             bayes_search_params[identifier] = Integer(values["low"], values["high"])
 
         elif value_type == "Real":
-            kwargs = {}
-            if "prior" in values:
-                kwargs["prior"] = values["prior"]
+            kwargs = {
+                k: v for k, v in values.items() if k not in ["type", "low", "high"]
+            }
             bayes_search_params[identifier] = Real(
                 values["low"], values["high"], **kwargs
             )
