@@ -6,5 +6,7 @@ COPY . .
 # Install dependencies from pyproject.toml
 RUN uv sync
 
+EXPOSE 5000
+
 # Start viusalisation server
 ENTRYPOINT [ "uv", "run", "main.py" ]
