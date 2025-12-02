@@ -1,0 +1,22 @@
+##########################
+# AdaBoost Parameters (ADA) #
+##########################
+
+adaboost_config:
+  class: sklearn.ensemble.AdaBoostClassifier
+  requires_scaling: False
+  
+  model_params:
+    algorithm: "SAMME.R" 
+
+  search_space:
+    n_estimators:
+      type: Integer
+      low: 100
+      high: 800
+
+    learning_rate:
+      type: Real
+      low: 0.01
+      high: 1.0
+      prior: log-uniform

@@ -10,3 +10,21 @@ model_registry:
     yaml_header: xgboost_config
     train_now: True
     evaluate_now: True
+
+  lightgbm:
+    name: LightGBMClassifier
+    yaml_header: xgboost_config
+    train_now: True
+    evaluate_now: True
+
+  svm:
+    name: SVCClassifier
+    yaml_header: svc_config
+    train_now: True
+    evaluate_now: True
+
+  adaboost:
+    name: AdaBoostClassifier
+    yaml_header: adaboost_config
+    train_now: True
+    evaluate_now: True

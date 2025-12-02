@@ -11,6 +11,8 @@ import pandas as pd
 from sklearn.model_selection import StratifiedKFold, train_test_split
 from skopt import BayesSearchCV
 from skopt.space import Categorical, Integer, Real
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 #################
 # Miscellaneous #
@@ -71,7 +73,7 @@ def split_dataset(df: pd.DataFrame, options: dict) -> Tuple:
 def train_model(X_train, y_train, model_config: dict, options: dict):
     model_class = _get_model_class(model_config["class"])
 
-    model_params = model_config["params"]
+    model_params = model_config["model_params"]
     if model_params.get("device") == "auto":
         device = "cuda" if GPUtil.getAvailable() else "cpu"
         model_params["device"] = device
@@ -79,8 +81,23 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
 
     model = model_class(random_state=options["random_state"], **model_params)
 
-    search_space = model_config["search_space"]
-    param_grid = _parse_search_space(search_space)
+    if model_config.get("requires_scaling", False):
+        print("Model requires scaling. Creating Pipeline with StandardScaler.")
+        model_to_tune = Pipeline(steps=[
+            ('scaler', StandardScaler()),
+            ('model', model)
+        ])
+        
+        search_space = model_config["search_space"]
+        search_space_prefixed = {
+            f"model__{k}": v for k, v in search_space.items()
+        }
+        param_grid = _parse_search_space(search_space_prefixed)
+        
+    else:
+        model_to_tune = model
+        search_space = model_config["search_space"]
+        param_grid = _parse_search_space(search_space)
 
     cv_strategy = StratifiedKFold(
         n_splits=options["cv_splits"],
@@ -89,7 +106,7 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
     )
 
     bs = BayesSearchCV(
-        estimator=model,
+        estimator=model_to_tune,
         search_spaces=param_grid,
         cv=cv_strategy,
         scoring="f1",  # Due to class imbalance

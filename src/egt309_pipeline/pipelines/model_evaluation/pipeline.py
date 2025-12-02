@@ -31,7 +31,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         nodes.append(
             Node(
                 func=evaluate_model,
-                inputs=[f"{model_name}_model_weights", "X_test", "y_test"],
+                inputs=[f"{model_name}_model_weights", "X_test", "y_test", 'params:misc_options'],
                 outputs=[
                     f"{model_name}_metrics",
                     f"{model_name}_confusion_matrix",

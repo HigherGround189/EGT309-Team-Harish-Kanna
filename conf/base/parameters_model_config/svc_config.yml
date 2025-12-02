@@ -1,0 +1,34 @@
+########################
+# SVM (SVC) Parameters #
+########################
+
+svc_config:
+  class: sklearn.svm.SVC
+  requires_scaling: True
+  
+  model_params:
+    class_weight: "balanced" 
+    probability: True
+    cache_size: 1000
+
+  search_space:
+    C:
+      type: Real
+      low: 0.1
+      high: 100.0
+      prior: log-uniform
+    
+    kernel:
+      type: Categorical
+      categories: ["rbf", "linear", "poly"] 
+
+    gamma:
+      type: Real
+      low: 1e-4
+      high: 10.0
+      prior: log-uniform
+
+    degree:
+      type: Integer
+      low: 2
+      high: 5
