@@ -1,11 +1,12 @@
 name: Build & Push Docker Image to Dockerhub
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - "dockerfile"
-      - "visualisation-server/dockerfile"
+      - "Dockerfile"
+      - "visualisation-server/Dockerfile"
 
 jobs:
   build_and_push_docker_image:
