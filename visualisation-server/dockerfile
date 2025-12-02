@@ -8,6 +8,7 @@ COPY . .
 # Install dependencies from pyproject.toml
 RUN uv sync
 
+# Expose port used by Flask
 EXPOSE 5500
 
 # Start viusalisation server
