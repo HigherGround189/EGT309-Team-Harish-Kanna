@@ -29,7 +29,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
           push: true
           tags: higherground189/egt309-team-harish-kanna-kedro-pipeline:latest
 
