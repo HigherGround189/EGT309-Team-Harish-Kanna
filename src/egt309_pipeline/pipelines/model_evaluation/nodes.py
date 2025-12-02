@@ -3,12 +3,10 @@ This is a boilerplate pipeline 'model_evaluation'
 generated using Kedro 1.0.0
 """
 
+import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-
 from sklearn.inspection import permutation_importance
-from sklearn.model_selection import train_test_split, cross_val_predict, StratifiedKFold
 from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
@@ -23,14 +21,16 @@ from sklearn.metrics import (
 # Miscellaneous #
 #################
 
+
 def _measure_error(y_test, y_pred, y_proba):
     return {
         "accuracy": accuracy_score(y_test, y_pred),
         "precision": precision_score(y_test, y_pred),
         "recall": recall_score(y_test, y_pred),
         "f1_score": f1_score(y_test, y_pred),
-        "auc_roc": roc_auc_score(y_test, y_proba)
+        "auc_roc": roc_auc_score(y_test, y_proba),
     }
+
 
 def _plot_confusion_matrix(y_test, y_pred):
     fig_cm = plt.figure(figsize=(8, 6))
@@ -45,12 +45,13 @@ def _plot_confusion_matrix(y_test, y_pred):
 
     return fig_cm
 
+
 def _plot_auc_roc(y_test, y_proba, auc_score):
     fpr, tpr, _ = roc_curve(y_test, y_proba)
     fig_roc = plt.figure(figsize=(8, 6))
-    
+
     plt.plot(fpr, tpr, label=f"AUC = {auc_score:.2f}")
-    plt.plot([0, 1], [0, 1], linestyle="--", color='gray')
+    plt.plot([0, 1], [0, 1], linestyle="--", color="gray")
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
     plt.title("ROC Curve")
@@ -58,6 +59,7 @@ def _plot_auc_roc(y_test, y_proba, auc_score):
 
     plt.close(fig_roc)
     return fig_roc
+
 
 def _plot_permutation_importance(model, X_test, y_test, n_repeats=2, random_state=42):
     r = permutation_importance(
@@ -80,9 +82,11 @@ def _plot_permutation_importance(model, X_test, y_test, n_repeats=2, random_stat
     plt.close(fig_fea)
     return fig_fea
 
+
 #########
 # Nodes #
 #########
+
 
 def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series):
     y_pred = model.predict(X_test)

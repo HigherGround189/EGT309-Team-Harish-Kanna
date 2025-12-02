@@ -9,7 +9,6 @@ from kedro.config import (
     OmegaConfigLoader,  # https://docs.kedro.org/en/0.19.10/api/kedro.config.OmegaConfigLoader.html
 )
 from kedro.framework.project import settings
-from .nodes import split_dataset, train_model
 from kedro.pipeline import Node, Pipeline
 
 from .nodes import evaluate_model, split_dataset, train_model

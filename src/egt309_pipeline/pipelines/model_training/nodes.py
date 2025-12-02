@@ -45,6 +45,7 @@ def _get_model_class(class_path: str):
     module = importlib.import_module(module_path)
     return getattr(module, class_name)
 
+
 #########
 # Nodes #
 #########
@@ -100,4 +101,3 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
 
     bs.fit(X_train, y_train)
     return bs.best_estimator_, bs.best_params_
-
