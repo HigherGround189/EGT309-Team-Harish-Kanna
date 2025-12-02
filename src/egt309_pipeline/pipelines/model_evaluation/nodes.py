@@ -95,13 +95,13 @@ def _plot_permutation_importance(model, X_test, y_test, params):
 #########
 
 
-def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series, params):
+def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series, options):
     y_pred = model.predict(X_test)
     y_proba = model.predict_proba(X_test)[:, 1]
 
     metrics = _measure_error(y_test, y_pred, y_proba)
     fig_cm = _plot_confusion_matrix(y_test, y_pred)
     fig_auc_roc = _plot_auc_roc(y_test, y_proba, metrics["auc_roc"])
-    fig_fea = _plot_permutation_importance(model, X_test, y_test, params)
+    fig_fea = _plot_permutation_importance(model, X_test, y_test, options)
 
     return metrics, fig_cm, fig_auc_roc, fig_fea
