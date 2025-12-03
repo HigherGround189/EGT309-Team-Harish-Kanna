@@ -32,13 +32,21 @@
     >
       <div
         class="progress-fill"
-        :style="{ width: percentage + '%', backgroundColor: colour }"
+        :style="{ width: percentage + '%', backgroundColor: backgroundColor }"
       ></div>
     </div>
   </div>
 </template>
 
 <script>
+const metricColorMap = {
+  accuracy: '#4CAF50', // Green
+  precision: '#2196F3', // Blue
+  recall: '#FFC107', // Amber
+  f1: '#E91E63', // Pink
+  auc: '#9C27B0' // Purple
+};
+
 export default {
   name: 'AccuracyCard',
   props: {
@@ -46,16 +54,24 @@ export default {
       type: Number,
       required: true,
       default: 0
-    },
-    colour: {
-      type: String,
-      default: '#3b82f6'
     }
   },
   computed: {
     // Ensures we display two decimal places like the image (e.g. 82.03)
     formattedPercentage() {
       return this.percentage.toFixed(2);
+    },
+    metricName() {
+      if (this.$slots.default && this.$slots.default()) {
+        const vnode = this.$slots.default()[0];
+        if (vnode && vnode.children && typeof vnode.children === 'string') {
+          return vnode.children.trim().toLowerCase();
+        }
+      }
+      return '';
+    },
+    backgroundColor() {
+      return metricColorMap[this.metricName] || '#3b82f6'; // Default color
     }
   }
 }

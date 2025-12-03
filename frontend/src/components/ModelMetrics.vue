@@ -1,17 +1,33 @@
 <template>
   <div class="model-metrics">
-    <h1 class="model-name">Random Forest</h1>
-    <p v-for="line in metrics" :key="line">{{ line }}</p>
-    <MetricsContainer v-for="n in 5" :key="n" class="metrics-container" :percentage="n*10">Accuracy</MetricsContainer>
+    <h1 class="model-name">{{ modelName }}</h1>
+    <MetricsContainer v-for="key in metricKeys" :key="key" class="metrics-container" :percentage="metrics[key] * 100">{{ key }}</MetricsContainer>
   </div>
 </template>
 
 <script>
 import MetricsContainer from './MetricsContainer.vue';
 
+const metricColorMap = {
+  accuracy: '#4CAF50', // Green
+  precision: '#2196F3', // Blue
+  recall: '#FFC107', // Amber
+  f1: '#E91E63', // Pink
+  auc: '#9C27B0' // Purple
+};
+
   export default {
     components: { MetricsContainer },
-    props: [ "model" ],
+    props: {
+      model: {
+        type: Object,
+        required: true
+      },
+      modelName: {
+        type: String,
+        required: true
+      }
+    },
     computed: {
       auc_roc() {
         return this.$props.model["auc_roc.png"]
@@ -30,7 +46,30 @@ import MetricsContainer from './MetricsContainer.vue';
       },
 
       metrics() {
-        return JSON.stringify(this.$props.model["test_error.json"].content.split()[0])
+        try {
+          return JSON.parse(this.$props.model["test_error.json"].content);
+        } catch (e) {
+          console.error("Error parsing metrics JSON:", e);
+          return {};
+        }
+      },
+
+      metricKeys() {
+        return Object.keys(this.metrics);
+      },
+
+      metricName() {
+        if (this.$slots.default && this.$slots.default()) {
+          const vnode = this.$slots.default()[0];
+          if (vnode && vnode.children && typeof vnode.children === 'string') {
+            return vnode.children.trim().toLowerCase();
+          }
+        }
+        return '';
+      },
+
+      backgroundColor() {
+        return metricColorMap[this.metricName] || '#3b82f6'; // Default color
       }
     }
   }
