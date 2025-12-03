@@ -40,14 +40,14 @@
 
 <script>
 const metricColorMap = {
-  accuracy: '#4CAF50', // Green
-  precision: '#2196F3', // Blue
-  recall: '#FFC107', // Amber
-  f1_score: '#E91E63', // Pink
-  micro_f1_score: '#FF9800', // Orange
-  macro_f1_score: '#00BCD4', // Cyan
-  weighted_f1_score: '#8BC34A', // Light Green
-  auc_roc: '#9C27B0' // Purple
+  accuracy: 'oklch(63.7% 0.237 25.331)', // Green
+  precision: 'oklch(76.9% 0.188 70.08)', // Blue
+  recall: 'oklch(72.3% 0.219 149.579)', // Amber
+  f1_score: 'oklch(70.4% 0.14 182.503)', // Pink
+  micro_f1_score: 'oklch(68.5% 0.169 237.323)', // Orange
+  macro_f1_score: 'oklch(58.5% 0.233 277.117)', // Cyan
+  weighted_f1_score: 'oklch(62.7% 0.265 303.9)', // Light Green
+  auc_roc: 'oklch(74% 0.238 322.16)' // Purple
 };
 
 export default {

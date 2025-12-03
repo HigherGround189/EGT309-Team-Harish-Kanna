@@ -84,5 +84,6 @@ export default {
 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 3rem;
+    font-style: italic;
   }
 </style>

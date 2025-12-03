@@ -59,6 +59,7 @@ import TrainingInProgress from './components/TrainingInProgress.vue';
   margin-bottom: 4vh;
   text-shadow: 0 0 5px #aaaaaa;
   user-select: none;
+  text-decoration: underline;
 }
 
 .content-wrapper {
