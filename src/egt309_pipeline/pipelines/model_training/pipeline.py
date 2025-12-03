@@ -52,4 +52,6 @@ def create_pipeline(**kwargs) -> Pipeline:
             )
         )
 
-    return Pipeline(nodes)
+    return Pipeline(
+        namespace="Model Training", prefix_datasets_with_namespace=False, nodes=nodes
+    )

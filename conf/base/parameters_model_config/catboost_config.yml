@@ -15,10 +15,10 @@ catboost_config:
     verbose: 0
 
   search_space:
-    iterations:
-      type: Integer
-      low: 500
-      high: 3000
+    # iterations:
+    #   type: Integer
+    #   low: 500
+    #   high: 3000
 
     learning_rate:
       type: Real
