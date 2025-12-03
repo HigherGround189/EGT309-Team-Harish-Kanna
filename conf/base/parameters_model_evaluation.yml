@@ -1,7 +1,3 @@
 model_evaluation_parameters:
   permutation_feature_importance_n_repeats: 5
-<<<<<<< HEAD
   random_state: 42
-=======
-  random_state: 42
->>>>>>> a209cf93557d0233ce39b782d7d033d10434d16c
