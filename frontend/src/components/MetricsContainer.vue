@@ -68,6 +68,7 @@ export default {
   Accent: Electric Blue
 */
 .card-container {
+  background-color: hsla(196, 87%, 15%, 0.178);
   border: 1px solid #2b3648; /* Subtle border */
   border-radius: 12px;
   padding: 24px;
