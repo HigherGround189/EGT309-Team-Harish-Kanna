@@ -1,19 +1,27 @@
-FULL_TRAINING = train eval
-ALL_STEPS = prepare $(FULL_TRAINING)
-
 .PHONY: data-prep train eval train_eval all
 
+# Default to uv
+RUN = uv run
+
+# Alternative options:
+# uv:					RUN = uv run (default)
+# Conda: 				RUN = conda run -n <your conda env>
+# Normal venv:          RUN = .venv/bin/python -m (Linux/macOS)
+#                       RUN = .venv\Scripts\python.exe -m (Windows)
+
+FULL_TRAINING = train eval
+
 data-prep:
-	uv run kedro run --pipeline data_preparation
+	$(RUN) kedro run --pipeline data_preparation
 
 train:
-	uv run kedro run --pipeline model_training
+	$(RUN) kedro run --pipeline model_training
 
 eval:
-	uv run kedro run --pipeline model_evaluation
+	$(RUN) kedro run --pipeline model_evaluation
 
 train_eval:
 	$(FULL_TRAINING)
 
 all:
-	$(ALL_STEPS)
+	$(RUN) kedro run

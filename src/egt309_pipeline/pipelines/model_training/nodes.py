@@ -142,8 +142,10 @@ def _init_model(X_train: pd.DataFrame, model_config: Dict, options: Dict) -> Typ
     # CatboostClassifier requires to specify category features in its parameters
     # for proper training
     if model_config["class"] == "catboost.CatBoostClassifier":
-        model_params["cat_features"] = X_train.select_dtypes(include=["object", "category"]).columns.tolist()
-        model_config["data_encoding"] = "none"
+        model_params["cat_features"] = X_train.select_dtypes(
+            include=["object", "category"]
+        ).columns.tolist()
+        model_config["data_encoding"] = None
         logger.debug("Added categorical cat_features")
 
     return model_class(random_state=options["random_state"], **model_params)
@@ -212,7 +214,10 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         preprocessing_steps.append(scaling_transformer)
         logger.debug("Applied Standard Scaling")
 
-    return ColumnTransformer(transformers=preprocessing_steps, remainder="passthrough", n_jobs=-1)
+    return ColumnTransformer(
+        transformers=preprocessing_steps, remainder="passthrough", n_jobs=-1
+    )
+
 
 #########
 # Nodes #
