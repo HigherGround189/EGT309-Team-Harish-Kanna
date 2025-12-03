@@ -8,5 +8,5 @@ misc_options:
   test_size: 0.2
   random_state: 42
   cv_splits: 5
-  n_iter: 50
+  n_iter: 1
   permutation_feature_importance_n_repeats: 5
