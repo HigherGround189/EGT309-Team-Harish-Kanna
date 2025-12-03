@@ -17,9 +17,9 @@ from sklearn.metrics import (
     roc_curve,
 )
 
-#################
-# Miscellaneous #
-#################
+#############
+# Utilities #
+#############
 
 
 def _measure_error(y_test, y_pred, y_proba):

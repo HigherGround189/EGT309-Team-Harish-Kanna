@@ -25,7 +25,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     nodes.append(
         Node(
             func=split_dataset,
-            inputs=["cleaned_bmarket", "params:misc_options"],
+            inputs=["cleaned_bmarket", "params:model_training_parameters"],
             outputs=["X_train", "X_test", "y_train", "y_test"],
             name="split_dataset_node",
         )
@@ -45,7 +45,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "X_train",
                     "y_train",
                     f"params:{config_name}",
-                    "params:misc_options",
+                    "params:model_training_parameters",
                 ],
                 outputs=[f"{model_name}_model_weights", f"{model_name}_best_params"],
                 name=f"train_{model_name}_node",

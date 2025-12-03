@@ -35,7 +35,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     f"{model_name}_model_weights",
                     "X_test",
                     "y_test",
-                    "params:misc_options",
+                    "params:model_evaluation_parameters",
                 ],
                 outputs=[
                     f"{model_name}_metrics",

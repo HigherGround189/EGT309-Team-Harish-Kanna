@@ -15,9 +15,9 @@ from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 from skopt import BayesSearchCV
 from skopt.space import Categorical, Integer, Real
 
-#################
-# Miscellaneous #
-#################
+#############
+# Utilities #
+#############
 
 
 def _parse_search_space(search_space: dict) -> Dict[str, Any]:
@@ -155,7 +155,7 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
         scoring="f1",  # Due to class imbalance
         n_jobs=-1,
         verbose=0,
-        n_iter=options["n_iter"],
+        n_iter=options["bayes_search_n_iters"],
         random_state=options["random_state"],
     )
 
