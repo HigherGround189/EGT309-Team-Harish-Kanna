@@ -55,6 +55,7 @@ def _plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> Figure:
     ax.set_yticklabels(labels)
     ax.set_ylabel("Actual")
     ax.set_xlabel("Predicted")
+    ax.set_title('Confusion Matrix')
     plt.close(fig_cm)
 
     return fig_cm
