@@ -301,7 +301,7 @@ def clean_campaignCalls(df: pd.DataFrame) -> pd.DataFrame:
 def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
     """
     Data cleaning on Previous Contact Days column
-    Function action: Drop Previous Contact Days and 
+    Function action: Drop Previous Contact Days and
                     added a Previously Contacted column
                     as boolean:
                     False = no prior contact
