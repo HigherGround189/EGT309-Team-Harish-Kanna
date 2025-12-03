@@ -4,6 +4,8 @@ model_registry:
     yaml_header: random_forest_config
     train_now: False
     evaluate_now: False
+    train_now: False
+    evaluate_now: False
 
   xgboost:
     name: XGBoostClassifier
@@ -13,6 +15,7 @@ model_registry:
 
   lightgbm:
     name: LightGBMClassifier
+    yaml_header: lightgbm_config
     yaml_header: lightgbm_config
     train_now: False
     evaluate_now: False
@@ -26,6 +29,8 @@ model_registry:
   adaboost:
     name: AdaBoostClassifier
     yaml_header: adaboost_config
+    train_now: True
+    evaluate_now: True
     train_now: True
     evaluate_now: True
 

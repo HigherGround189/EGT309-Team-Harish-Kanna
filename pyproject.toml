@@ -29,6 +29,7 @@ dependencies = [
  "gputil>=1.4.0",
  "kedro-datasets>=4.1.0",
  "catboost>=1.2.8",
+ "lightgbm>=4.6.0",
 ]
 
 [project.scripts]
