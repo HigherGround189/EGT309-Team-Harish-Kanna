@@ -301,7 +301,8 @@ def clean_campaignCalls(df: pd.DataFrame) -> pd.DataFrame:
 def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
     """
     Data cleaning on Previous Contact Days column
-    Function action: Rename 999 to -1 and added a Previously Contacted column
+    Function action: Drop Previous Contact Days and 
+                    added a Previously Contacted column
                     as boolean:
                     False = no prior contact
                     True = got prior contact
@@ -313,7 +314,7 @@ def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
     """
     df_new = df.copy()
     df_new["Previously Contacted"] = df_new["Previous Contact Days"] != 999
-    df_new.drop("Previous Contact Days", inplace=True)
+    df_new.drop("Previous Contact Days", axis=1, inplace=True)
     df_new = _reindex_target_col(df_new)
     return df_new
 
