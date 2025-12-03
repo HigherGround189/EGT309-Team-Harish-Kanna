@@ -147,7 +147,7 @@ def _init_model(
         model_params["cat_features"] = X_train.select_dtypes(
             include=["object", "category"]
         ).columns.tolist()
-        model_config["data_encoding"] = None
+        model_config["data_encoding"] = "none"
         logger.debug("Added categorical cat_features")
 
     return model_class(random_state=options["random_state"], **model_params)
@@ -319,7 +319,7 @@ def train_model(
         estimator=model_to_tune,
         search_spaces=param_grid,
         cv=cv_strategy,
-        scoring="recall_weighted",  # F1 is used due to class imbalance
+        scoring="recall_macro",  # F1 is used due to class imbalance
         n_jobs=-1,
         verbose=0,
         n_iter=options["bayes_search_n_iters"],
