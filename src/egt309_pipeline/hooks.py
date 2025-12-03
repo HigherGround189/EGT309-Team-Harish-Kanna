@@ -1,8 +1,10 @@
-from kedro.framework.hooks import hook_impl
-import requests
 import logging
 
+import requests
+from kedro.framework.hooks import hook_impl
+
 logger = logging.getLogger(__name__)
+
 
 class TrainingCompleteHook:
     @hook_impl
@@ -14,17 +16,21 @@ class TrainingCompleteHook:
 
         try:
             response = requests.get(primary_url, timeout=10)
-            response.raise_for_status() # Raise error if request is unsucessful
+            response.raise_for_status()  # Raise error if request is unsucessful
 
             logger.info("Model Evaluation Completed! Sucessfully reloaded frontend!")
 
         except Exception as exception:
-            logger.error(f"Can't contact visualisation-server container, falling back to localhost instead.\nException: {exception}")
+            logger.error(
+                f"Can't contact visualisation-server container, falling back to localhost instead.\nException: {exception}"
+            )
 
             try:
                 response = requests.get(fallback_url, timeout=10)
                 response.raise_for_status()
                 return response.json()
-            
+
             except Exception as exception:
-                logger.error(f"Can't contact Localhost. Is flask server running?\nException: {exception}")
+                logger.error(
+                    f"Can't contact Localhost. Is flask server running?\nException: {exception}"
+                )
