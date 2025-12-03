@@ -319,7 +319,7 @@ def train_model(
         estimator=model_to_tune,
         search_spaces=param_grid,
         cv=cv_strategy,
-        scoring="f1",  # F1 is used due to class imbalance
+        scoring="recall_weighted",  # F1 is used due to class imbalance
         n_jobs=-1,
         verbose=0,
         n_iter=options["bayes_search_n_iters"],
