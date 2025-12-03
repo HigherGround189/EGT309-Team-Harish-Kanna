@@ -85,7 +85,6 @@ export default {
 
 .card-label {
   color: #94a3b8; /* Muted text color */
-  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
