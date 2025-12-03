@@ -3,7 +3,7 @@
     <div class="spinner-wrapper">
       <Spinner class="loading-spinner"/>
     </div>
-    <h1 class="come-back-later-text">The Kedro Pipeline has not completed yet. Come back later!</h1>
+    <h1 class="come-back-later-text">The Kedro Pipeline has not finished executing yet. <br>Come back later!</h1>
   </div>
 </template>
 
@@ -17,19 +17,16 @@ export default {
 
 <style scoped>
 .training-in-progress{
-  height: 100%;
+  height: 75vh;
   width: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  border: 3px red solid;
 }
 
 .spinner-wrapper {
-  background-color: orange;
   padding: 3rem;
 
   height: 80%;
@@ -37,7 +34,7 @@ export default {
 
 .loading-spinner {
   aspect-ratio: 1 / 1;
-  width: 25vw;
+  height: 100%;
 }
 
 .come-back-later-text {
@@ -45,5 +42,12 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
 
   height: 20%;
+  width: 100%;
+  border-top: 2px hsl(0, 0%, 20%) solid;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 </style>

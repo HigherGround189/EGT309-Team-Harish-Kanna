@@ -67,6 +67,5 @@ import TrainingInProgress from './components/TrainingInProgress.vue';
   background-color: hsl(24, 10%, 10%);
   filter: drop-shadow(0 0 0.75rem hsl(0, 0%, 35%));
 
-  min-height: 75vh;
 }
 </style>
