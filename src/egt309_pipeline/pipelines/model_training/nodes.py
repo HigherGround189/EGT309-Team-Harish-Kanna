@@ -4,8 +4,8 @@ generated using Kedro 1.0.0
 """
 
 import importlib
-from typing import Any, Dict, Tuple
 import logging
+from typing import Any, Dict, Tuple
 
 logger = logging.getLogger(__name__)
 
