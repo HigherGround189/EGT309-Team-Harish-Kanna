@@ -2,10 +2,15 @@
 This is a boilerplate pipeline 'model_evaluation'
 generated using Kedro 1.0.0
 """
+from typing import Any, Dict, Tuple, Type
 
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+
+import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn.base import BaseEstimator
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import (
     accuracy_score,
@@ -22,7 +27,10 @@ from sklearn.metrics import (
 #############
 
 
-def _measure_error(y_test, y_pred, y_proba):
+def _measure_error(y_test: pd.Series, y_pred: np.ndarray, y_proba: np.ndarray) -> Dict:
+    """
+    Calculates multiple metrics that will be used to evaluate model performance.
+    """
     return {
         "accuracy": accuracy_score(y_test, y_pred),
         "precision": precision_score(y_test, y_pred),
@@ -35,7 +43,10 @@ def _measure_error(y_test, y_pred, y_proba):
     }
 
 
-def _plot_confusion_matrix(y_test, y_pred):
+def _plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> Figure:
+    """
+    Plots the confusion matrix of the model.
+    """
     fig_cm = plt.figure(figsize=(8, 6))
     cm = confusion_matrix(y_test, y_pred)
     ax = sns.heatmap(cm, annot=True, fmt="d")
@@ -49,7 +60,10 @@ def _plot_confusion_matrix(y_test, y_pred):
     return fig_cm
 
 
-def _plot_auc_roc(y_test, y_proba, auc_score):
+def _plot_auc_roc(y_test: pd.DataFrame, y_proba: np.ndarray, auc_score: float) -> Figure:
+    """
+    Plots the AUC-ROC graph.
+    """
     fpr, tpr, _ = roc_curve(y_test, y_proba)
     fig_roc = plt.figure(figsize=(8, 6))
 
@@ -64,7 +78,11 @@ def _plot_auc_roc(y_test, y_proba, auc_score):
     return fig_roc
 
 
-def _plot_permutation_importance(model, X_test, y_test, params):
+def _plot_permutation_importance(model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.DataFrame, params: Dict) -> Figure:
+    """
+    Calculates the feature importance for model.
+    Docs: https://scikit-learn.org/stable/modules/permutation_importance.html
+    """
     r = permutation_importance(
         model,
         X_test,
@@ -95,7 +113,33 @@ def _plot_permutation_importance(model, X_test, y_test, params):
 #########
 
 
-def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series, options):
+def evaluate_model(model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.Series, options: Dict) -> Tuple[Dict[str, float], Figure, Figure, Figure]:
+    """
+    Function used to evaluate the model based on certain metrics.
+
+    Parameters
+    ----------
+    model: Type[BaseEstimator]
+        Model to be evaluated
+    
+    X_test: pd.DataFrame
+        Testing dataset features
+
+    Y_test: pd.DataFrame
+        Testing dataset targets
+
+    options: Dict
+        Execution configuration; Defined in parameters_execution_configuration.yml under header 'execution_config'
+
+    Returns
+    -------
+    tuple
+        A tuple containing the following evaluation artifacts:
+        1. dict: Dictionary of metrics scores (Accuracy, F1, AUC, etc.).
+        2. Figure: Confusion Matrix plot.
+        3. Figure: ROC Curve plot.
+        4. Figure: Permutation Feature Importance plot.
+    """
     y_pred = model.predict(X_test)
     y_proba = model.predict_proba(X_test)[:, 1]
 
