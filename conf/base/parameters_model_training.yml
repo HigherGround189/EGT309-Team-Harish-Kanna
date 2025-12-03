@@ -2,4 +2,4 @@ model_training_parameters:
   test_size: 0.2
   random_state: 42
   cv_splits: 5
-  bayes_search_n_iters: 50 # Specify Bayes Search number of iterations
+  bayes_search_n_iters: 1 # Specify Bayes Search number of iterations
