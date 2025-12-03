@@ -180,16 +180,9 @@ def impute_age(df: pd.DataFrame, impute_method: str = "randdist") -> pd.DataFram
             df_new = _random_distribution(df_temp, target_col="Age", target_val=150)
 
         case "knn":
-            corr_cols = [
-                "Occupation",
-                "Marital Status",
-                "Education Level",
-                "Subscription Status",
-                "Previous Contact Days",
-            ]
             df_encoded_temp = int_encode(df_temp)
             df_new = _my_knnimputer(
-                df_encoded_temp, target_col="Age", target_val=150, corr_cols=corr_cols
+                df_encoded_temp, target_col="Age", target_val=150
             )
 
     return df_new
