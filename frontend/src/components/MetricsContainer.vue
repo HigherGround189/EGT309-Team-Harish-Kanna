@@ -1,7 +1,9 @@
 <template>
   <div class="card-container">
     <div class="card-header">
-      <span class="card-label">ACCURACY</span>
+      <span class="card-label">
+        <slot></slot>
+      </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
