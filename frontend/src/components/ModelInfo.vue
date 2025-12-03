@@ -1,27 +1,28 @@
 <template>
-  <div v-for="(files, model) in models" :key="model">
+  <!-- <div v-for="(files, model) in models" :key="model">
     <h2>{{ model }}</h2>
     <div v-for="(file, filename) in files" :key="filename">
       <p>Api Route: {{ file.url }}</p>
       <img v-if="file.isImage" :src="file.url" :alt="filename" />
       <pre v-else v-for="line in file.content.split()" :key="line">
-        <p>{{ line }}</p>
+        <p>{{ line }}</p> /* This line displays text content */
       </pre>
     </div>
-  </div>
+  </div> -->
 
   <div class="content-wrapper">
     <CongratulationsText/>
-    <Test/>
+    <ModelMetrics/>
   </div>
 
 </template>
 
 <script>
 import CongratulationsText from './CongratulationsText.vue';
+import ModelMetrics from './ModelMetrics.vue';
 
   export default {
-    components: { CongratulationsText },
+    components: { CongratulationsText, ModelMetrics },
     data() {
       return {
         models: {},
