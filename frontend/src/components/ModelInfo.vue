@@ -12,7 +12,7 @@
 
   <div class="model-info-wrapper">
     <CongratulationsText/>
-    <ModelMetrics/>
+    <ModelMetrics v-for="model in models" :key="model" :model="model"/>
   </div>
 
 </template>
