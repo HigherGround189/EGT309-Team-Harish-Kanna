@@ -53,7 +53,6 @@ export default {
     }
   },
   computed: {
-    // Ensures we display two decimal places like the image (e.g. 82.03)
     formattedPercentage() {
       return this.percentage.toFixed(2);
     }
@@ -62,14 +61,9 @@ export default {
 </script>
 
 <style scoped>
-/* Colors drawn from the image:
-  Background: Dark Navy/Slate
-  Text: Muted Blue/Grey & White
-  Accent: Electric Blue
-*/
 .card-container {
   background-color: hsla(196, 87%, 15%, 0.178);
-  border: 1px solid #2b3648; /* Subtle border */
+  border: 1px solid #2b3648;
   border-radius: 12px;
   padding: 24px;
   width: 60%;
@@ -85,7 +79,7 @@ export default {
 }
 
 .card-label {
-  color: #94a3b8; /* Muted text color */
+  color: #94a3b8;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -94,12 +88,12 @@ export default {
 .trend-icon {
   width: 18px;
   height: 18px;
-  color: #94a3b8; /* Matches label color */
+  color: #94a3b8;
 }
 
 .card-value {
   color: #ffffff;
-  font-size: 2.5rem; /* Large text size */
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 16px;
   line-height: 1.1;
@@ -109,17 +103,16 @@ export default {
 .progress-track {
   width: 100%;
   height: 8px;
-  background-color: #2b3648; /* Darker track color */
-  border-radius: 99px; /* Pill shape */
-  overflow: hidden; /* Ensures the fill doesn't bleed out */
+  background-color: #2b3648;
+  border-radius: 99px;
+  overflow: hidden;
 }
 
 /* Progress Bar Indicator (Fill) */
 .progress-fill {
   height: 100%;
-  background-color: #3b82f6; /* Bright Blue */
+  background-color: #3b82f6;
   border-radius: 99px;
-  /* Smooth transition if the number updates */
   transition: width 0.5s ease-out;
 }
 </style>

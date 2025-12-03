@@ -1,20 +1,10 @@
 <template>
-  <!-- <div v-for="(files, model) in models" :key="model">
-    <h2>{{ model }}</h2>
-    <div v-for="(file, filename) in files" :key="filename">
-      <p>Api Route: {{ file.url }}</p>
-      <img v-if="file.isImage" :src="file.url" :alt="filename" />
-      <pre v-else v-for="line in file.content.split()" :key="line">
-        <p>{{ line }}</p> /* This line displays text content */
-      </pre>
-    </div>
-  </div> -->
-
   <div class="model-info-wrapper">
     <CongratulationsText/>
-    <ModelMetrics/>
+    <div v-for="(model, modelName) in models" :key="modelName">
+      <ModelMetrics :model="model" />
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -29,82 +19,53 @@ import ModelMetrics from './ModelMetrics.vue';
         image_file_extensions: ["png", "jpeg", "jpg"]
       }
     },
-    mounted() {
-      fetch("/api/models")
-        .then(res => res.json())
-        .then(data => {
+    async mounted() { // Added async
+      try {
+        const res = await fetch("/api/models");
+        const data = await res.json();
 
-          //After fetching model data, we want to create metadata for each file, for convenience.
-          // This is our goal:
-          // file: {
-          //   url: "/api/<model>/<filepath>"
-          //   isImage: false,
-          //   content: xxx
-          // }
-          // Acutal text content should be stored in .content.
-          // However, if the file is an image, it can't have text content, so we leaeve it as null
+        const finalModels = {};
 
+        for (const modelName in data) {
+          const files = data[modelName];
+          let results = {};
+          let parameters = {};
+          const fileContentsPromises = [];
 
-          // Iterate through all model folders
-          const processedModels = {}
-          for (const modelName in data) {
-            // console.log(`Model name: ${modelName}`)
-            const files = data[modelName]
+          for (const filename in files) {
+            const api_route = files[filename];
+            const file_extension = filename.split('.').pop().toLowerCase();
+            const isImage = this.image_file_extensions.includes(file_extension);
 
-            // Iterate through all files inside model folder
-            const processedFiles = {}
-            for (const filename in files) {
-              // console.log(`${modelName}'s file: ${filename}}`)
-
-              // Get route to query backend with (eg: /api/RandomForestClassifier/parameters.json)
-              const api_route = files[filename];
-
-              // Check if file extension is inside this.image_file_extensions list.
-              const file_extension = filename.split('.').pop().toLowerCase()
-              const isImage = this.image_file_extensions.includes(file_extension)
-
-              // Create hashmap containing metadata for each file
-              processedFiles[filename] = {
-                url: api_route,
-                isImage: isImage,
-                content: isImage ? null : 'Loading...' // Notice that this is empty
-              };
-            }
-
-            // Add file metadata to model, eg:
-            // RandomForestClassifier: {
-            //   filename1: {url: xxx, isImage: false, content: null},
-            //   filename12 {url: xxx, isImage: false, content: "Loading..."}
-            // }
-            processedModels[modelName] = processedFiles;
-          }
-
-          // Overall hashmap that will contain the hashmap of all existing models, eg:
-          // processedModels: {
-          //   RandomForestClassifier: {xxx},
-          //   XGBoostClassifier: {xxx},
-          // }
-          this.models = processedModels;
-
-          // Our goal is to populate the .content field of each file with the actual textdata
-          // However, we can only update it through Vue data attributes, else the UI won't update
-          // Thus we have to loop through each model to access their files
-          for (const modelName in this.models) {
-            // So we can loop through each file
-            for (const filename in this.models[modelName]) {
-              const file = this.models[modelName][filename];
-              if (!file.isImage) {
-                // This way, we can change each file's .content field appropriately, using fetch() to retrieve the actual data
-                fetch(file.url)
+            if (!isImage) {
+              fileContentsPromises.push(
+                fetch(api_route)
                   .then(res => res.text())
                   .then(text => {
-                    file.content = text;
+                    if (filename === 'results.json') {
+                      results = JSON.parse(text);
+                    } else if (filename === 'parameters.json') {
+                      parameters = JSON.parse(text);
+                    }
                   })
-              }
+                  .catch(error => {
+                    console.error(`Error fetching content for ${api_route}:`, error);
+                  })
+              );
             }
           }
+          await Promise.all(fileContentsPromises); // Wait for all file contents of the current model
 
-        });
+          finalModels[modelName] = {
+            name: modelName,
+            results: results,
+            parameters: parameters
+          };
+        }
+        this.models = finalModels;
+      } catch (error) {
+        console.error("Error fetching models data:", error);
+      }
     }
   }
 </script>
