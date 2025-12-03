@@ -29,10 +29,8 @@ model_registry:
   adaboost:
     name: AdaBoostClassifier
     yaml_header: adaboost_config
-    train_now: True
-    evaluate_now: True
-    train_now: True
-    evaluate_now: True
+    train_now: False
+    evaluate_now: False
 
   catboost:
     name: CatBoostClassifier
