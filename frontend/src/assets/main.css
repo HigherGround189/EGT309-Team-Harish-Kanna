@@ -6,9 +6,11 @@ body {
 
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 
-  padding: 5rem;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+  padding-inline: 4rem;
+
   background-image:
     linear-gradient(var(--grid-lines-colour) 1px, transparent 1px),
     linear-gradient(to right, var(--grid-lines-colour) 1px, var(--background-colour) 1px);

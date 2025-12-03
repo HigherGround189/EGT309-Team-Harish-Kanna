@@ -1,6 +1,10 @@
 <template>
-  <TrainingInProgress v-if="!trainingComplete"/>
-  <ModelInfo v-if="trainingComplete"/>
+  <h1 class="title-text">EGT309 Team Harish Kanna</h1>
+
+  <div class="content-wrapper">
+    <TrainingInProgress v-if="!trainingComplete"/>
+    <ModelInfo v-if="trainingComplete"/>
+  </div>
 </template>
 
 <script>
@@ -47,5 +51,22 @@ import TrainingInProgress from './components/TrainingInProgress.vue';
 </script>
 
 <style scoped>
+.title-text {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 5.5rem;
+  text-align: center;
+  margin-bottom: 4vh;
+  text-shadow: 0 0 5px #aaaaaa;
+  user-select: none;
+}
 
+.content-wrapper {
+  border: 3px hsl(0, 0%, 35%) solid;
+  border-radius: 14px;
+  background-color: #131314;
+  filter: drop-shadow(0 0 0.75rem hsl(0, 0%, 35%));
+
+  min-height: 75vh;
+}
 </style>
