@@ -34,10 +34,10 @@ handlers:
 
 loggers:
   kedro:
-    level: INFO
+    level: DEBUG
 
   egt309_pipeline:
-    level: INFO
+    level: DEBUG
 
 root:
   handlers: [rich, info_file_handler]

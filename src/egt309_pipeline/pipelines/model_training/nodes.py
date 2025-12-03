@@ -5,6 +5,9 @@ generated using Kedro 1.0.0
 
 import importlib
 from typing import Any, Dict, Tuple
+import logging
+
+logger = logging.getLogger(__name__)
 
 import GPUtil
 import pandas as pd
@@ -84,12 +87,12 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
     if model_params.get("device") == "auto":
         device = "cuda" if GPUtil.getAvailable() else "cpu"
         model_params["device"] = device
-        print(f"Selected: {device}")
+        logger.debug(f"Selected: {device}")
 
     if model_config["class"] == "catboost.CatBoostClassifier":
         model_params["cat_features"] = categorical_cols
         model_config["data_encoding"] = "none"
-        print("Added categorical cat_features")
+        logger.debug("Added categorical cat_features")
 
     model = model_class(random_state=options["random_state"], **model_params)
 
@@ -97,7 +100,7 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
     data_encoding = model_config.get("data_encoding", "ohe").lower()
 
     if data_encoding == "ohe":
-        print("Applying One-Hit Encoding")
+        logger.debug("Applying One-Hot Encoding")
         encoding_transformer = (
             "ohe",
             OneHotEncoder(handle_unknown="ignore", sparse_output=False),
@@ -106,7 +109,7 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
         preprocessing_steps.append(encoding_transformer)
 
     elif data_encoding == "label":
-        print("Applying Label Encoding")
+        logger.debug("Applying Label Encoding")
         encoding_transformer = (
             "label",
             OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
@@ -115,13 +118,13 @@ def train_model(X_train, y_train, model_config: dict, options: dict):
         preprocessing_steps.append(encoding_transformer)
 
     elif data_encoding == "none":
-        print("Skipped encoding")
+        logger.debug("Skipped encoding")
         pass
 
     if model_config.get("requires_scaling", False):
         scaling_transformer = ("scaler", StandardScaler(), numerical_cols)
         preprocessing_steps.append(scaling_transformer)
-        print("Applyd Standard Scaling")
+        logger.debug("Applied Standard Scaling")
 
     # https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer_mixed_types.html
     if preprocessing_steps:
