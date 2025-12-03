@@ -12,6 +12,7 @@ lightgbm_config:
     objective: "binary"
     metric: "binary_logloss"
     boosting_type: "gbdt"
+    class_weight: "is_unbalance"
     verbose: -1
 
   search_space:
