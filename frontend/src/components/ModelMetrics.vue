@@ -2,14 +2,19 @@
   <div class="model-metrics">
     <h1 class="model-name">{{ modelName }}</h1>
     <MetricsContainer v-for="key in metricKeys" :key="key" class="metrics-container" :percentage="metrics[key] * 100">{{ key }}</MetricsContainer>
+    <ModelGraphs :image_url="auc_roc"/>
+    <ModelGraphs :image_url="cmatrix"/>
+    <ModelsParameter :json-content="parameters"/>
   </div>
 </template>
 
 <script>
 import MetricsContainer from './MetricsContainer.vue';
+import ModelGraphs from './ModelGraphs.vue';
+import ModelsParameter from './ModelsParameter.vue';
 
 export default {
-  components: { MetricsContainer },
+  components: { MetricsContainer, ModelGraphs, ModelsParameter },
   props: {
     model: {
       type: Object,
@@ -34,7 +39,7 @@ export default {
     },
 
     parameters() {
-      return this.$props.model["parameters.json"]
+      return this.$props.model["parameters.json"].content
     },
 
     metrics() {

@@ -110,18 +110,6 @@ import ModelMetrics from './ModelMetrics.vue';
 </script>
 
 <style scoped>
-  pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background-color: #f4f4f4;
-    padding: 1em;
-    border-radius: 5px;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
   .model-info-wrapper {
     padding-block: 3rem;
     min-height: 90vh;
