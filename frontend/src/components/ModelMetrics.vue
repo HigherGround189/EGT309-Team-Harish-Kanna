@@ -8,70 +8,58 @@
 <script>
 import MetricsContainer from './MetricsContainer.vue';
 
-const metricColorMap = {
-  accuracy: '#4CAF50', // Green
-  precision: '#2196F3', // Blue
-  recall: '#FFC107', // Amber
-  f1: '#E91E63', // Pink
-  auc: '#9C27B0' // Purple
-};
+export default {
+  components: { MetricsContainer },
+  props: {
+    model: {
+      type: Object,
+      required: true
+    },
+    modelName: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    auc_roc() {
+      return this.$props.model["auc_roc.png"]
+    },
 
-  export default {
-    components: { MetricsContainer },
-    props: {
-      model: {
-        type: Object,
-        required: true
-      },
-      modelName: {
-        type: String,
-        required: true
+    cmatrix() {
+      return this.$props.model["cmatrix.png"]
+    },
+
+    feature_importance() {
+      return this.$props.model["feature_importance.png"]
+    },
+
+    parameters() {
+      return this.$props.model["parameters.json"]
+    },
+
+    metrics() {
+      try {
+        return JSON.parse(this.$props.model["test_error.json"].content);
+      } catch (e) {
+        console.error("Error parsing metrics JSON:", e);
+        return {};
       }
     },
-    computed: {
-      auc_roc() {
-        return this.$props.model["auc_roc.png"]
-      },
 
-      cmatrix() {
-        return this.$props.model["cmatrix.png"]
-      },
+    metricKeys() {
+      return Object.keys(this.metrics);
+    },
 
-      feature_importance() {
-        return this.$props.model["feature_importance.png"]
-      },
-
-      parameters() {
-        return this.$props.model["parameters.json"]
-      },
-
-      metrics() {
-        try {
-          return JSON.parse(this.$props.model["test_error.json"].content);
-        } catch (e) {
-          console.error("Error parsing metrics JSON:", e);
-          return {};
+    metricName() {
+      if (this.$slots.default && this.$slots.default()) {
+        const vnode = this.$slots.default()[0];
+        if (vnode && vnode.children && typeof vnode.children === 'string') {
+          return vnode.children.trim().toLowerCase();
         }
-      },
-
-      metricKeys() {
-        return Object.keys(this.metrics);
-      },
-
-      metricName() {
-        if (this.$slots.default && this.$slots.default()) {
-          const vnode = this.$slots.default()[0];
-          if (vnode && vnode.children && typeof vnode.children === 'string') {
-            return vnode.children.trim().toLowerCase();
-          }
-        }
-        return '';
-      },
-
-      backgroundColor() {
-        return metricColorMap[this.metricName] || '#3b82f6'; // Default color
       }
+      return '';
     }
+  }
   }
 </script>
 
