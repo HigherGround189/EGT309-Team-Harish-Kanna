@@ -10,7 +10,6 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
 current_training_status = "ongoing"
 
-
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, "index.html")
@@ -76,7 +75,6 @@ def serve_file(model, filename):
 def connection_test():
     socketio.emit("connectionTest", {"message": "Hello from Flask!"})
     return "Event sent!"
-
 
 @app.route("/training-complete")
 def update_frontend():
