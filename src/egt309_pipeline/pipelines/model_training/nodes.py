@@ -7,7 +7,10 @@ import importlib
 import logging
 from typing import Any, Dict, Tuple
 
+import sklearn
+
 logger = logging.getLogger(__name__)
+sklearn.set_config(transform_output="pandas")
 
 import GPUtil
 import pandas as pd
@@ -100,7 +103,7 @@ def _build_preprocessor(X_train, model_config: dict) -> ColumnTransformer:
         )
         preprocessing_steps.append(encoding_transformer)
 
-    elif data_encoding == None:
+    elif data_encoding == "none":
         logger.debug("Skipped encoding")
         pass
 
