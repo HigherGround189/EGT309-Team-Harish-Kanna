@@ -18,7 +18,7 @@ import TrainingInProgress from './components/TrainingInProgress.vue';
     },
     mounted() {
       // Initialise Websocket Connection
-      this.socket = io('http://127.0.0.1:5000')
+      this.socket = io('http://127.0.0.1:5500')
 
       // Initialise Listener
       this.socket.on("trainingComplete", (key) => {

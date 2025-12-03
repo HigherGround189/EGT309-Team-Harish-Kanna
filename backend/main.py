@@ -8,7 +8,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Directory containing saved models
 SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
-
+training_completed = False
 
 @app.route("/")
 def index():
@@ -74,7 +74,8 @@ def connection_test():
 
 @app.route("/training-complete")
 def update_frontend():
-    socketio.emit("trainingComplete", {"key": False})
+    training_completed = True
+    socketio.emit("trainingComplete", {"key": training_completed})
     return "Updated Frontend that training is complete"
 
 
