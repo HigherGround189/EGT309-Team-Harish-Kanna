@@ -4,7 +4,8 @@
 
 lightgbm_config:
   class: lightgbm.LGBMClassifier
-  requires_scaling: True
+  requires_scaling: False
+  data_encoding: "label"
 
   model_params:
     n_jobs: 1

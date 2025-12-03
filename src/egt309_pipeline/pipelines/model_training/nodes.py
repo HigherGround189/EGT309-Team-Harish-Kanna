@@ -7,7 +7,10 @@ import importlib
 import logging
 from typing import Any, Dict, Tuple
 
+import sklearn
+
 logger = logging.getLogger(__name__)
+sklearn.set_config(transform_output="pandas")
 
 import GPUtil
 import pandas as pd
@@ -62,7 +65,7 @@ def _init_model(X_train, model_config: dict, options: dict) -> Any:
 
     if model_config["class"] == "catboost.CatBoostClassifier":
         model_params["cat_features"] = X_train.select_dtypes(include=["object", "category"]).columns.tolist()
-        model_config["data_encoding"] = None
+        model_config["data_encoding"] = "none"
         logger.debug("Added categorical cat_features")
 
     return model_class(random_state=options["random_state"], **model_params)
@@ -96,7 +99,7 @@ def _build_preprocessor(X_train, model_config: dict) -> ColumnTransformer:
         )
         preprocessing_steps.append(encoding_transformer)
 
-    elif data_encoding == None:
+    elif data_encoding == "none":
         logger.debug("Skipped encoding")
         pass
 
