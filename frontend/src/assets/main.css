@@ -25,14 +25,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--background-colour);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--grid-lines-colour);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(187, 187, 187, 0.25);
 }
