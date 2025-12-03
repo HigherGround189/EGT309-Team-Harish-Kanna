@@ -1,10 +1,18 @@
 <template>
-  <div v-for="(files, model) in models" :key="model">
+  <!-- <div v-for="(files, model) in models" :key="model">
     <h2>{{ model }}</h2>
     <div v-for="(file, filename) in files" :key="filename">
       <p>Api Route: {{ file.url }}</p>
       <img v-if="file.isImage" :src="file.url" :alt="filename" />
       <pre v-else>{{ file.content }}</pre>
+    </div>
+  </div> -->
+
+  <div class="content-wrapper">
+    <div class="congratulations-text">
+      <img src="@/assets/checkmark.png" class="checkmark" alt=""/>
+      <h2>Training Completed!</h2>
+      <p>Kedro has completed its pipelines. Here are the best results:</p>
     </div>
   </div>
 </template>
@@ -32,7 +40,7 @@
           // Acutal text content should be stored in .content.
           // However, if the file is an image, it can't have text content, so we leaeve it as null
 
-          
+
           // Iterate through all model folders
           const processedModels = {}
           for (const modelName in data) {
@@ -108,5 +116,46 @@
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  .content-wrapper {
+    padding: 3rem;
+    min-height: 90vh;
+  }
+
+  .congratulations-text {
+    font-family: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .checkmark {
+    height: 10vh;
+    animation: bounce 1s infinite;
+    margin-bottom: 1rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  .congratulations-text > h2{
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .congratulations-text > p {
+    font-size: 1.2rem;
   }
 </style>

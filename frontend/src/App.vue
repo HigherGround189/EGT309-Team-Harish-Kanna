@@ -1,5 +1,5 @@
 <template>
-  <h1 class="title-text">EGT309 Team Harish Kanna</h1>
+  <h1 class="title-text" v-if="!trainingComplete" >EGT309 Team Harish Kanna</h1>
 
   <div class="content-wrapper">
     <TrainingInProgress v-if="!trainingComplete" />
