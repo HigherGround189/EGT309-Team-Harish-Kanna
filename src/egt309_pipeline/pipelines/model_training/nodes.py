@@ -50,6 +50,7 @@ def _get_model_class(class_path: str):
     module = importlib.import_module(module_path)
     return getattr(module, class_name)
 
+
 def _init_model(X_train, model_config: dict, options: dict) -> Any:
     model_class = _get_model_class(model_config["class"])
 
@@ -61,11 +62,14 @@ def _init_model(X_train, model_config: dict, options: dict) -> Any:
         logger.debug(f"Selected: {device}")
 
     if model_config["class"] == "catboost.CatBoostClassifier":
-        model_params["cat_features"] = X_train.select_dtypes(include=["object", "category"]).columns.tolist()
+        model_params["cat_features"] = X_train.select_dtypes(
+            include=["object", "category"]
+        ).columns.tolist()
         model_config["data_encoding"] = None
         logger.debug("Added categorical cat_features")
 
     return model_class(random_state=options["random_state"], **model_params)
+
 
 def _build_preprocessor(X_train, model_config: dict) -> ColumnTransformer:
     categorical_cols = X_train.select_dtypes(
@@ -105,7 +109,10 @@ def _build_preprocessor(X_train, model_config: dict) -> ColumnTransformer:
         preprocessing_steps.append(scaling_transformer)
         logger.debug("Applied Standard Scaling")
 
-    return ColumnTransformer(transformers=preprocessing_steps, remainder="passthrough", n_jobs=-1)
+    return ColumnTransformer(
+        transformers=preprocessing_steps, remainder="passthrough", n_jobs=-1
+    )
+
 
 #########
 # Nodes #
@@ -128,7 +135,6 @@ def split_dataset(df: pd.DataFrame, options: dict) -> Tuple:
 
 
 def train_model(X_train, y_train, model_config: dict, options: dict):
-
     model = _init_model(X_train, model_config, options)
     preprocessor = _build_preprocessor(X_train, model_config)
 
