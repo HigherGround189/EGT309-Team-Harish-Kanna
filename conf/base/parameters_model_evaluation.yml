@@ -1,8 +1,2 @@
-# This is a boilerplate parameters config generated for pipeline 'model_evaluation'
-# using Kedro 1.0.0.
-#
-# Documentation for this file format can be found in "Parameters"
-# Link: https://docs.kedro.org/en/1.0.0/configuration/parameters.html
-
 model_evaluation_parameters:
   permutation_feature_importance_n_repeats: 5
