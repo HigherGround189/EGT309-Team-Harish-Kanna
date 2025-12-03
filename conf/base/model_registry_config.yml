@@ -14,8 +14,9 @@ model_registry:
   lightgbm:
     name: LightGBMClassifier
     yaml_header: lightgbm_config
-    train_now: True
-    evaluate_now: True
+    yaml_header: lightgbm_config
+    train_now: False
+    evaluate_now: False
 
   svm:
     name: SVCClassifier
