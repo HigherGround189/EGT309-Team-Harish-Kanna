@@ -1,7 +1,7 @@
 <template>
   <div class="model-metrics">
     <h1 class="model-name">{{ modelName }}</h1>
-    <MetricsContainer v-for="key in metricKeys" :key="key" class="metrics-container" :percentage="metrics[key] * 100">{{ key }}</MetricsContainer>
+    <MetricsContainer v-for="key in metricKeys" :key="key" class="metrics-container" :percentage="metrics[key]">{{ key }}</MetricsContainer>
     <ModelGraphs :image_url="auc_roc"/>
     <ModelGraphs :image_url="cmatrix"/>
     <ModelsParameter :json-content="parameters"/>
@@ -27,24 +27,24 @@ export default {
   },
   computed: {
     auc_roc() {
-      return this.$props.model["auc_roc.png"]
+      return this.$props.model[`${this.$props.modelName}_auc_roc_curve.png`]
     },
 
     cmatrix() {
-      return this.$props.model["cmatrix.png"]
+      return this.$props.model[`${this.$props.modelName}_confusion_matrix.png`]
     },
 
     feature_importance() {
-      return this.$props.model["feature_importance.png"]
+      return this.$props.model[`${this.$props.modelName}_feature_importance.png`]
     },
 
     parameters() {
-      return this.$props.model["parameters.json"].content
+      return this.$props.model[`${this.$props.modelName}_best_params.json`].content
     },
 
     metrics() {
       try {
-        return JSON.parse(this.$props.model["test_error.json"].content);
+        return JSON.parse(this.$props.model[`${this.$props.modelName}_metrics.json`].content);
       } catch (e) {
         console.error("Error parsing metrics JSON:", e);
         return {};

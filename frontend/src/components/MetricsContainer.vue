@@ -20,7 +20,7 @@
     </div>
 
     <div class="card-value">
-      {{ formattedPercentage }}%
+      {{ formattedPercentage }}
     </div>
 
     <div
@@ -32,7 +32,7 @@
     >
       <div
         class="progress-fill"
-        :style="{ width: percentage + '%', backgroundColor: backgroundColor }"
+        :style="{ width: (percentage * 100) + '%', backgroundColor: backgroundColor }"
       ></div>
     </div>
   </div>
@@ -43,8 +43,11 @@ const metricColorMap = {
   accuracy: '#4CAF50', // Green
   precision: '#2196F3', // Blue
   recall: '#FFC107', // Amber
-  f1: '#E91E63', // Pink
-  auc: '#9C27B0' // Purple
+  f1_score: '#E91E63', // Pink
+  micro_f1_score: '#FF9800', // Orange
+  macro_f1_score: '#00BCD4', // Cyan
+  weighted_f1_score: '#8BC34A', // Light Green
+  auc_roc: '#9C27B0' // Purple
 };
 
 export default {
@@ -57,7 +60,6 @@ export default {
     }
   },
   computed: {
-    // Ensures we display two decimal places like the image (e.g. 82.03)
     formattedPercentage() {
       return this.percentage.toFixed(2);
     },
@@ -71,21 +73,16 @@ export default {
       return '';
     },
     backgroundColor() {
-      return metricColorMap[this.metricName] || '#3b82f6'; // Default color
+      return metricColorMap[this.metricName] || '#3b82f6';
     }
   }
 }
 </script>
 
 <style scoped>
-/* Colors drawn from the image:
-  Background: Dark Navy/Slate
-  Text: Muted Blue/Grey & White
-  Accent: Electric Blue
-*/
 .card-container {
   background-color: hsla(196, 87%, 15%, 0.178);
-  border: 1px solid #2b3648; /* Subtle border */
+  border: 1px solid #2b3648;
   border-radius: 12px;
   padding: 24px;
   width: 60%;
