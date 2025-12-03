@@ -13,6 +13,7 @@
   border: 20px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   border-left-color: hsl(153, 60%, 39%);
+  background-color: transparent;
   animation: spin 1s ease infinite;
 }
 

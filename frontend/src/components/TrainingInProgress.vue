@@ -35,11 +35,13 @@ export default {
 .loading-spinner {
   aspect-ratio: 1 / 1;
   height: 100%;
+  filter: drop-shadow(0 0 0.75rem hsl(0, 0%, 30%));
 }
 
 .come-back-later-text {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
+  text-shadow: 0 0 3px #aaaaaa;
 
   height: 20%;
   width: 100%;
