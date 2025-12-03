@@ -313,9 +313,7 @@ def clean_previousContactDays(df: pd.DataFrame) -> pd.DataFrame:
     """
     df_new = df.copy()
     df_new["Previously Contacted"] = df_new["Previous Contact Days"] != 999
-    df_new["Previous Contact Days"] = df_new["Previous Contact Days"].map(
-        lambda x: -1 if x == 999 else x
-    )
+    df_new.drop("Previous Contact Days", inplace=True)
     df_new = _reindex_target_col(df_new)
     return df_new
 
