@@ -12,19 +12,26 @@ import TrainingInProgress from './components/TrainingInProgress.vue';
     components: { ModelInfo, TrainingInProgress },
     data() {
       return {
-        trainingComplete: false,
+        trainingComplete: null,
         socket: null
       }
     },
-    mounted() {
+    async mounted() {
       // Initialise Websocket Connection
       this.socket = io('http://127.0.0.1:5500')
 
-      // Initialise Listener
-      this.socket.on("trainingComplete", (key) => {
+      // Fetch data from /training-status to get initial status
+      fetch("/api/training-status")
+        .then(res => res.json())
+        .then(data => {
+          this.trainingComplete = data["Training status"] === "ongoing" ? false : true
+        })
+
+      // Initialise Listener for trainingComplete event
+      this.socket.on("trainingComplete", (data) => {
         console.log("Training Complete!")
-        console.log(`Key: ${key}`)
-        this.trainingComplete = key
+        console.log(`Data: ${data.key}`)
+        this.trainingComplete = (data.key === 'completed')
       })
 
       this.socket.on('connectionTest', (msg) => {
