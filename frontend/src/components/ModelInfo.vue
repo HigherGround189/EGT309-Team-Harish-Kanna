@@ -10,7 +10,7 @@
     </div>
   </div> -->
 
-  <div class="content-wrapper">
+  <div class="model-info-wrapper">
     <CongratulationsText/>
     <ModelMetrics/>
   </div>
@@ -122,7 +122,7 @@ import ModelMetrics from './ModelMetrics.vue';
     height: auto;
   }
 
-  .content-wrapper {
+  .model-info-wrapper {
     padding-block: 3rem;
     min-height: 90vh;
   }
