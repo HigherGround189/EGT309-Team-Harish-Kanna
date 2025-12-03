@@ -14,7 +14,6 @@ sklearn.set_config(transform_output="pandas")
 
 import GPUtil
 import pandas as pd
-
 from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import StratifiedKFold, train_test_split
@@ -51,7 +50,7 @@ def _parse_search_space(search_space: dict) -> Dict[str, Any]:
             'x': {'type': 'Integer', 'low': 1, 'high': 10},
             'y': {'type': 'Categorical', 'categories': ['a', 'b']}
         }
-        
+
         _parse_search_space(space)
         {'x': Integer(1, 10), 'y': Categorical(['a', 'b'])}
     """
@@ -104,7 +103,10 @@ def _get_model_class(class_path: str) -> Type[BaseEstimator]:
     # Returns model class
     return getattr(module, class_name)
 
-def _init_model(X_train: pd.DataFrame, model_config: Dict, options: Dict) -> Type[BaseEstimator]:
+
+def _init_model(
+    X_train: pd.DataFrame, model_config: Dict, options: Dict
+) -> Type[BaseEstimator]:
     """
     Initializes a ML model object with model confiuration specified in model's *.yml file.
     Moves uses cuda if specified in model's configuration.
@@ -150,9 +152,10 @@ def _init_model(X_train: pd.DataFrame, model_config: Dict, options: Dict) -> Typ
 
     return model_class(random_state=options["random_state"], **model_params)
 
+
 def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTransformer:
     """
-    Creates dataset transformation object. 
+    Creates dataset transformation object.
     Used for applying One-Hit, Label (Oritental) encoding on the entire dataset.
     You can also refuse to apply any encoding to the dataset.
 
@@ -161,7 +164,7 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
     X_train: pd.DataFrame
         Training data; Used to determine categorical and numerical columns in the dataset
 
-    model_config: 
+    model_config:
         Model base hyperparameter configuration.
         Used to check datset how dataset should be encoded, as well as if the dataset requires scaling.
 
@@ -184,7 +187,9 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
     ).columns.tolist()
 
     preprocessing_steps = []
-    data_encoding = model_config.get("data_encoding", "ohe").lower() # Default encoding is one-hot encoding
+    data_encoding = model_config.get(
+        "data_encoding", "ohe"
+    ).lower()  # Default encoding is one-hot encoding
 
     if data_encoding == "ohe":
         logger.debug("Applying One-Hot Encoding")
@@ -232,7 +237,7 @@ def split_dataset(df: pd.DataFrame, options: Dict) -> Tuple:
     ----------
     df: pd.DataFrame
         Dataset to be split
-    
+
     options: Dict
         Configuration that specifies train test split ratio and random state;
         Defined in parameters_execution_configuration.yml under header 'execution_config'
@@ -256,7 +261,9 @@ def split_dataset(df: pd.DataFrame, options: Dict) -> Tuple:
     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train: pd.DataFrame, y_train: pd.DataFrame, model_config: Dict, options: Dict) -> Tuple[BaseEstimator, Dict]:
+def train_model(
+    X_train: pd.DataFrame, y_train: pd.DataFrame, model_config: Dict, options: Dict
+) -> Tuple[BaseEstimator, Dict]:
     """
     Trains a model using Bayesian Optimization for hyperparameter tuning
 
@@ -264,7 +271,7 @@ def train_model(X_train: pd.DataFrame, y_train: pd.DataFrame, model_config: Dict
     ----------
     X_train: pd.DataFrame
         Features of the training dataset
-    
+
     Y_train: pd.DataFrame
         Targets of the training dataset
 
@@ -289,7 +296,9 @@ def train_model(X_train: pd.DataFrame, y_train: pd.DataFrame, model_config: Dict
         model_to_tune = Pipeline(
             steps=[("preprocessor", preprocessor), ("model", model)]
         )
-        prefix = "model__" # Pipeline object requires to add prefix in front of parameters
+        prefix = (
+            "model__"  # Pipeline object requires to add prefix in front of parameters
+        )
 
     else:
         model_to_tune = model

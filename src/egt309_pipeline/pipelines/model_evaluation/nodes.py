@@ -2,14 +2,14 @@
 This is a boilerplate pipeline 'model_evaluation'
 generated using Kedro 1.0.0
 """
-from typing import Any, Dict, Tuple, Type
+
+from typing import Dict, Tuple, Type
 
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
-
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib.figure import Figure
 from sklearn.base import BaseEstimator
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import (
@@ -60,7 +60,9 @@ def _plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> Figure:
     return fig_cm
 
 
-def _plot_auc_roc(y_test: pd.DataFrame, y_proba: np.ndarray, auc_score: float) -> Figure:
+def _plot_auc_roc(
+    y_test: pd.DataFrame, y_proba: np.ndarray, auc_score: float
+) -> Figure:
     """
     Plots the AUC-ROC graph.
     """
@@ -78,7 +80,9 @@ def _plot_auc_roc(y_test: pd.DataFrame, y_proba: np.ndarray, auc_score: float) -
     return fig_roc
 
 
-def _plot_permutation_importance(model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.DataFrame, params: Dict) -> Figure:
+def _plot_permutation_importance(
+    model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.DataFrame, params: Dict
+) -> Figure:
     """
     Calculates the feature importance for model.
     Docs: https://scikit-learn.org/stable/modules/permutation_importance.html
@@ -113,7 +117,9 @@ def _plot_permutation_importance(model: Type[BaseEstimator], X_test: pd.DataFram
 #########
 
 
-def evaluate_model(model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.Series, options: Dict) -> Tuple[Dict[str, float], Figure, Figure, Figure]:
+def evaluate_model(
+    model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.Series, options: Dict
+) -> Tuple[Dict[str, float], Figure, Figure, Figure]:
     """
     Function used to evaluate the model based on certain metrics.
 
@@ -121,7 +127,7 @@ def evaluate_model(model: Type[BaseEstimator], X_test: pd.DataFrame, y_test: pd.
     ----------
     model: Type[BaseEstimator]
         Model to be evaluated
-    
+
     X_test: pd.DataFrame
         Testing dataset features
 
