@@ -46,4 +46,6 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name=f"evaluate_{model_name}_node",
             )
         )
-    return Pipeline(namespace="Model Evaluation",prefix_datasets_with_namespace=False, nodes=nodes)
+    return Pipeline(
+        namespace="Model Evaluation", prefix_datasets_with_namespace=False, nodes=nodes
+    )
