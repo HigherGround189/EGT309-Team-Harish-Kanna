@@ -8,11 +8,16 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Directory containing saved models
 SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
-
+current_training_status = "ongoing"
 
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, "index.html")
+
+
+@app.route("/api/training-status")
+def training_status():
+    return jsonify({"Training status": current_training_status})
 
 
 # List all models in SAVED_MODEL_DIR
@@ -71,12 +76,15 @@ def connection_test():
     socketio.emit("connectionTest", {"message": "Hello from Flask!"})
     return "Event sent!"
 
-
 @app.route("/training-complete")
 def update_frontend():
-    socketio.emit("trainingComplete", {"key": False})
+    global current_training_status
+    print(f"{current_training_status=}")
+    current_training_status = "completed"
+    socketio.emit("trainingComplete", {"key": current_training_status})
     return "Updated Frontend that training is complete"
 
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5500, debug=True, allow_unsafe_werkzeug=True)
+    
