@@ -1,0 +1,8 @@
+{
+  "model__colsample_bytree": 0.7640415835413256,
+  "model__learning_rate": 0.11883357504897696,
+  "model__max_depth": 93,
+  "model__n_estimators": 384,
+  "model__scale_pos_weight": 14.722367172302954,
+  "model__subsample": 0.7656474529942154
+}
