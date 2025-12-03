@@ -10,7 +10,6 @@ RUN = uv run
 #                       RUN = .venv\Scripts\python.exe -m (Windows)
 
 FULL_TRAINING = train eval
-ALL_STEPS = prepare $(FULL_TRAINING)
 
 data-prep:
 	$(RUN) kedro run --pipeline data_preparation
@@ -25,4 +24,4 @@ train_eval:
 	$(FULL_TRAINING)
 
 all:
-	$(ALL_STEPS)
+	$(RUN) kedro run
