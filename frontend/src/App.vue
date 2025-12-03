@@ -2,8 +2,8 @@
   <h1 class="title-text">EGT309 Team Harish Kanna</h1>
 
   <div class="content-wrapper">
-    <TrainingInProgress v-if="!trainingComplete"/>
-    <ModelInfo v-if="trainingComplete"/>
+    <TrainingInProgress v-if="!trainingComplete" />
+    <ModelInfo v-if="trainingComplete" />
   </div>
 </template>
 
@@ -62,9 +62,9 @@ import TrainingInProgress from './components/TrainingInProgress.vue';
 }
 
 .content-wrapper {
-  border: 3px hsl(0, 0%, 35%) solid;
+  border: 3px hsl(0, 0%, 40%) solid;
   border-radius: 14px;
-  background-color: #131314;
+  background-color: hsl(24, 10%, 10%);
   filter: drop-shadow(0 0 0.75rem hsl(0, 0%, 35%));
 
   min-height: 75vh;
