@@ -220,7 +220,10 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         logger.debug("Applied Standard Scaling")
 
     return ColumnTransformer(
-        transformers=preprocessing_steps, remainder="passthrough", n_jobs=-1, verbose_feature_names_out=False
+        transformers=preprocessing_steps,
+        remainder="passthrough",
+        n_jobs=-1,
+        verbose_feature_names_out=False,
     )
 
 
