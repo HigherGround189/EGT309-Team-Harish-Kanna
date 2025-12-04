@@ -23,6 +23,14 @@ y_test:
   type: pickle.PickleDataset
   filepath: data/05_model_input/y_test.pkl
 
+X_train:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_train.pkl
+
+y_train:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_train.pkl
+
 # https://docs.kedro.org/en/0.19.12/data/kedro_dataset_factories.html
 "{model_name}_model_weights":
   type: pickle.PickleDataset

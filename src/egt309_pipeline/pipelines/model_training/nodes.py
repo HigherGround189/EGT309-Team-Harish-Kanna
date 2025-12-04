@@ -14,9 +14,13 @@ sklearn.set_config(transform_output="pandas")
 
 import GPUtil
 import pandas as pd
-from sklearn.base import BaseEstimator
+import numpy as np
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.model_selection import cross_val_predict
+from sklearn.utils.validation import check_is_fitted
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import StratifiedKFold, train_test_split
+from sklearn.metrics import precision_recall_curve
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 from skopt import BayesSearchCV
@@ -220,12 +224,40 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         logger.debug("Applied Standard Scaling")
 
     return ColumnTransformer(
+<<<<<<< HEAD
         transformers=preprocessing_steps,
         remainder="passthrough",
         n_jobs=-1,
         verbose_feature_names_out=False,
+=======
+        transformers=preprocessing_steps, remainder="passthrough", n_jobs=-1, verbose_feature_names_out=False
+>>>>>>> e118e96 (RecallOptimizedClassifier object)
     )
 
+class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
+    def __init__(self, base_estimator, cv, min_recall=0.85):
+        self.base_estimator = base_estimator
+        self.cv = cv
+        self.min_recall = min_recall
+        self.threshold_ = 0.5
+
+    def fit(self, X, y):        
+        y_proba = cross_val_predict(
+            self.base_estimator, X, y, cv=self.cv, method="predict_proba"
+        )[:, 1]
+
+        precision, recalls, thresholds = precision_recall_curve(y, y_proba)
+
+        valid_indices = np.where(recalls[:-1] >= self.min_recall)[0]
+        best_index = valid_indices[-1]
+        self.threshold_ = thresholds[best_index]
+
+    def predict(self, X):
+        probs = self.base_estimator.predict_proba(X)[:, 1]
+        return (probs >= self.threshold_).astype(int)
+
+    def predict_proba(self, X):
+        return self.base_estimator.predict_proba(X)
 
 #########
 # Nodes #
@@ -330,4 +362,12 @@ def train_model(
     )
 
     bs.fit(X_train, y_train)
+
+    # final_model = RecallOptimizedClassifier(
+    #     base_estimator=bs.best_estimator_,
+    #     cv=2,
+    #     min_recall=0.85
+    # )
+
+    # final_model.fit(X_train, y_train)
     return bs.best_estimator_, bs.best_params_

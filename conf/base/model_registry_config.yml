@@ -2,7 +2,7 @@ model_registry:
   random_forest:
     name: RandomForestClassifier
     yaml_header: random_forest_config
-    train_now: False
+    train_now: True
     evaluate_now: False
 
   xgboost:

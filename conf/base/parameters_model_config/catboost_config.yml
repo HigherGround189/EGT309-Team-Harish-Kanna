@@ -17,8 +17,8 @@ catboost_config:
   search_space:
     iterations:
       type: Integer
-      low: 500
-      high: 3000
+      low: 5
+      high: 10
 
     learning_rate:
       type: Real
