@@ -9,7 +9,7 @@ catboost_config:
 
   model_params:
     loss_function: "Logloss"
-    eval_metric: "recall"
+    eval_metric: "Recall"
     auto_class_weights: "Balanced"
     allow_writing_files: False
     verbose: 0
