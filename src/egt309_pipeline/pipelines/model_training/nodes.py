@@ -13,14 +13,12 @@ logger = logging.getLogger(__name__)
 sklearn.set_config(transform_output="pandas")
 
 import GPUtil
-import pandas as pd
 import numpy as np
+import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.model_selection import cross_val_predict
-from sklearn.utils.validation import check_is_fitted
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.metrics import precision_recall_curve
+from sklearn.model_selection import StratifiedKFold, cross_val_predict, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 from skopt import BayesSearchCV
@@ -230,6 +228,7 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         verbose_feature_names_out=False,
     )
 
+
 class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
     def __init__(self, base_estimator, cv, min_recall=0.85):
         self.base_estimator = base_estimator
@@ -237,7 +236,7 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
         self.min_recall = min_recall
         self.threshold_ = 0.5
 
-    def fit(self, X, y):        
+    def fit(self, X, y):
         y_proba = cross_val_predict(
             self.base_estimator, X, y, cv=self.cv, method="predict_proba"
         )[:, 1]
@@ -254,6 +253,7 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
 
     def predict_proba(self, X):
         return self.base_estimator.predict_proba(X)
+
 
 #########
 # Nodes #
