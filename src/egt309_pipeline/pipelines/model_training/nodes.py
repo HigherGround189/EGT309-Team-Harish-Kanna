@@ -366,4 +366,4 @@ def train_model(
     )
 
     final_model.fit(X_train, y_train)
-    return bs.best_estimator_, bs.best_params_
+    return final_model, bs.best_params_
