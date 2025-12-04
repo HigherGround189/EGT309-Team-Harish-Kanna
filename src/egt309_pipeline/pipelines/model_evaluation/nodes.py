@@ -94,7 +94,7 @@ def _plot_permutation_importance(
         y_test,
         n_repeats=params["permutation_feature_importance_n_repeats"],
         random_state=params["random_state"],
-        scoring="recall"
+        scoring="recall",
     )
 
     perm_importance_df = pd.DataFrame(

@@ -360,9 +360,7 @@ def train_model(
     bs.fit(X_train, y_train)
 
     final_model = RecallOptimizedClassifier(
-        base_estimator=bs.best_estimator_,
-        cv=2,
-        min_recall=0.85
+        base_estimator=bs.best_estimator_, cv=2, min_recall=0.85
     )
 
     final_model.fit(X_train, y_train)
