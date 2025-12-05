@@ -1171,6 +1171,7 @@ dependencies = [
     { name = "kedro-viz", version = "12.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "kedro-viz", version = "12.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "lightgbm" },
+    { name = "missmecha-py" },
     { name = "notebook" },
     { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
@@ -1210,6 +1211,7 @@ requires-dist = [
     { name = "kedro-datasets", specifier = ">=4.1.0" },
     { name = "kedro-viz", specifier = ">=12.1.0" },
     { name = "lightgbm", specifier = ">=4.6.0" },
+    { name = "missmecha-py", specifier = ">=0.1.2" },
     { name = "notebook" },
     { name = "numpy", specifier = ">=2.0.2" },
     { name = "pandas", specifier = ">=2.3.3" },
@@ -2843,6 +2845,29 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
+]
+
+[[package]]
+name = "missmecha-py"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "matplotlib", version = "3.9.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "matplotlib", version = "3.10.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "numpy", version = "2.3.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "pandas" },
+    { name = "scikit-learn", version = "1.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "scikit-learn", version = "1.7.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "scipy", version = "1.13.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "scipy", version = "1.16.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "seaborn" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/72/9c/a22cb205549d57d013e8d68040470e27f9c6a3903d12d0d14824d792e90f/missmecha_py-0.1.2.tar.gz", hash = "sha256:3f8d86df376db5f2a7372bd6aca3c4d8d9e7f20c24ab41a4d8c22c925b0dddf0", size = 32716, upload-time = "2025-07-29T23:05:30.966Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/59/89da414ea0e4df01b8b2356d522c7ef8c45ad0f64817572758174f4cb712/missmecha_py-0.1.2-py3-none-any.whl", hash = "sha256:f85e0db591584ed0c647b268eba5c14bb5d686a636833f9bbeab269958ebdf95", size = 36970, upload-time = "2025-07-29T23:05:29.845Z" },
 ]
 
 [[package]]
