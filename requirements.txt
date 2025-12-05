@@ -241,6 +241,7 @@ markupsafe==3.0.3
 matplotlib==3.10.7
     # via
     #   catboost
+    #   missingno
     #   missmecha-py
     #   seaborn
 matplotlib-inline==0.2.1
@@ -249,6 +250,8 @@ matplotlib-inline==0.2.1
     #   ipython
 mdurl==0.1.2
     # via markdown-it-py
+missingno==0.5.2
+    # via egt309-pipeline (pyproject.toml)
 missmecha-py==0.1.2
     # via egt309-pipeline (pyproject.toml)
 mistune==3.1.4
@@ -282,6 +285,7 @@ numpy==2.3.5
     #   imbalanced-learn
     #   lightgbm
     #   matplotlib
+    #   missingno
     #   missmecha-py
     #   pandas
     #   scikit-learn
@@ -445,6 +449,7 @@ scipy==1.16.3
     #   catboost
     #   imbalanced-learn
     #   lightgbm
+    #   missingno
     #   missmecha-py
     #   scikit-learn
     #   scikit-optimize
@@ -452,6 +457,7 @@ scipy==1.16.3
 seaborn==0.13.2
     # via
     #   egt309-pipeline (pyproject.toml)
+    #   missingno
     #   missmecha-py
 secure==1.0.1
     # via kedro-viz
