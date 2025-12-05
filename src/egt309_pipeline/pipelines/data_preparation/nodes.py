@@ -96,6 +96,7 @@ def _random_distribution(
     """
     df_temp = df.copy()
     col = df_temp[target_col]
+    rng = np.random.default_rng(42)
     if target_val is None:
         temp_col = col[~col.isna()]
         tobe_fill = col.isna()
@@ -105,7 +106,7 @@ def _random_distribution(
     distribution = temp_col.value_counts(normalize=True).tolist()
     labels = temp_col.value_counts().index.tolist()
     fill_mask = tobe_fill
-    fill = np.random.choice(labels, size=fill_mask.sum(), p=distribution)  # type: ignore
+    fill = rng.choice(labels, size=fill_mask.sum(), p=distribution)  # type: ignore
     df_temp.loc[fill_mask, target_col] = fill
     return df_temp
 
