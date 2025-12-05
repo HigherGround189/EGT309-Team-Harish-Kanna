@@ -1,5 +1,5 @@
-# Default Python trixie slim image with uv built in
-FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim
+# Default Python alpine image with uv built in
+FROM ghcr.io/astral-sh/uv:python3.13-alpine
 
 # Set workdir to /app
 WORKDIR /app

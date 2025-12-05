@@ -3,7 +3,7 @@ services:
     container_name: kedro-pipeline
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     image: higherground189/egt309-team-harish-kanna-kedro-pipeline
     volumes:
       - ./data:/app/data
@@ -11,7 +11,7 @@ services:
     container_name: visualisation-server
     build:
       context: visualisation-server/
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     image: higherground189/egt309-team-harish-kanna-kedro-visualisation-server
     ports:
       - "5500:5500"
