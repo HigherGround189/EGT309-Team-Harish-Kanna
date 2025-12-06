@@ -48,7 +48,7 @@ dev = [ "pytest-cov~=3.0", "pytest-mock>=1.7.1, <2.0", "pytest~=7.2", "ruff~=0.1
 package_name = "egt309_pipeline"
 project_name = "egt309-pipeline"
 kedro_init_version = "1.0.0"
-tools = "['Linting', 'Testing', 'Custom Logging', 'Data Structure']"
+tools = "['Linting', 'Custom Logging', 'Data Structure']"
 example_pipeline = "False"
 source_dir = "src"
 
