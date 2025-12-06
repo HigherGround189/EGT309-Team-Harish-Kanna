@@ -64,7 +64,7 @@ Advanced techniques such as MCAR assessment, mutual information analysis, and on
 
 ### 2. Key Findings
 #### Null Handling
-Missingness of the columns are evaluated using:
+Missingness of the columns were evaluated using:
 - Missingno visualization such as Dendrogram, Matrix and Heatmap
 - Little MCAR Test
 - Mutual Information between feature with missing values and other columns
@@ -76,7 +76,12 @@ Therefore, the chosen imputation techniques were designed for independent practi
 - KNN Imputation (use as a variantion for model training)
 
 #### Dependencies Analysis
+Statistical techniques were also conducted to check for dependencies and relationship between columns:
+- Pairwise Correlation (Numeric)
+- Mutual Information
+- Chi Square Test
 
+The results indicated that the columns have non-linear relationship, including numerical features. Most of the features showed low dependency with the target (Subscription Status) according to Normalized Mutual Information (NMI) and Chi Square Test. While the p values of Chi Square Test supports that there still exist dependencies between features and target. Additionally, a single feature has a very low NMI and score 1 for p value with the target was dropped.
 
 #### Pre-feature Selection
 
