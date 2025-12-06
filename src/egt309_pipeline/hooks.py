@@ -22,7 +22,7 @@ class TrainingCompleteHook:
 
         except Exception as exception:
             logger.error(
-                f"Can't contact visualisation-server container, falling back to localhost instead.\nException: {exception}"
+                f"Can't contact visualisation-server container. Is the pipeline running inside a container? Falling back to localhost instead.\nException: {exception}"
             )
 
             try:
