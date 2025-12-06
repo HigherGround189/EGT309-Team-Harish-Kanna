@@ -9,7 +9,7 @@ services:
       - ./data:/app/data
     tty: true
     environment:
-    - TERM=xterm-256color
+      - TERM=xterm-256color
   visualisation-server:
     container_name: visualisation-server
     build:
