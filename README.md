@@ -19,12 +19,12 @@
 
 ## Section B - Folder Overview
 ```
-.
-├── conf
+EGT309-Team-Harish-Kanna                Folder Explanations:
+├── conf                                <-- Pipeline Configuration
 │   ├── base
-│   │   └──parameters_model_config
+│   │   └──parameters_model_config      <-- Model Parameter Configuration
 │   └── local
-├── data
+├── data                                <-- Pipeline Data
 │   ├── 01_raw
 │   ├── 02_intermediate
 │   ├── 03_primary
@@ -34,7 +34,7 @@
 │   ├── 07_model_output
 │   └── 08_reporting
 ├── notebooks
-├── saved_models
+├── saved_models                        <-- Models Trained & Evaluated 
 │   ├── AdaBoostClassifier
 │   ├── CatBoostClassifier
 │   ├── LightGBMClassifier
@@ -42,12 +42,12 @@
 │   └── XGBoostClassifier
 ├── src
 │   └── egt309_pipeline
-│       └── pipelines
+│       └── pipelines                   <-- Individual Namespaced Pipelienes
 │           ├── data_preparation
 │           ├── model_evaluation
 │           └── model_training
-└── visualisation-server
-'''
+└── visualisation-server                <-- Webapp to view Model Results
+```
 
 ## Section C - Execution Instructions
 
