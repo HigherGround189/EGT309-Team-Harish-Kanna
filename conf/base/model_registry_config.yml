@@ -8,8 +8,8 @@ model_registry:
   xgboost:
     name: XGBoostClassifier
     yaml_header: xgboost_config
-    train_now: False
-    evaluate_now: False
+    train_now: True
+    evaluate_now: True
 
   lightgbm:
     name: LightGBMClassifier
