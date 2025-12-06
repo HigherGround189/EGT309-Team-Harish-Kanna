@@ -53,35 +53,38 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 
 ## Section D - Pipeline Design & Flow
 
-## Section E - Overview & key findings from EDA 
-
-### 1. Overview of Exploratory Data Analysis (EDA)
+## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
+### 1. Overview of EDA
 The dataset provided in this project comprises 41,188 records of bank marketing data containing client attributes and marketing campaign calls such as age, occupation, contact method and campaign calls. The primary objective of the analysis is to perform EDA to gain insights and findings into overall structure, quality and predictive usefulness of the features before training machine learning models.
 
-The analysis examined the missingness patterns, outliers, distribution shapes, feature dependencies and the overall suitability of features for machine learning.
+The analysis examined the missingness, outliers, distribution, feature dependencies and the overall suitability of features for machine learning. Advanced techniques such as MCAR assessment, mutual information analysis, and one hot aware feature selection were applied to guide appropriate imputation, preprocessing and feature engineering.
 
-Advanced techniques such as MCAR assessment, mutual information analysis, and one hot aware feature selection were applied to identify meaningful features and determine the appropriate preprocessing strategy. These findings led to the decisions for imputation and feature engineering.
-
-### 2. Key Findings
+### 2. Key Findings of EDA
 #### Null Handling
-Missingness of the columns are evaluated using:
+Missingness of the columns were evaluated using:
 - Missingno visualization such as Dendrogram, Matrix and Heatmap
 - Little MCAR Test
 - Mutual Information between feature with missing values and other columns
 
-All these evaluation results showed that the columns behaved closely as Missing Completely At Random (MCAR), meaning the missing values could not be reliably predicted using other variables (columns).
+All these evaluation results showed that the columns behaved closely as Missing Completely At Random (MCAR), meaning the missing values could not be reliably predicted using other variables.
 
 Therefore, the chosen imputation techniques were designed for independent practices:
 - Random Distribution Imputation
 - KNN Imputation (use as a variantion for model training)
 
 #### Dependencies Analysis
+Statistical techniques were also conducted for relationship checking:
+- Pairwise Correlation (Numeric)
+- Mutual Information
+- Chi Square Test
 
+Most features showed low but non-zero dependency with the target (Subscription Status), indicating weak but potentially useful predictive signals. The features also have non-linear relationships, including numeric.
 
 #### Pre-feature Selection
-
+Mutual information combined with SelectKBest and SelectPercentile was applied on integer and one hot encoded features separately. Across all four approaches, Previously Contacted, Contact Method and Campaign Calls consistently ranked as most important. Certain values of Marital Status (married and single) and levels of education also contributed to prediction values for the target, indicating that both demographic and campaign-related attributes are useful for predicting subscription behaviour.
 
 #### Dealing with imbalance class
+Analyzing the class ditribution of Subscription Status, there is a huge imbalance 88.7% (No) and 11.3% (Yes), suggesting the need for techniques like SMOTE or stratified sampling during model training. 
 
 
 ## Section F - Feature Processing
