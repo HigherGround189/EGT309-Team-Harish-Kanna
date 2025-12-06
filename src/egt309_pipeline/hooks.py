@@ -1,10 +1,44 @@
-import logging
-
+from rich.console import Console
+from rich_gradient import Gradient
 import requests
 from kedro.framework.hooks import hook_impl
+import logging
 
 logger = logging.getLogger(__name__)
+console = Console(force_terminal=True)
 
+class DisplayBannerBeforePipelineRuns:
+    @hook_impl
+    def after_context_created(self):
+        # Created with https://www.patorjk.com/software/taag/#p=display&f=ANSI+Shadow&t=EGT309+TEAM%0AHarish+Kanna&x=none&v=4&h=4&w=80&we=false
+        banner_text = """
+        ███████╗ ██████╗████████╗██████╗  ██████╗  █████╗     ████████╗███████╗ █████╗ ███╗   ███╗
+        ██╔════╝██╔════╝╚══██╔══╝╚════██╗██╔═████╗██╔══██╗    ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║
+        █████╗  ██║  ███╗  ██║    █████╔╝██║██╔██║╚██████║       ██║   █████╗  ███████║██╔████╔██║
+        ██╔══╝  ██║   ██║  ██║    ╚═══██╗████╔╝██║ ╚═══██║       ██║   ██╔══╝  ██╔══██║██║╚██╔╝██║
+        ███████╗╚██████╔╝  ██║   ██████╔╝╚██████╔╝ █████╔╝       ██║   ███████╗██║  ██║██║ ╚═╝ ██║
+        ╚══════╝ ╚═════╝   ╚═╝   ╚═════╝  ╚═════╝  ╚════╝        ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
+
+        ██╗  ██╗ █████╗ ██████╗ ██╗███████╗██╗  ██╗    ██╗  ██╗ █████╗ ███╗   ██╗███╗   ██╗ █████╗
+        ██║  ██║██╔══██╗██╔══██╗██║██╔════╝██║  ██║    ██║ ██╔╝██╔══██╗████╗  ██║████╗  ██║██╔══██╗
+        ███████║███████║██████╔╝██║███████╗███████║    █████╔╝ ███████║██╔██╗ ██║██╔██╗ ██║███████║
+        ██╔══██║██╔══██║██╔══██╗██║╚════██║██╔══██║    ██╔═██╗ ██╔══██║██║╚██╗██║██║╚██╗██║██╔══██║
+        ██║  ██║██║  ██║██║  ██║██║███████║██║  ██║    ██║  ██╗██║  ██║██║ ╚████║██║ ╚████║██║  ██║
+        ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚═╝  ╚═╝
+        """
+
+        # Taken from https://uigradients.com/#SlightOceanView and https://uigradients.com/#Magic
+        gradient_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
+
+        console.print(
+            Gradient(text=banner_text, colors=gradient_colours),
+            justify="center"
+        )
+
+        console.print(
+            Gradient(text="Pipeline Starting...", colors=["#a8c0ff", "#a17fe0"]),
+            justify="center"
+        )
 
 class TrainingCompleteHook:
     @hook_impl
