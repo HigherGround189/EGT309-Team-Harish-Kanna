@@ -4,10 +4,12 @@
 
 ### Leong Jun Hoe - 230633N@mymail.nyp.edu.sg
 - Data preprocessing
+- Feature Analysis
 - Feature engineering 
 
 ### Lee Ying Ray - 233466E@mymail.nyp.edu.sg
 - Pipeline Development
+- Pipeline Containerisation
 - Repository Automation
 
 ### Zhang Zhe Xiang - 232842C@mymail.nyp.edu.sg
