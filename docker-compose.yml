@@ -15,7 +15,7 @@ services:
     container_name: visualisation-server
     build:
       context: visualisation-server/
-      dockerfile: Visualisation.Dockerfile
+      dockerfile: Visualisation-Server.Dockerfile
     image: higherground189/egt309-team-harish-kanna-kedro-visualisation-server
     ports:
       - "5500:5500"

@@ -1,5 +1,5 @@
 # Default Python alpine image with uv built in
-FROM ghcr.io/astral-sh/uv:python3.13-alpine
+FROM ghcr.io/astral-sh/uv:python3.12-alpine
 
 # Set workdir to /app
 WORKDIR /app
