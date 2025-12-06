@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Final_eda</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>eda</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7536,7 +7536,6 @@ a.anchor-link {
 <span class="kn">import</span><span class="w"> </span><span class="nn">missingno</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">msno</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">missmecha.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCARTest</span>
@@ -8440,7 +8439,7 @@ dtype: int64</pre>
     <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">x_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plot a bar graph for the input data.</span>
@@ -8466,12 +8465,28 @@ dtype: int64</pre>
         <span class="c1"># To display top frequent unique values</span>
         <span class="n">plot_df</span> <span class="o">=</span> <span class="n">counts</span> <span class="k">if</span> <span class="n">top</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">counts</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
 
-        <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">plot_df</span><span class="p">[</span><span class="s2">"count"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">"pastel"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">plot_df</span><span class="p">)))</span>
+        <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span>
+            <span class="n">plot_df</span><span class="p">[</span><span class="s2">"count"</span><span class="p">],</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">"pastel"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">plot_df</span><span class="p">)),</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">plot_df</span><span class="p">[</span><span class="s2">"label_text"</span><span class="p">]):</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">(),</span> <span class="n">label</span><span class="p">,</span>
-                     <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'bottom'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                <span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">(),</span>
+                <span class="n">label</span><span class="p">,</span>
+                <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span>
+                <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">legend</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+                <span class="n">bars</span><span class="p">,</span>
+                <span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span>
+            <span class="p">)</span>
 
     <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"bar"</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># To ensure y is provided to compare</span>
@@ -8479,13 +8494,30 @@ dtype: int64</pre>
         <span class="c1"># To display top frequent unique values</span>
         <span class="n">plot_df</span> <span class="o">=</span> <span class="n">df</span> <span class="k">if</span> <span class="n">top</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
 
-        <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="n">plot_df</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">"pastel"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">plot_df</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="n">y</span> <span class="k">if</span> <span class="n">legend</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+            <span class="n">plot_df</span><span class="p">[</span><span class="n">y</span><span class="p">],</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">"pastel"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">plot_df</span><span class="p">)),</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">y</span> <span class="k">if</span> <span class="n">legend</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">plot_df</span><span class="p">[</span><span class="n">y</span><span class="p">]):</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> 
-                     <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'bottom'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                <span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">(),</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span>
+                <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">legend</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'upper left'</span><span class="p">)</span>
-            
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+                <span class="n">bars</span><span class="p">,</span>
+                <span class="n">plot_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span>
+            <span class="p">)</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"kind must be 'bar' or 'count'"</span><span class="p">)</span>
 
@@ -8516,7 +8548,7 @@ dtype: int64</pre>
 <span class="sd">    shrink: add gap between histogram bars</span>
 <span class="sd">    """</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-    
+
     <span class="c1"># Plot histogram</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span>
         <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span>
@@ -8524,11 +8556,11 @@ dtype: int64</pre>
         <span class="n">color</span><span class="o">=</span><span class="s2">"skyblue"</span><span class="p">,</span>
         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span>
         <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
-        <span class="n">shrink</span><span class="o">=</span><span class="n">shrink</span>
+        <span class="n">shrink</span><span class="o">=</span><span class="n">shrink</span><span class="p">,</span>
     <span class="p">)</span>
-    
+
     <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="n">x_rotation</span><span class="p">)</span>
-    
+
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span> <span class="k">if</span> <span class="n">title</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"Histogram of </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Frequency"</span><span class="p">)</span>
@@ -8545,10 +8577,10 @@ dtype: int64</pre>
 <span class="sd">    col   : name of column for x-axis</span>
 <span class="sd">    """</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-    
+
     <span class="c1"># Plot boxplot</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
-    
+
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span> <span class="k">if</span> <span class="n">title</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"Box Plot of </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="n">y_rotation</span><span class="p">)</span>
@@ -8711,7 +8743,7 @@ Name: Age, dtype: object</pre>
     <span class="n">top</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">fontsize</span><span class="o">=</span><span class="mi">5</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -8858,7 +8890,7 @@ Name: Occupation, dtype: object</pre>
     <span class="n">title</span><span class="o">=</span><span class="s2">"Occupation Distribution"</span><span class="p">,</span>
     <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">fontsize</span><span class="o">=</span><span class="mi">5</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -10452,9 +10484,7 @@ Name: Age, Length: 41188, dtype: int64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [405]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_hist_graph</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"Age"</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">150</span><span class="p">],</span> <span class="n">col</span><span class="o">=</span><span class="s2">"Age"</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span>
-<span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_hist_graph</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"Age"</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">150</span><span class="p">],</span> <span class="n">col</span><span class="o">=</span><span class="s2">"Age"</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -11487,9 +11517,7 @@ Name: Age_mean, dtype: float64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [421]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_hist_graph</span><span class="p">(</span>
-    <span class="n">df_mean_rp</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">"Age_mean"</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span>
-<span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_hist_graph</span><span class="p">(</span><span class="n">df_mean_rp</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">"Age_mean"</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -11581,9 +11609,7 @@ Name: Age_median, dtype: float64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [424]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_hist_graph</span><span class="p">(</span>
-    <span class="n">df_median_rp</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">"Age_median"</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span>
-<span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_hist_graph</span><span class="p">(</span><span class="n">df_median_rp</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">"Age_median"</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">x_rotation</span><span class="o">=-</span><span class="mi">55</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -13588,8 +13614,8 @@ Subscription Status               1.000000
 </blockquote>
 <hr/>
 <ol>
-<li>The p values just shows whether any dependencies exist for the columns, while mutual information and chi square shows the strength of those dependencies.</li>
-<li>Both mutual information and p values are suggesting to drop Previous Contact Days.</li>
+<li>The p values just shows whether any dependencies exist for the columns (p value &lt; 0.05, rejecting null hypothesis), while mutual information and chi square shows the strength of those dependencies.</li>
+<li>Both mutual information and p values are suggesting to drop Previous Contact Days since they are &gt; 0.05, which fails to reject the null hypothesis, saying Previous Contact Days has insufficient evidence of relating with other columns, especially Subscription Status.</li>
 <li>Though Personal Loan has high p values (0.7) suggesting that there is less evidence of association with Status Subscription. However, there is still some association and since other columns already have a low dependencies, it would be best to continue keeping Personal Loan to predict Subscription Status.</li>
 </ol>
 </div>
