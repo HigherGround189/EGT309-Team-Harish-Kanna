@@ -1,6 +1,19 @@
 # EGT309 Team Harish Kanna
 
-## Section A - Contributers
+## Section A - Contributors
+
+### Leong Jun Hoe - 230633N@mymail.nyp.edu.sg
+- Data preprocessing
+- Feature engineering 
+
+### Lee Ying Ray - 233466E@mymail.nyp.edu.sg
+- Pipeline Development
+- Repository Automation
+
+### Zhang Zhe Xiang - 232842C@mymail.nyp.edu.sg
+- Model Training
+- Model Tuning
+- Model Evaluation
 
 ## Section B - Folder Overview
 
