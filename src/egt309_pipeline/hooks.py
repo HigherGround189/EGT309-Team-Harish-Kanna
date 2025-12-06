@@ -33,8 +33,7 @@ class DisplayBannerBeforePipelineRuns:
         gradient_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
 
         console.print(
-            Gradient(text=banner_text, colors=gradient_colours),
-            justify="center"
+            Gradient(text=banner_text, colors=gradient_colours), justify="center"
         )
 
         console.print(
