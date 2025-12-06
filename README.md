@@ -57,9 +57,7 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 ### 1. Overview of EDA
 The dataset provided in this project comprises 41,188 records of bank marketing data containing client attributes and marketing campaign calls such as age, occupation, contact method and campaign calls. The primary objective of the analysis is to perform EDA to gain insights and findings into overall structure, quality and predictive usefulness of the features before training machine learning models.
 
-The analysis examined the missingness patterns, outliers, distribution shapes, feature dependencies and the overall suitability of features for machine learning.
-
-Advanced techniques such as MCAR assessment, mutual information analysis, and one hot aware feature selection were applied to identify meaningful features and determine the appropriate preprocessing strategy. These findings led to the decisions for imputation and feature engineering.
+The analysis examined the missingness, outliers, distribution, feature dependencies and the overall suitability of features for machine learning. Advanced techniques such as MCAR assessment, mutual information analysis, and one hot aware feature selection were applied to guide appropriate imputation, preprocessing and feature engineering.
 
 ### 2. Key Findings of EDA
 #### Null Handling
@@ -68,30 +66,25 @@ Missingness of the columns were evaluated using:
 - Little MCAR Test
 - Mutual Information between feature with missing values and other columns
 
-All these evaluation results showed that the columns behaved closely as Missing Completely At Random (MCAR), meaning the missing values could not be reliably predicted using other variables (columns).
+All these evaluation results showed that the columns behaved closely as Missing Completely At Random (MCAR), meaning the missing values could not be reliably predicted using other variables.
 
 Therefore, the chosen imputation techniques were designed for independent practices:
 - Random Distribution Imputation
 - KNN Imputation (use as a variantion for model training)
 
 #### Dependencies Analysis
-Statistical techniques were also conducted to check for dependencies and relationship between columns:
+Statistical techniques were also conducted for relationship checking:
 - Pairwise Correlation (Numeric)
 - Mutual Information
 - Chi Square Test
 
-The results indicated that the columns have non-linear relationship, including numerical features. Most of the features showed low dependency with the target (Subscription Status) according to Normalized Mutual Information (NMI) and Chi Square Test. While the p values of Chi Square Test supports that there still exist dependencies between features and target. Additionally, a single feature has a very low NMI and score 1 for p value with the target was dropped.
+Most features showed low but non-zero dependency with the target (Subscription Status), indicating weak but potentially useful predictive signals. The features also have non-linear relationships, including numeric.
 
 #### Pre-feature Selection
-As additional support for selecting important features, mutual information was also leveraged in combination with SelectKBest and SelectPercentile. 4 combinations were tested:
-- Integer Encoded with SelectKBest
-- Integer Encoded with SelectPercentile
-- One Hot Encoded with SelectKBest
-- One Hot Encoded with SelectPercentile
-
-Across the four approach, the features Previously Contacted, Contact Method and Campaign Calls consistently ranked as the most important. Furthermore, certain values of Marital Status (married and single) and levels of education also contributed to prediction values for the target. These results indicate that both demographic and campaign-related attributes are useful for predicting subscription behaviour.
+Mutual information combined with SelectKBest and SelectPercentile was applied on integer and one hot encoded features separately. Across all four approaches, Previously Contacted, Contact Method and Campaign Calls consistently ranked as most important. Certain values of Marital Status (married and single) and levels of education also contributed to prediction values for the target, indicating that both demographic and campaign-related attributes are useful for predicting subscription behaviour.
 
 #### Dealing with imbalance class
+Analyzing the class ditribution of Subscription Status, there is a huge imbalance 88.7% (No) and 11.3% (Yes), suggesting the need for techniques like SMOTE or stratified sampling during model training. 
 
 
 ## Section F - Feature Processing
