@@ -29,6 +29,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
+          file: Pipeline.Dockerfile
           push: true
           tags: higherground189/egt309-team-harish-kanna-kedro-pipeline:latest
 
@@ -51,6 +52,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
+          file: Visualisation-server.Dockerfile
           context: "{{defaultContext}}:visualisation-server"
           push: true
           tags: higherground189/egt309-team-harish-kanna-kedro-visualisation-server:latest
