@@ -1,26 +1,19 @@
-# What is this for?
+# EGT309 Team Harish Kanna
 
-This folder should be used to store configuration files used by Kedro or by separate tools.
+## Section A - Contributers
 
-This file can be used to provide users with instructions for how to reproduce local configuration with their own credentials. You can edit the file however you like, but you may wish to retain the information below and add your own section in the [Instructions](#Instructions) section.
+## Section B - Folder Overview
 
-## Local configuration
+## Section C - Execution Instructions
 
-The `local` folder should be used for configuration that is either user-specific (e.g. IDE configuration) or protected (e.g. security keys).
+## Section D - Pipeline Design & Flow
 
-> *Note:* Please do not check in any local configuration to version control.
+## Section E - Overview & key findings from EDA 
 
-## Base configuration
+## Section F - Feature Processing
 
-The `base` folder is for shared configuration, such as non-sensitive and project-related configuration that may be shared across team members.
+## Section G - Model Choice Overview
 
-WARNING: Please do not put access credentials in the base configuration folder.
+## Section H - Model Evaluation
 
-## Instructions
-
-
-
-
-## Need help?
-
-[Find out more about configuration from the Kedro documentation](https://docs.kedro.org/en/stable/kedro_project_setup/configuration.html).
+## Section I - Model Deployment Considerations
