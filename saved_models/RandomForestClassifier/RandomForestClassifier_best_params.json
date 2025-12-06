@@ -1,0 +1,8 @@
+{
+  "model__class_weight": "balanced",
+  "model__max_depth": 10,
+  "model__max_features": "log2",
+  "model__max_samples": 0.5,
+  "model__min_samples_split": 25,
+  "model__n_estimators": 200
+}
