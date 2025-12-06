@@ -7,6 +7,9 @@ services:
     image: higherground189/egt309-team-harish-kanna-kedro-pipeline
     volumes:
       - ./data:/app/data
+    tty: true
+    environment:
+    - TERM=xterm-256color
   visualisation-server:
     container_name: visualisation-server
     build:
@@ -17,3 +20,4 @@ services:
       - "5500:5500"
     volumes:
       - ./data/06_models:/app/saved_models
+    tty: true
