@@ -21,9 +21,6 @@ banner_text = """
 """
 
 # Taken from https://uigradients.com/#SlightOceanView and https://uigradients.com/#Magic
-gradient_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"] 
+gradient_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
 
-console.print(
-    Gradient(text=banner_text, colors=gradient_colours),
-    justify="center"
-)
+console.print(Gradient(text=banner_text, colors=gradient_colours), justify="center")

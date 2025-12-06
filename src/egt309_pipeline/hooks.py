@@ -1,11 +1,13 @@
-from rich.console import Console
-from rich_gradient import Gradient
+import logging
+
 import requests
 from kedro.framework.hooks import hook_impl
-import logging
+from rich.console import Console
+from rich_gradient import Gradient
 
 logger = logging.getLogger(__name__)
 console = Console(force_terminal=True)
+
 
 class DisplayBannerBeforePipelineRuns:
     @hook_impl
@@ -31,14 +33,14 @@ class DisplayBannerBeforePipelineRuns:
         gradient_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
 
         console.print(
-            Gradient(text=banner_text, colors=gradient_colours),
-            justify="center"
+            Gradient(text=banner_text, colors=gradient_colours), justify="center"
         )
 
         console.print(
             Gradient(text="Pipeline Starting...", colors=["#a8c0ff", "#a17fe0"]),
-            justify="center"
+            justify="center",
         )
+
 
 class TrainingCompleteHook:
     @hook_impl
