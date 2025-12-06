@@ -33,7 +33,8 @@ class DisplayBannerBeforePipelineRuns:
         gradient_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
 
         console.print(
-            Gradient(text=banner_text, colors=gradient_colours), justify="center"
+            Gradient(text=banner_text, colors=gradient_colours),
+            justify="center"
         )
 
         console.print(
@@ -51,7 +52,7 @@ class TrainingCompleteHook:
         fallback_url = "http://localhost:5500/training-complete"
 
         try:
-            response = requests.get(primary_url, timeout=10)
+            response = requests.get(primary_url, timeout=3)
             response.raise_for_status()  # Raise error if request is unsucessful
 
             logger.info("Model Evaluation Completed! Sucessfully reloaded frontend!")
@@ -62,7 +63,7 @@ class TrainingCompleteHook:
             )
 
             try:
-                response = requests.get(fallback_url, timeout=10)
+                response = requests.get(fallback_url, timeout=3)
                 response.raise_for_status()
                 return response.json()
 
