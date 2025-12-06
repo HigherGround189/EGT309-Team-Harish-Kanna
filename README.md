@@ -53,16 +53,15 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 
 ## Section D - Pipeline Design & Flow
 
-## Section E - Overview & key findings from EDA 
-
-### 1. Overview of Exploratory Data Analysis (EDA)
+## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
+### 1. Overview of EDA
 The dataset provided in this project comprises 41,188 records of bank marketing data containing client attributes and marketing campaign calls such as age, occupation, contact method and campaign calls. The primary objective of the analysis is to perform EDA to gain insights and findings into overall structure, quality and predictive usefulness of the features before training machine learning models.
 
 The analysis examined the missingness patterns, outliers, distribution shapes, feature dependencies and the overall suitability of features for machine learning.
 
 Advanced techniques such as MCAR assessment, mutual information analysis, and one hot aware feature selection were applied to identify meaningful features and determine the appropriate preprocessing strategy. These findings led to the decisions for imputation and feature engineering.
 
-### 2. Key Findings
+### 2. Key Findings of EDA
 #### Null Handling
 Missingness of the columns were evaluated using:
 - Missingno visualization such as Dendrogram, Matrix and Heatmap
@@ -84,7 +83,13 @@ Statistical techniques were also conducted to check for dependencies and relatio
 The results indicated that the columns have non-linear relationship, including numerical features. Most of the features showed low dependency with the target (Subscription Status) according to Normalized Mutual Information (NMI) and Chi Square Test. While the p values of Chi Square Test supports that there still exist dependencies between features and target. Additionally, a single feature has a very low NMI and score 1 for p value with the target was dropped.
 
 #### Pre-feature Selection
+As additional support for selecting important features, mutual information was also leveraged in combination with SelectKBest and SelectPercentile. 4 combinations were tested:
+- Integer Encoded with SelectKBest
+- Integer Encoded with SelectPercentile
+- One Hot Encoded with SelectKBest
+- One Hot Encoded with SelectPercentile
 
+Across the four approach, the features Previously Contacted, Contact Method and Campaign Calls consistently ranked as the most important. Furthermore, certain values of Marital Status (married and single) and levels of education also contributed to prediction values for the target. These results indicate that both demographic and campaign-related attributes are useful for predicting subscription behaviour.
 
 #### Dealing with imbalance class
 
