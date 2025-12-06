@@ -91,8 +91,21 @@ Analyzing the class ditribution of Subscription Status, there is a huge imbalanc
 
 
 
-| Feature Names | Data Type | Issues Identified | Processing / Transformation Applied | Reason
+| Feature Names | Data Type | Issues Identified | Processing / Transformation Applied | Reason |
 |:-------|:---------:|:-------:|:---------:|:-------:|
+|`Client ID`| Category | No predictive value | Dropped | Identifier; Not useful for model |
+|`Age`| Number | Text included ('years old'), outlier 150 | Removed 'years old' & Impute 150 | Standardization and correcting invalid value |
+|`Occupation`| Category | Contained 'unknown' | Removed 'unknown' | Avoid meaningless category |
+|`Marital Status`| Category | Contained 'unknown' | Removed 'unknown' | Avoid meaningless category |
+|`Education Level`| Category | - | - | - |
+|`Credit Default`| Category | High imbalance class | Dropped | Not useful for model |
+|`Housing Loan`| Category | 60% missing data | Dropped | MCAR & Too huge number of missing values to be imputed fairly |
+|`Personal Loan`| Category | 10% missing data | Impute nan | MCAR & Missing values handled with Random Distribution Imputation |
+|`Contact Method`| Category | Inconsistent category naming ('cel' & 'Telephone') | Rename 'cel' with 'cellular' & 'Telephone' with 'telephone' | Standardization; Ensure clean processing |
+|`Campaign Calls`| Number | Negative values present | Converted to positive with absolute | Negative values are invalid; Mirrored distribution (likely error in negative) |
+|`Previous Contact Days`| Number | No association with Subscription Status | Dropped | Avoid meaningless feature |
+|`Previously Contacted`| Boolean | Derived from Previous Contact Days | True if not 999; False if 999 | Clear indicator for model training |
+|`Subscription Status`| Boolean | Text ('yes';'no') & heavily imbalanced | Convert to binary (True if 'yes'; False if 'no') | Target variable; Require stratified sampling during model training & Appropriate type conversion |
 
 ## Section G - Model Choice Overview
 
