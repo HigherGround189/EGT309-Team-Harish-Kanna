@@ -3,9 +3,9 @@
 ## Section A - Contributors
 
 ### Leong Jun Hoe - 230633N@mymail.nyp.edu.sg
-- Data preprocessing
+- Data Preprocessing
 - Feature Analysis
-- Feature engineering 
+- Feature Engineering 
 
 ### Lee Ying Ray - 233466E@mymail.nyp.edu.sg
 - Pipeline Development
@@ -18,6 +18,36 @@
 - Model Evaluation
 
 ## Section B - Folder Overview
+```
+.
+├── conf
+│   ├── base
+│   │   └──parameters_model_config
+│   └── local
+├── data
+│   ├── 01_raw
+│   ├── 02_intermediate
+│   ├── 03_primary
+│   ├── 04_feature
+│   ├── 05_model_input
+│   ├── 06_models
+│   ├── 07_model_output
+│   └── 08_reporting
+├── notebooks
+├── saved_models
+│   ├── AdaBoostClassifier
+│   ├── CatBoostClassifier
+│   ├── LightGBMClassifier
+│   ├── RandomForestClassifier
+│   └── XGBoostClassifier
+├── src
+│   └── egt309_pipeline
+│       └── pipelines
+│           ├── data_preparation
+│           ├── model_evaluation
+│           └── model_training
+└── visualisation-server
+'''
 
 ## Section C - Execution Instructions
 
