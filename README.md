@@ -70,7 +70,7 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 > You may need to run `chmod +x run.sh` before running it.
 
 > [!TIP]
-> If you want to <u>**build the images from source**</u> (instead of pulling ?> > images from DockerHub):
+> If you want to <u>**build the images from source**</u> (instead of pulling images from DockerHub):
  ```bash
  docker compose up --build
 ```
@@ -92,13 +92,15 @@ _Assuming that the repository is already cloned:_
 docker compose -f development.docker-compose.yml up --build
 ```
 
-### Defining YAML configuration files for the pipeline
-The model training portion of the pipeline is designed such that you can train new models (as long as they inherit from scikit-learn's BaseEstimator class) solely by **specifying the model's configuration in YAML files** and **installing the required package**. This avoids the need to hardcode a new model class for each training run.
+### Defining YAML configuration files for Model Training
+The Pipeline's model training is designed such that you can train new models (as long as they inherit from scikit-learn's BaseEstimator class) solely by <u>**specifying the model's configuration in YAML files**</u> and <u>**installing the required package**</u>. This avoids the need to hardcode a new model class for each training run.
 
-> **Note**: The naming of individual configuration files doesn't matter, as Kedro concatenates all configuration files into a single configuration dictionary during loading. In fact, it is possible to combine all model configurations into a single YAML file. However, for better organization, I recommend defining each model's configuration in its own file, where the filename mirrors the root key (e.g., random_forest_config.yml for the root key named random_forest_config).
+> [!NOTE]
+> The naming of individual configuration files doesn't matter, as Kedro concatenates all configuration files into a single configuration dictionary during loading. In fact, it is possible to combine all model configurations into a single YAML file. However, for better organization, it is recommend to define each model's configuration in its own file, where the filename mirrors the root key (e.g.  `random_forest_config.yml` for the root key named `random_forest_config`).
 
 #### Defining model training configuration
-I highly recommend specifying model configurations within the /conf/base/parameters_model_config directory. The root-level key for each model configuration can be named arbitrarily, as you'll reference it explicitly in the model_registry_config.yml file. However, I suggest following the format <model_name>_config (e.g., random_forest_config) to define your root key.
+> [!IMPORTANT]
+> It is highly recommend specifying model configurations within the [parameters_model_config](conf/base/parameters_model_config) directory. The root-level key for each model configuration can be named arbitrarily, as you'll reference it explicitly in the [model_registry_config.yml](conf/base/model_registry_config.yml) file. However, format `<model_name>_config` (e.g. `random_forest_config`) is suggested to define your root key.
 
 **Each model configuration MUST follow this YAML schema:**
 *   class: str, required  
@@ -284,8 +286,8 @@ graph TD
 Nodes | Purpose | Input | Output |
 |:---|:---|:---:|:---:|
 Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in [eda.ipynb](eda.pdf)) | bmarket `(SQLTableDataset)` | cleaned_bmarket `(CSVDataset)`
-Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf\base\parameters_model_training.yml)   | cleaned_bmarket `(CSVDataset)` | X Train, X Test, Y Train, Y Test `(PickleDataset)`
-Train <u>**{MODEL}**</u> Node | Trains Selected Model <u>**{MODEL}**</u> using hyperparameters defined in [parameters_model_config](conf\base\parameters_model_config). | X Train, Y Train `(PickleDataset)` | <u>**{MODEL}**</u> Best Params `(JSONDataset)`, <u>**{MODEL}**</u>Weights `(PickleDataset)`
+Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf/base/parameters_model_training.yml)   | cleaned_bmarket `(CSVDataset)` | X Train, X Test, Y Train, Y Test `(PickleDataset)`
+Train <u>**{MODEL}**</u> Node | Trains Selected Model <u>**{MODEL}**</u> using hyperparameters defined in [parameters_model_config](conf/base/parameters_model_config). | X Train, Y Train `(PickleDataset)` | <u>**{MODEL}**</u> Best Params `(JSONDataset)`, <u>**{MODEL}**</u>Weights `(PickleDataset)`
 Evaluate <u>**{MODEL}**</u> Node | Evaluates <u>**{MODEL}**</u> and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|<u>**{MODEL}**</u> Model Weights, X Test, Y Test `(PickleDataset)` | <u>**{MODEL}**</u> Metrics `(JSONDataset)`, <u>**{MODEL}**</u> Confusion Matrix, <u>**{MODEL}**</u> Auc Roc Curve, <u>**{MODEL}**</u> Feature Importance `(MatplotlibDataset)`
  
 
