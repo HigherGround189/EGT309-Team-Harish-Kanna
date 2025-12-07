@@ -223,6 +223,9 @@ model_registry_config:
 *   `minimum_recall: float`, *default=0.85* <br>
         The minimum acceptable recall score for the model during evaluation. The pipeline will adjust the model's decision threshold (e.g., for binary classification) as needed to ensure the recall meets or exceeds this value.
 
+*   `bayes_scoring: str`, required <br>
+        Scoring method used on models trained with BayesSearchCV.
+
 **Example**
 ```yaml
 parameters_model_training:
@@ -436,7 +439,7 @@ We hypothesized that the 'yes' class for subcription not only had a small sample
 
 ## Section H - Model Evaluation
 
-**Models chosen in the end**
+**Models chosen in the end** <br>
 Looking at the goal of the project, we have to “identify which clients are most likely to respond positively” and “optimize the company’s marketing strategies”. This meant that we had to **maximize the identification of actual subscribers** and therefore should optimize for recall. This is because optimizing for recall ensures the bank captures the maximum possible market share, rather than leaving potential customers behind. To do this, we chose to optimize recall as an evaluation metric.  
 
 However, since the dataset is highly imbalanced, we cannot get the model to achieve a high recall just based off training. To fix this issue, we improved the model's recall by adjusting the model's decision threshold to make sure that the model achieves minimally a recall of 80%. However, this also means we are trading recall for precision and that precision becomes lower.
