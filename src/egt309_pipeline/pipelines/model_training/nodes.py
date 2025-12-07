@@ -230,6 +230,25 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
 
 
 class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
+    """
+    A wrapper that adjusts the model's decision threshold to ensure that a certain percentage of positive cases is minimally caught.
+    This ensures that the model finds at least the "min_recall" amount of true positives, which minimizes false negatives (missed detections).
+
+    Do take note this approach also decreases the precision, which means the model will also be more prone to flagging more false positives.
+
+    Parameters
+    ----------
+    base_estimator: BaseEstimator
+        Model that is to be tuned
+
+    cv: int
+        How many cross validation chunks to split the data
+
+    min_recall: float, default=0.85
+        Minimum target percentage of positive classes that the model should be able to detect (Float between range of 0.0 to 1.0)
+
+    """
+
     def __init__(self, base_estimator, cv, min_recall=0.85):
         self.base_estimator = base_estimator
         self.cv = cv
@@ -346,11 +365,12 @@ def train_model(
         random_state=options["random_state"],
     )
 
+    # Hyperparameter optimization with Bayesian Optimisation
     bs = BayesSearchCV(
         estimator=model_to_tune,
         search_spaces=param_grid,
         cv=cv_strategy,
-        scoring="recall_macro",  # F1 is used due to class imbalance
+        scoring="recall_weighted",
         n_jobs=-1,
         verbose=0,
         n_iter=options["bayes_search_n_iters"],
@@ -359,8 +379,11 @@ def train_model(
 
     bs.fit(X_train, y_train)
 
+    # Wrapper to ensure that the model meets the minimum recall
     final_model = RecallOptimizedClassifier(
-        base_estimator=bs.best_estimator_, cv=2, min_recall=0.85
+        base_estimator=bs.best_estimator_,
+        cv=options["cv_splits"],
+        min_recall=options["minimum_recall"],
     )
 
     final_model.fit(X_train, y_train)

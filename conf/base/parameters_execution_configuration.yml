@@ -1,5 +1,0 @@
-execution_config:
-  test_size: 0.2
-  random_state: 42
-  cv_splits: 5
-  bayes_search_n_iters: 10 # Specify Bayes Search number of iterations

@@ -3,6 +3,8 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
 
+# ---^^^%%%^^^-- #
+# Used for the data_preparation pipeline
 bmarket:
   type: pandas.SQLTableDataset
   table_name: bank_marketing
@@ -14,7 +16,11 @@ cleaned_bmarket:
   filepath: data/03_primary/cleaned_bmarket.csv
   save_args:
     lineterminator: "\n"
+# ---^^^%%%^^^-- #
 
+# ---###$$$###--- #
+# Used for the model_training pipeline
+# Saving of model training and testing data in hard drive
 X_test:
   type: pickle.PickleDataset
   filepath: data/05_model_input/X_test.pkl
@@ -30,8 +36,19 @@ X_train:
 y_train:
   type: pickle.PickleDataset
   filepath: data/05_model_input/y_train.pkl
+# ---###$$$###--- #
 
-# https://docs.kedro.org/en/0.19.12/data/kedro_dataset_factories.html
+# --%%%###%%%--- #
+# Used for the model_training pipeline
+# Handles I/O for all models in the pipeline, without having to do manual specification.
+# Saves best:
+#       Model weights (as .pkl file)
+#       Hyperparamaters (as .json file)
+#       Confusion matrix (as .png file)
+#       AUC-ROC curve (as .png file)
+#       Model feature importnace (as .png file)
+# In specified file paths.
+# Docs: https://docs.kedro.org/en/0.19.12/data/kedro_dataset_factories.html
 "{model_name}_model_weights":
   type: pickle.PickleDataset
   filepath: saved_models/{model_name}/{model_name}.pkl
@@ -61,3 +78,4 @@ y_train:
   filepath: saved_models/{model_name}/{model_name}_feature_importance.png
   save_args:
     format: png
+# --%%%###%%%--- #
