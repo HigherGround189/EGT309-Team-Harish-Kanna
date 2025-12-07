@@ -94,6 +94,44 @@ docker compose -f development.docker-compose.yml up --build
 
 ## Section D - Pipeline Design & Flow
 
+```mermaid
+graph TD
+    %% 1. Source & Prep
+    A[("Bmarket")] --> B["Data Preprocessing"]
+    B --> C[("Cleaned Bmarket")]
+
+    %% 2. Training
+    C --> D["Model Training"]
+
+    %% 3. Training Artifacts (Inputs to Evaluation)
+    D --> E_XGB[("X Test")]
+    D --> E2[("Y Test")]
+    D --> E3[("XGBoost Weights & Params")]
+    D --> E_RF[("Random Forest Weights & Params")]
+    D --> E_LGBM[("LightGBM Weights & Params")]
+    D --> E_SVM[("SVM Weights & Params")]
+    D --> E_ADA[("AdaBoost Weights & Params")]
+    D --> E_CAT[("CatBoost Weights & Params")]
+
+    %% 4. Evaluation Input (All Artifacts Feed In)
+    E_XGB --> F["Model Evaluation"]
+    E2 --> F
+    E3 --> F
+    E_RF --> F
+    E_LGBM --> F
+    E_SVM --> F
+    E_ADA --> F
+    E_CAT --> F
+
+    %% 5. Multiple Evaluation Outputs
+    F --> G1[("XGBoost Graphs & Metrics")]
+    F --> G2[("Random Forest Graphs & Metrics")]
+    F --> G3[("LightGBM Graphs & Metrics")]
+    F --> G4[("SVM Graphs & Metrics")]
+    F --> G5[("AdaBoost Graphs & Metrics")]
+    F --> G6[("CatBoost Graphs & Metrics")]
+```
+
 ## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
 ### 1. Overview of EDA
 The dataset provided in this project comprises 41,188 records of bank marketing data containing client attributes and marketing campaign calls such as age, occupation, contact method and campaign calls. The primary objective of the analysis is to perform EDA to gain insights and findings into overall structure, quality and predictive usefulness of the features before training machine learning models.
