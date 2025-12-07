@@ -1,8 +1,0 @@
-{
-  "model__class_weight": null,
-  "model__max_depth": 10,
-  "model__max_features": "sqrt",
-  "model__max_samples": 0.5,
-  "model__min_samples_split": 14,
-  "model__n_estimators": 1000
-}
