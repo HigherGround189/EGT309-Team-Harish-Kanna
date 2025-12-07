@@ -69,9 +69,10 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 > [!NOTE]
 > You may need to run `chmod +x run.sh` before running it.
 
-If you want to <u>**build the images from source**</u> (instead of pulling images from DockerHub):
-```bash
-docker compose up --build
+> [!TIP]
+> If you want to <u>**build the images from source**</u> (instead of pulling ?> > images from DockerHub):
+ ```bash
+ docker compose up --build
 ```
 
 ### Steps to launch Development Server
@@ -85,7 +86,8 @@ _Assuming that the repository is already cloned:_
 > [!NOTE]
 > You may need to run `chmod +x dev.sh` before running it.
 
-If you want to <u>**build the image from source**</u> (instead of pulling it from DockerHub):
+> [!TIP]
+> If you want to <u>**build the image from source**</u> (instead of pulling it from DockerHub):
 ```bash
 docker compose -f development.docker-compose.yml up --build
 ```
@@ -235,8 +237,6 @@ parameters_model_evaluation:
   permutation_feature_importance_n_repeats: 5
   random_state: 42
 ```
-
-
 
 ## Section D - Pipeline Design & Flow
 
