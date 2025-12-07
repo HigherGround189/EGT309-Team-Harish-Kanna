@@ -287,13 +287,18 @@ graph TD
 ```
 
 ### Pipeline Node Explanation
+Our Pipeline extensively utilises namespaced pipelines, which help organise related nodes together, improving code organisation.
+
+Hence, the graph above only displays namespaced pipelines, as it would be very messy to display all nodes (eg: Training Node for each Model).
+
+Likewise, the table below references the "Data Processing" namespaced pipeline, which contains all nodes for data processing.
 
 Nodes | Purpose | Input | Output |
 |:---|:---|:---:|:---:|
 Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in [eda.ipynb](eda.pdf)) | bmarket `(SQLTableDataset)` | cleaned_bmarket `(CSVDataset)`
 Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf/base/parameters_model_training.yml)   | cleaned_bmarket `(CSVDataset)` | X Train, X Test, Y Train, Y Test `(PickleDataset)`
 Train **{MODEL}** Node | Trains Selected Model **{MODEL}** using hyperparameters defined in [parameters_model_config](conf/base/parameters_model_config). | X Train, Y Train `(PickleDataset)` | **{MODEL}** Best Params `(JSONDataset)`, **{MODEL}** Weights `(PickleDataset)`
-Evaluate **{MODEL}** Node | Evaluates **{MODEL}** and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|**{MODEL}** Model Weights, X Test, Y Test `(PickleDataset)` | **{MODEL}** Metrics `(JSONDataset)`,<br> **{MODEL}** Confusion Matrix,<br> **{MODEL}** Auc Roc Curve,<br> **{MODEL}** Feature Importance `(MatplotlibDataset)`
+Evaluate **{MODEL}** Node | Evaluates **{MODEL}** and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|**{MODEL}** Model Weights, X Test, Y Test `(PickleDataset)` | **{MODEL}** Metrics `(JSONDataset)`, **{MODEL}** Confusion Matrix, **{MODEL}** Auc Roc Curve, **{MODEL}** Feature Importance `(MatplotlibDataset)`
 
 ### Pipeline Hooks
 
