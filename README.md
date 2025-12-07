@@ -106,16 +106,16 @@ The Pipeline's model training is designed such that you can train new models (as
 *   `class: str, required`  
         The full import path to the model's class (from scikit-learn or another library that inherits from scikit-learn's BaseEstimator class).
 
-*   `data_encoding: {"ohe", "label", "none"}, default="ohe`"  
+*   `data_encoding: {"ohe", "label", "none"}`, *default="ohe"*  
         Specifies the dataset encoding method. Offers "ohe" (One-Hot encoding), "label" (Lablel/Ordinal encoding) and "none" (no encoding on the dataset).
 
-*   `requires_scaling: bool, default=False`  
+*   `requires_scaling: bool`, *default=False*
         Set to true if the model is distance-based (e.g., KNN, SVM) and requires feature scaling for optimal performance. Defaults to false.
 
-*   `model_params: dict, optional`  
+*   `model_params: dict`, optional
         A nested dictionary of hyperparameters to pass to the model constructor. It should be all the parameters that will be kept constant and not passed to bayesian search. It should match the paramaters accepted by the model class __init__ method (e.g., warm_start=False for Random Forest). You can get the parameters from the model constructor's official documentation.
 
-*   `search_space: dict, optional`  
+*   `search_space: dict`, optional  
         A nested dictionary defining the hyperparameter search space for bayesian hyperparameter optimization. Each key is a hyperparameter name, and it's value is a sub-dictionary with:
     *   `type: {"Real", "Integer", "Categorical"}`, required  
             One of "Real" (continuous floats), "Integer" (discrete ints), or "Categorical" (discrete categories). For more information, refer to original [documentation](https://scikit-optimize.github.io/stable/modules/generated/skopt.BayesSearchCV.html)
@@ -123,7 +123,7 @@ The Pipeline's model training is designed such that you can train new models (as
         Lower bound of the hyperparameter search space range.
     * `high: float/int`, required for `"Real"/"Integer"`  
         Upper bound of the hyperparameter search space range.
-    * `prior: str, default="uniform"`, optional for `"Real"`  
+    * `prior: str`, *default="uniform"*, optional for `"Real"`  
         Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
     * `categories: list[str]`, required for "Categorical"  
         A list of possible category values.
@@ -206,7 +206,7 @@ model_registry_config:
 *   `test_size: float`, required <br>
         Proportion of the dataset which will be allocated to the test set during train-test split. Must be between 0.0 and 1.0
 
-*   `random_state: int`, ***default=42*** <br>
+*   `random_state: int`, *default=42* <br>
         Seed value to ensure reproducibility across runs
 
 *   `cv_splits: int`, required <br>
@@ -215,7 +215,7 @@ model_registry_config:
 *   `bayes_search_n_iters: int`, required <br>
         The number of iterations for Bayesian hyperparameter optimization
 
-*   `minimum_recall: float`, ***default=0.85*** <br>
+*   `minimum_recall: float`, *default=0.85* <br>
         The minimum acceptable recall score for the model during evaluation. The pipeline will adjust the model's decision threshold (e.g., for binary classification) as needed to ensure the recall meets or exceeds this value.
 
 **Example**
@@ -233,9 +233,9 @@ parameters_model_training:
 > Model evaluation parameters have to be specified within the key `parameters_model_evaluation`.
 
 **Model evaluation configuration schema (defined within the `parameters_model_evaluation` key)**
-*   `permutation_feature_importance_n_repeats: int`, required  
+*   `permutation_feature_importance_n_repeats: int`, required <br>
         Number of times each feature is randomly shuffled when computing permutation feature importance.
-*   `random_state: int`, ***default=42***  
+*   `random_state: int`, *default=42* <br>
         Seed value to ensure reproducibility across runs
 
 **Example**
