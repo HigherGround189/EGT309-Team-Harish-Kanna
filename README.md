@@ -434,7 +434,9 @@ XGBoost differs from LightGBM by offering level-wise tree growth. What makes it 
 **Why did we use it?** <br>
 We hypothesized that the 'yes' class for subcription not only had a small sample datasize, but also had many outliers. This conclusion was reached because SMOTE performed very poorly. We were hoping that XGBoost's ability to mathematically penalize complexity (via reg_alpha and reg_lambda) would make it more robust to the noise and outliers. Additionally, it also offered a way to handle imbalanced datasets.
 
-### Models chosen in the end
+## Section H - Model Evaluation
+
+**Models chosen in the end**
 Looking at the goal of the project, we have to “identify which clients are most likely to respond positively” and “optimize the company’s marketing strategies”. This meant that we had to **maximize the identification of actual subscribers** and therefore should optimize for recall. This is because optimizing for recall ensures the bank captures the maximum possible market share, rather than leaving potential customers behind. To do this, we chose to optimize recall as an evaluation metric.  
 
 However, since the dataset is highly imbalanced, we cannot get the model to achieve a high recall just based off training. To fix this issue, we improved the model's recall by adjusting the model's decision threshold to make sure that the model achieves minimally a recall of 80%. However, this also means trading recall for precision as precision becomes lower.
@@ -443,9 +445,5 @@ In the end, we chose **LightGBM**, **CatBoost** and **AdaBoost**.
 
 We realised that it was extremely difficult to optimize our models any further as all of them score roughly the same in almost all metrics with marginal difference. This is attributed to the terrible dataset. However, taking into account that we are building a machine learning pipeline, where new data can be ingested, we decided to keep **LightGBM**, **CatBoost** and **AdaBoost** as they are the most robust options in the scenario that the dataset changes.
 
-
-
-
-## Section H - Model Evaluation
 
 ## Section I - Model Deployment Considerations
