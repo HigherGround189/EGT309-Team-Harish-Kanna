@@ -32,7 +32,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             name="split_dataset_node",
         )
     )
-    
+
     model_registry = parameters["model_registry"]
     for config in model_registry.values():
         if not config.get("train_now", True):

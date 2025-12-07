@@ -240,7 +240,7 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
     ----------
     base_estimator: BaseEstimator
         Model that is to be tuned
-    
+
     cv: int
         How many cross validation chunks to split the data
 
@@ -248,6 +248,7 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
         Minimum target percentage of positive classes that the model should be able to detect (Float between range of 0.0 to 1.0)
 
     """
+
     def __init__(self, base_estimator, cv, min_recall=0.85):
         self.base_estimator = base_estimator
         self.cv = cv
@@ -380,7 +381,9 @@ def train_model(
 
     # Wrapper to ensure that the model meets the minimum recall
     final_model = RecallOptimizedClassifier(
-        base_estimator=bs.best_estimator_, cv=options['cv_splits'], min_recall=options['minimum_recall']
+        base_estimator=bs.best_estimator_,
+        cv=options["cv_splits"],
+        min_recall=options["minimum_recall"],
     )
 
     final_model.fit(X_train, y_train)
