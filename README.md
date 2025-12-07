@@ -66,7 +66,8 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
     ```bash
     ./run.sh
     ```
-> **Note**: You may need to run `chmod +x run.sh` before running it.
+> [!NOTE]
+> You may need to run `chmod +x run.sh` before running it.
 
 If you want to <u>**build the images from source**</u> (instead of pulling images from DockerHub):
 ```bash
@@ -81,7 +82,8 @@ _Assuming that the repository is already cloned:_
     ```bash
     ./dev.sh
     ```
-> **Note**: You may need to run `chmod +x dev.sh` before running it.
+> [!NOTE]
+> You may need to run `chmod +x dev.sh` before running it.
 
 If you want to <u>**build the image from source**</u> (instead of pulling it from DockerHub):
 ```bash
@@ -134,11 +136,11 @@ graph TD
 ### Pipeline Node Explanation
 
 Nodes | Purpose | Input | Output |
-|---|---|---|---|
-Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in [eda.ipynb](eda.pdf)) | bmarket | cleaned_bmarket
-Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf\base\parameters_model_training.yml)   | cleaned_bmarket | X Train, X Test, Y Train, Y Test
-Train `{MODEL}` Node | Trains Selected Model `{MODEL}` using hyperparameters defined in [parameters_model_config](conf\base\parameters_model_config). | X Train, Y Train | `{MODEL}` Best Params, `{MODEL}`Weights
-Evaluate `{MODEL}` Node | Evaluates `{MODEL}` and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|`{MODEL}` Model Weights, X Test, Y Test | `{MODEL}` Metrics, `{MODEL}` Confusion Matrix, `{MODEL}` Auc Roc Curve, `{MODEL}` Feature Importance
+|:---|:---|:---:|:---:|
+Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in [eda.ipynb](eda.pdf)) | bmarket `(SQLTableDataset)` | cleaned_bmarket `(CSVDataset)`
+Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf\base\parameters_model_training.yml)   | cleaned_bmarket `(CSVDataset)` | X Train, X Test, Y Train, Y Test `(PickleDataset)`
+Train <u>***{MODEL}***</u> Node | Trains Selected Model <u>***{MODEL}***</u> using hyperparameters defined in [parameters_model_config](conf\base\parameters_model_config). | X Train, Y Train `(PickleDataset)` | <u>***{MODEL}***</u> Best Params `(JSONDataset)`, <u>***{MODEL}***</u>Weights `(PickleDataset)`
+Evaluate <u>***{MODEL}***</u> Node | Evaluates <u>***{MODEL}***</u> and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|<u>***{MODEL}***</u> Model Weights, X Test, Y Test `(PickleDataset)` | <u>***{MODEL}***</u> Metrics `(JSONDataset)`, <u>***{MODEL}***</u> Confusion Matrix, <u>***{MODEL}***</u> Auc Roc Curve, <u>***{MODEL}***</u> Feature Importance `(MatplotlibDataset)`
  
 
 
