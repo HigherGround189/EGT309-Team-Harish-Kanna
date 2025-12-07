@@ -439,11 +439,12 @@ We hypothesized that the 'yes' class for subcription not only had a small sample
 **Models chosen in the end**
 Looking at the goal of the project, we have to “identify which clients are most likely to respond positively” and “optimize the company’s marketing strategies”. This meant that we had to **maximize the identification of actual subscribers** and therefore should optimize for recall. This is because optimizing for recall ensures the bank captures the maximum possible market share, rather than leaving potential customers behind. To do this, we chose to optimize recall as an evaluation metric.  
 
-However, since the dataset is highly imbalanced, we cannot get the model to achieve a high recall just based off training. To fix this issue, we improved the model's recall by adjusting the model's decision threshold to make sure that the model achieves minimally a recall of 80%. However, this also means trading recall for precision as precision becomes lower.
+However, since the dataset is highly imbalanced, we cannot get the model to achieve a high recall just based off training. To fix this issue, we improved the model's recall by adjusting the model's decision threshold to make sure that the model achieves minimally a recall of 80%. However, this also means we are trading recall for precision and that precision becomes lower.
 
 In the end, we chose **LightGBM**, **CatBoost** and **AdaBoost**.
 
-We realised that it was extremely difficult to optimize our models any further as all of them score roughly the same in almost all metrics with marginal difference. This is attributed to the terrible dataset. However, taking into account that we are building a machine learning pipeline, where new data can be ingested, we decided to keep **LightGBM**, **CatBoost** and **AdaBoost** as they are the most robust options in the scenario that the dataset changes.
-
+The original idea was that after attaining greater than 80% for recall, we would choose the models that has the higher precision score for our final models. However, we soon realised that this model evaluation metric does not work because all the models achieved nearly identical metric scores. This suggests the data contains a "performance ceiling" due to noise and limited sample size. However, taking into account that we are building a machine learning pipeline, where new data can be ingested, we decided to keep **LightGBM**, **CatBoost** and **AdaBoost** as they are the most operationally robust options in the scenario that the dataset changes.
 
 ## Section I - Model Deployment Considerations
+
+The model is optimized for 80% Recall (finding as many subscribers as possible). However, this means that it will inherently generate a higher rate of False Positives (predicting a client will subscribe when they actually won't).
