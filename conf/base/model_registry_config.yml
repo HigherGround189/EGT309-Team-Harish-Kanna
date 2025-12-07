@@ -1,36 +1,36 @@
-model_registry:
+model_registry_config:
   random_forest:
     name: RandomForestClassifier
-    yaml_header: random_forest_config
+    model_config_key: random_forest_config
     train_now: True
     evaluate_now: True
 
   xgboost:
     name: XGBoostClassifier
-    yaml_header: xgboost_config
+    model_config_key: xgboost_config
     train_now: True
     evaluate_now: True
 
   lightgbm:
     name: LightGBMClassifier
-    yaml_header: lightgbm_config
+    model_config_key: lightgbm_config
     train_now: True
     evaluate_now: True
 
   svm:
     name: SVCClassifier
-    yaml_header: svc_config
+    model_config_key: svc_config
     train_now: False
     evaluate_now: False
 
   adaboost:
     name: AdaBoostClassifier
-    yaml_header: adaboost_config
+    model_config_key: adaboost_config
     train_now: True
     evaluate_now: True
 
   catboost:
     name: CatBoostClassifier
-    yaml_header: catboost_config
+    model_config_key: catboost_config
     train_now: True
     evaluate_now: True

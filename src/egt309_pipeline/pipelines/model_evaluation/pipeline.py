@@ -23,7 +23,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     parameters = conf_loader["parameters"]
 
     nodes = []
-    model_registry = parameters["model_registry"]
+    model_registry = parameters["model_registry_config"]
     for config in model_registry.values():
         if not config.get("evaluate_now", True):
             continue
@@ -37,7 +37,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     f"{model_name}_model_weights",
                     "X_test",
                     "y_test",
-                    "params:model_evaluation_parameters",
+                    "params:parameters_model_evaluation",
                 ],
                 outputs=[
                     f"{model_name}_metrics",
