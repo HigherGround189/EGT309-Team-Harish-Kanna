@@ -363,6 +363,57 @@ Analyzing the class ditribution of Subscription Status, there is a huge imbalanc
 |`Subscription Status`| Boolean | Text ('yes';'no') & heavily imbalanced | Convert to binary (True if 'yes'; False if 'no') | Target variable; Require stratified sampling during model training & Appropriate type conversion |
 
 ## Section G - Model Choice Overview
+Models that we experiment with are influenced by whether they have the ability to offer greater weight to certain classes. This is deliberate as we needed to find a way to combat the class imbalance issue in the data.
+
+### Random Forest
+**How does it work?**  
+Ensemble method that builds multiple decision trees on random subsets of the data and features, and then aggregates their predictions.
+
+**Why did we use it?**
+It allows us to **handle imbalanced datasets** by offering us the option to adjust class weights.
+
+### Adaboost
+**How does it work?**  
+Ensemble method that builds multiple decision trees on random subsets of the data and features (called weak learners), and then aggregates their predictions.
+
+**Why did we use it?**
+Adaboost passively handles imbalance by increasing the weight of misclassified instances after each iteration, which is very likely to be the minority class in very skewed datasets. (like our dataset)
+
+### Catboost
+
+**How does it work?**  
+A gradient boosting model that uses ordered boosting as well as regularization which makes it less prone from overfitting.
+
+**Why did we use it?**
+Catboost not only automatically calculates and balances penalties for the minority class, it also handles categorical features natively without One-Hot or Ordinal encoding. This was appealing as I had concerns that One-Hot encoding would result in high dimensionality and dilute the signal of the categorical variables, making it harder for decision trees to find patterns.
+
+### LightGBM
+
+**How does it work?**  
+A gradient boosting framework that uses leaf-wise tree growth. Instead of growing a balanced tree, it greedily grows the single most promising branch to reduce loss.
+
+**Why did we use it?**
+As with the other models, LightGBM offered a way to handle imbalanced classes. Additionally, we wanted to see if there were any highly complex specific patterns that the dataset contains that the model would be able to leverage upon with it's lead-wise tree growth approach. If there was such patterns, we would observe a better result with this model over the others.
+
+### XGBoost
+
+**How does it work?**  
+XGBoost differs from LightGBM by offering level-wise tree growth. What makes it unique is that it implements L2 regularization directly in the objective function to penalize complex models which makes it much better than other models to prevent overfitting.
+
+**Why did we use it?**
+We hypothesized that the 'yes' class for subcription not only had a small sample datasize, but also had many outliers. This conclusion was reached because SMOTE performed very poorly. We were hoping that XGBoost's ability to mathematically penalize complexity (via reg_alpha and reg_lambda) would make it more robust to the noise and outliers. Additionally, it also offered a way to handle imbalanced datasets.
+
+### Models chosen in the end
+Looking at the goal of the project, we have to “identify which clients are most likely to respond positively” and “optimize the company’s marketing strategies”. This meant that we had to **maximize the identification of actual subscribers** and therefore should optimize for recall. This is because optimizing for recall ensures the bank captures the maximum possible market share, rather than leaving potential customers behind. To do this, we chose to optimize recall as an evaluation metric.  
+
+However, since the dataset is highly imbalanced, we cannot get the model to achieve a high recall just based off training. To fix this issue, we improved the model's recall by adjusting the model's decision threshold to make sure that the model achieves minimally a recall of 80%. However, this also means trading recall for precision as precision becomes lower.
+
+In the end, we chose **LightGBM**, **CatBoost** and **AdaBoost**.
+
+We realised that it was extremely difficult to optimize our models any further as all of them score roughly the same in almost all metrics with marginal difference. This is attributed to the terrible dataset. However, taking into account that we are building a machine learning pipeline, where new data can be ingested, we decided to keep **LightGBM**, **CatBoost** and **AdaBoost** as they are the most robust options in the scenario that the dataset changes.
+
+
+
 
 ## Section H - Model Evaluation
 
