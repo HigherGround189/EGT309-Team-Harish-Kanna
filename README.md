@@ -135,7 +135,7 @@ graph TD
 
 Nodes | Purpose | Input | Output |
 |---|---|---|---|
-Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in eda.ipynb) | bmarket | cleaned_bmarket
+Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in [eda.ipynb](eda.pdf)) | bmarket | cleaned_bmarket
 Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf\base\parameters_model_training.yml)   | cleaned_bmarket | X Train, X Test, Y Train, Y Test
 Train `{MODEL}` Node | Trains Selected Model `{MODEL}` using hyperparameters defined in [parameters_model_config](conf\base\parameters_model_config). | X Train, Y Train | `{MODEL}` Best Params, `{MODEL}`Weights
 Evaluate `{MODEL}` Node | Evaluates `{MODEL}` and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|`{MODEL}` Model Weights, X Test, Y Test | `{MODEL}` Metrics, `{MODEL}` Confusion Matrix, `{MODEL}` Auc Roc Curve, `{MODEL}` Feature Importance
