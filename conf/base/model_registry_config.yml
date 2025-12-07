@@ -2,8 +2,8 @@ model_registry_config:
   random_forest:
     name: RandomForestClassifier
     model_config_key: random_forest_config
-    train_now: False
-    evaluate_now: False
+    train_now: True
+    evaluate_now: True
 
   xgboost:
     name: XGBoostClassifier
@@ -14,8 +14,8 @@ model_registry_config:
   lightgbm:
     name: LightGBMClassifier
     model_config_key: lightgbm_config
-    train_now: False
-    evaluate_now: False
+    train_now: True
+    evaluate_now: True
 
   svm:
     name: SVCClassifier
@@ -26,11 +26,11 @@ model_registry_config:
   adaboost:
     name: AdaBoostClassifier
     model_config_key: adaboost_config
-    train_now: False
-    evaluate_now: False
+    train_now: True
+    evaluate_now: True
 
   catboost:
     name: CatBoostClassifier
     model_config_key: catboost_config
-    train_now: False
-    evaluate_now: False
+    train_now: True
+    evaluate_now: True
