@@ -304,6 +304,14 @@ Train **{MODEL}** Node | Trains Selected Model **{MODEL}** using hyperparameters
 Evaluate **{MODEL}** Node | Evaluates **{MODEL}** and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|**{MODEL}** Model Weights, X Test, Y Test `(PickleDataset)` | **{MODEL}** Metrics `(JSONDataset)`, **{MODEL}** Confusion Matrix, **{MODEL}** Auc Roc Curve, **{MODEL}** Feature Importance `(MatplotlibDataset)`
 
 ### Pipeline Hooks
+Kedro's Hooks allow for custom code to be ran after specific events in the Pipeline's lifecycle.
+
+In this pipeline, we create two custom hooks, `DisplayBannerBeforePipelineRuns` and `TrainingCompleteHook`.
+
+Hook | Event | Purpose
+|:---|:---:|:---:|
+`DisplayBannerBeforePipelineRuns` | `after_context_created` | 
+
 
 
 ### Repository Automation
