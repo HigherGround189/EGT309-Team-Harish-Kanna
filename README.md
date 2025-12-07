@@ -57,6 +57,8 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 
 ### Steps to run Pipeline
 
+For convenience, all images are present on DockerHub.
+
 1.  Clone the repository and navigate to the project directory:
     ```bash
     git clone https://github.com/HigherGround189/EGT309-Team-Harish-Kanna.git
