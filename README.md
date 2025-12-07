@@ -224,7 +224,7 @@ model_registry_config:
         The minimum acceptable recall score for the model during evaluation. The pipeline will adjust the model's decision threshold (e.g., for binary classification) as needed to ensure the recall meets or exceeds this value.
 
 *   `bayes_scoring: str`, required <br>
-        Scoring method used on models trained with BayesSearchCV.
+        Scoring method used on models optimised with BayesSearchCV.
 
 **Example**
 ```yaml
