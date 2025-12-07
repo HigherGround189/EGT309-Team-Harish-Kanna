@@ -4,3 +4,4 @@ parameters_model_training:
   cv_splits: 5 # Cross Validation splits
   bayes_search_n_iters: 20 # Specify Bayes Search number of iterations
   minimum_recall: 0.85
+  bayes_scoring: weighted_recall
