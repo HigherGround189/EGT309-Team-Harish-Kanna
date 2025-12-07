@@ -68,8 +68,6 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
     ```
 > **Note**: You may need to run `chmod +x run.sh` before running it.
 
-`run.sh` 
-
 If you want to <u>**build the images from source**</u> (instead of pulling images from DockerHub):
 ```bash
 docker compose up --build
@@ -133,7 +131,16 @@ graph TD
     F --> G6[("CatBoost Graphs & Metrics")]
 ```
 
-### Node Explanations
+### Pipeline Node Explanation
+
+Nodes | Purpose | Input | Output |
+|---|---|---|---|
+Data Processing (Namespaced Pipeline) | Data Processing Purpose | bmarket | cleaned_bmarket
+Split Dataset |  Purpose | cleaned_bmarket | X Train, X Test, Y Train, Y Test
+Train {MODEL} Node | Purpose | Y Train, X Train | {MODEL} Best Params, {Model}Weights
+Evaluate {MODEL} Node | Purpose |{MODEL} Model Weights, X Test, Y Test | {MODEL} Metrics, {MODEL} Confusion Matrix, {MODEL} Auc Roc Curve, {MODEL} Feature Importance
+ 
+
 
 ### Pipeline Hooks
 
