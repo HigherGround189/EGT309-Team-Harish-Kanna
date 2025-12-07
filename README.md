@@ -103,29 +103,29 @@ The Pipeline's model training is designed such that you can train new models (as
 > It is highly recommend specifying model configurations within the [parameters_model_config](conf/base/parameters_model_config) directory. The root-level key for each model configuration can be named arbitrarily, as you'll reference it explicitly in the [model_registry_config.yml](conf/base/model_registry_config.yml) file. However, format `<model_name>_config` (e.g. `random_forest_config`) is suggested to define your root key.
 
 **Each model configuration MUST follow this YAML schema:**
-*   class: str, required  
+*   `class: str, required`  
         The full import path to the model's class (from scikit-learn or another library that inherits from scikit-learn's BaseEstimator class).
 
-*   data_encoding: {"ohe", "label", "none"}, default="ohe"  
+*   `data_encoding: {"ohe", "label", "none"}, default="ohe`"  
         Specifies the dataset encoding method. Offers "ohe" (One-Hot encoding), "label" (Lablel/Ordinal encoding) and "none" (no encoding on the dataset).
 
-*   requires_scaling: bool, default=False  
+*   `requires_scaling: bool, default=False`  
         Set to true if the model is distance-based (e.g., KNN, SVM) and requires feature scaling for optimal performance. Defaults to false.
 
-*   model_params: dict, optional  
+*   `model_params: dict, optional`  
         A nested dictionary of hyperparameters to pass to the model constructor. It should be all the parameters that will be kept constant and not passed to bayesian search. It should match the paramaters accepted by the model class __init__ method (e.g., warm_start=False for Random Forest). You can get the parameters from the model constructor's official documentation.
 
-*   search_space: dict, optional  
+*   `search_space: dict, optional`  
         A nested dictionary defining the hyperparameter search space for bayesian hyperparameter optimization. Each key is a hyperparameter name, and it's value is a sub-dictionary with:
-    *   type: {"Real", "Integer", "Categorical"}, required  
+    *   `type: {"Real", "Integer", "Categorical"}`, required  
             One of "Real" (continuous floats), "Integer" (discrete ints), or "Categorical" (discrete categories). For more information, refer to original [documentation](https://scikit-optimize.github.io/stable/modules/generated/skopt.BayesSearchCV.html)
-    * low: float/int, required for "Real"/"Integer"  
+    * `low: float/int`, required for `"Real"/"Integer"`  
         Lower bound of the hyperparameter search space range.
-    * high: float/int, required for "Real"/"Integer"  
+    * `high: float/int`, required for `"Real"/"Integer"`  
         Upper bound of the hyperparameter search space range.
-    * prior: str, default="uniform", optional for "Real"  
+    * `prior: str, default="uniform"`, optional for `"Real"`  
         Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
-    * categories: list[str], required for "Categorical"  
+    * `categories: list[str]`, required for "Categorical"  
         A list of possible category values.
 
 **Example**
@@ -164,19 +164,22 @@ random_forest_config:
 ```
 
 #### Defining the Model Registry
-After defining the model configuration, we now have to map it's root key in the model registry. It is **extremely important** that the model registry must have the root key *model_registry_config*.
+After defining the model configuration, we now have to map it's root key in the model registry. 
+
+> [!IMPORTANT]
+>It is **extremely important** that the model registry must have the root key `model_registry_config`.
 
 **model registry configuration schema:**
-*   name: str, required  
+*   `name: str`, required <br>
         This field can be any string and is not strictly enforced to follow a specific format as only the nested content will be used by the pipeline.
 
-*   model_config_key: str, required  
+*   `model_config_key: str`, required <br>
         Specify the model configuration root key here.
 
-*   train_now: bool, required
+*   `train_now: bool`, required <br>
         If True, the model will be trained in the pipeline, else if set to False, it will be ommited from training.
 
-*   evaluate_now: bool, required
+*   `evaluate_now: bool`, required <br>
         If True, the model will be evaluated in the pipeline, else if set to False, it will be ommited from evaluation.
 
 **Example**
@@ -196,22 +199,23 @@ model_registry_config:
 ```
 
 #### Defining model training configuration
-Model training parameters have to be specified within the key *parameters_model_training*.
+> [!IMPORTANT]
+>Model training parameters have to be specified within the key `parameters_model_training`.
 
-**model training configuration schema (defined within the *parameters_model_training* key)**
-*   test_size: float, required  
+**Model training configuration schema (defined within the *parameters_model_training* key)**
+*   `test_size: float`, required <br>
         Proportion of the dataset which will be allocated to the test set during train-test split. Must be between 0.0 and 1.0
 
-*   random_state: int, default=42 
+*   `random_state: int`, ***default=42*** <br>
         Seed value to ensure reproducibility across runs
 
-*   cv_splits: int, required  
+*   `cv_splits: int`, required <br>
         Number of folds for cross-validation
 
-*   bayes_search_n_iters: int, required  
+*   `bayes_search_n_iters: int`, required <br>
         The number of iterations for Bayesian hyperparameter optimization
 
-*   minimum_recall: float, default=0.85
+*   `minimum_recall: float`, ***default=0.85*** <br>
         The minimum acceptable recall score for the model during evaluation. The pipeline will adjust the model's decision threshold (e.g., for binary classification) as needed to ensure the recall meets or exceeds this value.
 
 **Example**
@@ -225,12 +229,13 @@ parameters_model_training:
 ```
 
 #### Defing model evaluation configuration
-Model evaluation parameters have to be specified within the key *parameters_model_evaluation*.
+> [!IMPORTANT]
+> Model evaluation parameters have to be specified within the key `parameters_model_evaluation`.
 
-**model evaluation configuration schema (defined within the *parameters_model_evaluation* key)**
-*   permutation_feature_importance_n_repeats: int, required  
+**Model evaluation configuration schema (defined within the `parameters_model_evaluation` key)**
+*   `permutation_feature_importance_n_repeats: int`, required  
         Number of times each feature is randomly shuffled when computing permutation feature importance.
-*   random_state: int, default=42  
+*   `random_state: int`, ***default=42***  
         Seed value to ensure reproducibility across runs
 
 **Example**
