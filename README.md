@@ -34,7 +34,7 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 │   ├── 07_model_output
 │   └── 08_reporting
 ├── notebooks
-├── saved_models                        <-- Models Trained & Evaluated 
+├── saved_models                        <-- Models saved here after Evaluation 
 │   ├── AdaBoostClassifier
 │   ├── CatBoostClassifier
 │   ├── LightGBMClassifier
@@ -55,24 +55,39 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 
 - `docker` and `docker compose` must be installed.
 
-## Steps to run Pipeline
+### Steps to run Pipeline
 
 1.  Clone the repository and navigate to the project directory:
     ```bash
     git clone https://github.com/HigherGround189/EGT309-Team-Harish-Kanna.git
     cd EGT309-Team-Harish-Kanna
     ```
-2.  Run "run.sh"
+2.  Run "run.sh". It will will automatically pull the images from DockerHub, and launch the containers. 
     ```bash
     ./run.sh
     ```
-> **<u>Note</u>**: You may need to run `chmod+x run.sh` before running it.
+> **Note**: You may need to run `chmod +x run.sh` before running it.
 
-`run.sh` will automatically pull the container images from DockerHub, and launch the containers. 
+`run.sh` 
 
-If you want to **<u>build the containers from source</u>** (instead of pulling images from DockerHub):
+If you want to <u>**build the images from source**</u> (instead of pulling images from DockerHub):
 ```bash
 docker compose up --build
+```
+
+### Steps to launch Development Server
+
+_Assuming that the repository is already cloned:_
+
+1.  Run "dev.sh". It will will automatically pull the development server image from DockerHub, and launch the container. 
+    ```bash
+    ./dev.sh
+    ```
+> **Note**: You may need to run `chmod +x dev.sh` before running it.
+
+If you want to <u>**build the image from source**</u> (instead of pulling it from DockerHub):
+```bash
+docker compose -f development.docker-compose.yml up --build
 ```
 
 ## Section D - Pipeline Design & Flow
