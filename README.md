@@ -51,6 +51,30 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 
 ## Section C - Execution Instructions
 
+### Prerequisites
+
+- `docker` and `docker compose` must be installed.
+
+## Steps to run Pipeline
+
+1.  Clone the repository and navigate to the project directory:
+    ```bash
+    git clone https://github.com/HigherGround189/EGT309-Team-Harish-Kanna.git
+    cd EGT309-Team-Harish-Kanna
+    ```
+2.  Run "run.sh"
+    ```bash
+    ./run.sh
+    ```
+> **<u>Note</u>**: You may need to run `chmod+x run.sh` before running it.
+
+`run.sh` will automatically pull the container images from DockerHub, and launch the containers. 
+
+If you want to **<u>build the containers from source</u>** (instead of pulling images from DockerHub):
+```bash
+docker compose up --build
+```
+
 ## Section D - Pipeline Design & Flow
 
 ## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
