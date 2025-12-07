@@ -15,6 +15,7 @@ from .nodes import evaluate_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
+    # Loader is used to load all configurations defined within the /conf/base/** dir
     conf_loader = OmegaConfigLoader(
         conf_source=str(Path.cwd() / settings.CONF_SOURCE),
         **settings.CONFIG_LOADER_ARGS,
@@ -28,6 +29,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             continue
 
         model_name = config["name"]
+        # Create nodes to evaluate trained model on test data
         nodes.append(
             Node(
                 func=evaluate_model,

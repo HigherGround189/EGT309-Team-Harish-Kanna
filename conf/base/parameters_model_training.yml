@@ -1,0 +1,6 @@
+model_training_parameters:
+  test_size: 0.2 # Train test split ratio
+  random_state: 42
+  cv_splits: 5 # Cross Validation splits
+  bayes_search_n_iters: 20 # Specify Bayes Search number of iterations
+  minimum_recall: 0.80

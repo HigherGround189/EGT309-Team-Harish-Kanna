@@ -15,6 +15,7 @@ from .nodes import split_dataset, train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
+    # Loader is used to load all configurations defined within the /conf/base/** dir
     conf_loader = OmegaConfigLoader(
         conf_source=str(Path.cwd() / settings.CONF_SOURCE),
         **settings.CONFIG_LOADER_ARGS,
@@ -23,14 +24,15 @@ def create_pipeline(**kwargs) -> Pipeline:
 
     nodes = []
     nodes.append(
+        # Node that splits the dataset into training and testing data
         Node(
             func=split_dataset,
-            inputs=["cleaned_bmarket", "params:execution_config"],
+            inputs=["cleaned_bmarket", "params:model_training_parameters"],
             outputs=["X_train", "X_test", "y_train", "y_test"],
             name="split_dataset_node",
         )
     )
-
+    
     model_registry = parameters["model_registry"]
     for config in model_registry.values():
         if not config.get("train_now", True):
@@ -38,6 +40,7 @@ def create_pipeline(**kwargs) -> Pipeline:
 
         config_name = config["yaml_header"]
         model_name = config["name"]
+        # Creates a node for each model that has train_now=True
         nodes.append(
             Node(
                 func=train_model,
@@ -45,7 +48,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "X_train",
                     "y_train",
                     f"params:{config_name}",
-                    "params:execution_config",
+                    "params:model_training_parameters",
                 ],
                 outputs=[f"{model_name}_model_weights", f"{model_name}_best_params"],
                 name=f"train_{model_name}_node",
