@@ -397,41 +397,41 @@ Analyzing the class ditribution of Subscription Status, there is a huge imbalanc
 Models that we experiment with are influenced by whether they have the ability to offer greater weight to certain classes. This is deliberate as we needed to find a way to combat the class imbalance issue in the data.
 
 ### Random Forest
-**How does it work?**  
+**How does it work?** <br>
 Ensemble method that builds multiple decision trees on random subsets of the data and features, and then aggregates their predictions.
 
-**Why did we use it?**
+**Why did we use it?** <br>
 It allows us to **handle imbalanced datasets** by offering us the option to adjust class weights.
 
 ### Adaboost
-**How does it work?**  
+**How does it work?** <br>
 Ensemble method that builds multiple decision trees on random subsets of the data and features (called weak learners), and then aggregates their predictions.
 
-**Why did we use it?**
+**Why did we use it?** <br>
 Adaboost passively handles imbalance by increasing the weight of misclassified instances after each iteration, which is very likely to be the minority class in very skewed datasets. (like our dataset)
 
 ### Catboost
 
-**How does it work?**  
+**How does it work?** <br>
 A gradient boosting model that uses ordered boosting as well as regularization which makes it less prone from overfitting.
 
-**Why did we use it?**
+**Why did we use it?** <br>
 Catboost not only automatically calculates and balances penalties for the minority class, it also handles categorical features natively without One-Hot or Ordinal encoding. This was appealing as I had concerns that One-Hot encoding would result in high dimensionality and dilute the signal of the categorical variables, making it harder for decision trees to find patterns.
 
 ### LightGBM
 
-**How does it work?**  
+**How does it work?** <br>
 A gradient boosting framework that uses leaf-wise tree growth. Instead of growing a balanced tree, it greedily grows the single most promising branch to reduce loss.
 
-**Why did we use it?**
+**Why did we use it?** <br>
 As with the other models, LightGBM offered a way to handle imbalanced classes. Additionally, we wanted to see if there were any highly complex specific patterns that the dataset contains that the model would be able to leverage upon with it's lead-wise tree growth approach. If there was such patterns, we would observe a better result with this model over the others.
 
 ### XGBoost
 
-**How does it work?**  
+**How does it work?** <br>
 XGBoost differs from LightGBM by offering level-wise tree growth. What makes it unique is that it implements L2 regularization directly in the objective function to penalize complex models which makes it much better than other models to prevent overfitting.
 
-**Why did we use it?**
+**Why did we use it?** <br>
 We hypothesized that the 'yes' class for subcription not only had a small sample datasize, but also had many outliers. This conclusion was reached because SMOTE performed very poorly. We were hoping that XGBoost's ability to mathematically penalize complexity (via reg_alpha and reg_lambda) would make it more robust to the noise and outliers. Additionally, it also offered a way to handle imbalanced datasets.
 
 ### Models chosen in the end
