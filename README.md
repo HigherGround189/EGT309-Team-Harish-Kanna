@@ -96,34 +96,34 @@ docker compose -f development.docker-compose.yml up --build
 
 ```mermaid
 graph TD
-    %% 1. Source & Prep
+    %% Data Source -> Data Processing -> Data Cleaned
     A[("Bmarket")] --> B["Data Preprocessing"]
     B --> C[("Cleaned Bmarket")]
 
-    %% 2. Training
+    %% Data Cleaned -> Model Training
     C --> D["Model Training"]
 
-    %% 3. Training Artifacts (Inputs to Evaluation)
-    D --> E_XGB[("X Test")]
+    %% Model Training -> Model Training Outputs
+    D --> E1[("X Test")]
     D --> E2[("Y Test")]
-    D --> E3[("XGBoost Weights & Params")]
+    D --> E_XGB[("XGBoost Weights & Params")]
     D --> E_RF[("Random Forest Weights & Params")]
     D --> E_LGBM[("LightGBM Weights & Params")]
     D --> E_SVM[("SVM Weights & Params")]
     D --> E_ADA[("AdaBoost Weights & Params")]
     D --> E_CAT[("CatBoost Weights & Params")]
 
-    %% 4. Evaluation Input (All Artifacts Feed In)
-    E_XGB --> F["Model Evaluation"]
+    %% Model Training Outputs -> Model Evaluation
+    E1 --> F["Model Evaluation"]
     E2 --> F
-    E3 --> F
+    E_XGB --> F
     E_RF --> F
     E_LGBM --> F
     E_SVM --> F
     E_ADA --> F
     E_CAT --> F
 
-    %% 5. Multiple Evaluation Outputs
+    %% Model Evaluation Outputs
     F --> G1[("XGBoost Graphs & Metrics")]
     F --> G2[("Random Forest Graphs & Metrics")]
     F --> G3[("LightGBM Graphs & Metrics")]
