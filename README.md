@@ -106,26 +106,26 @@ The Pipeline's model training is designed such that you can train new models (as
 *   `class: str, required`  
         The full import path to the model's class (from scikit-learn or another library that inherits from scikit-learn's BaseEstimator class).
 
-*   `data_encoding: {"ohe", "label", "none"}`, *default="ohe"*  
+*   `data_encoding: {"ohe", "label", "none"}`, *default="ohe"* <br>
         Specifies the dataset encoding method. Offers "ohe" (One-Hot encoding), "label" (Lablel/Ordinal encoding) and "none" (no encoding on the dataset).
 
-*   `requires_scaling: bool`, *default=False*
+*   `requires_scaling: bool`, *default=False* <br>
         Set to true if the model is distance-based (e.g., KNN, SVM) and requires feature scaling for optimal performance. Defaults to false.
 
-*   `model_params: dict`, optional
+*   `model_params: dict`, optional <br>
         A nested dictionary of hyperparameters to pass to the model constructor. It should be all the parameters that will be kept constant and not passed to bayesian search. It should match the paramaters accepted by the model class __init__ method (e.g., warm_start=False for Random Forest). You can get the parameters from the model constructor's official documentation.
 
-*   `search_space: dict`, optional  
+*   `search_space: dict`, optional <br>
         A nested dictionary defining the hyperparameter search space for bayesian hyperparameter optimization. Each key is a hyperparameter name, and it's value is a sub-dictionary with:
-    *   `type: {"Real", "Integer", "Categorical"}`, required  
+    *   `type: {"Real", "Integer", "Categorical"}`, required <br>
             One of "Real" (continuous floats), "Integer" (discrete ints), or "Categorical" (discrete categories). For more information, refer to original [documentation](https://scikit-optimize.github.io/stable/modules/generated/skopt.BayesSearchCV.html)
-    * `low: float/int`, required for `"Real"/"Integer"`  
+    * `low: float/int`, required for `"Real"/"Integer"` <br>
         Lower bound of the hyperparameter search space range.
-    * `high: float/int`, required for `"Real"/"Integer"`  
+    * `high: float/int`, required for `"Real"/"Integer"` <br>
         Upper bound of the hyperparameter search space range.
-    * `prior: str`, *default="uniform"*, optional for `"Real"`  
+    * `prior: str`, *default="uniform"*, optional for `"Real"` <br>  
         Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
-    * `categories: list[str]`, required for "Categorical"  
+    * `categories: list[str]`, required for `"Categorical"` <br>
         A list of possible category values.
 
 **Example**
