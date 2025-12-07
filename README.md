@@ -304,9 +304,37 @@ Train **{MODEL}** Node | Trains Selected Model **{MODEL}** using hyperparameters
 Evaluate **{MODEL}** Node | Evaluates **{MODEL}** and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|**{MODEL}** Model Weights, X Test, Y Test `(PickleDataset)` | **{MODEL}** Metrics `(JSONDataset)`, **{MODEL}** Confusion Matrix, **{MODEL}** Auc Roc Curve, **{MODEL}** Feature Importance `(MatplotlibDataset)`
 
 ### Pipeline Hooks
+Kedro's Hooks allow for custom code to be ran after specific events in the Pipeline's lifecycle.
+
+In this pipeline, we create two custom hooks, `DisplayBannerBeforePipelineRuns` and `TrainingCompleteHook`.
+
+Hook | Event | Purpose
+|:---|:---:|:---|
+`DisplayBannerBeforePipelineRuns` | `after_context_created` | Displays a banner with the words _"EGT309 Team Harish Kanna"_ before the pipeline run.
+`TrainingCompleteHook` | `after_pipeline_run` | Contacts the Visualisation Server's container to notify that training is complete, and displays a banner with the words _"Pipeline Complete"_ after the pipeline has concluded.
+
+### Visualisation Server
+
+This project includes a web app that displays all model graphs & metrics. This removes the need for users to navigate through folders to retrieve their model metrics, as well as providing an easy way to compare the performance between models.
+
+> [!TIP]
+> You can access the Visualisation Server at [http://127.0.0.1:5500](http://127.0.0.1:5500) after running `run.sh`.
+
+The Visualisation Server looks like this:
 
 
 ### Repository Automation
+
+To improve productivity, we heavily utilised **Github Actions** to automate mundane tasks. Of particular note are the two linters used, `ruff` and `prettier`.
+
+Linter | Language | Capabilities
+|:---|:---:|:---|
+`ruff` | Python | Lints and Formats code. Able to detect and fix errors in code, as well as enforcing a consistent code style across entire repo.
+`prettier` | YAML | Enforces consistent style across all YAML files, as well as detecting errors.
+
+While there were other github actions too (such as [Build & Push Docker Image to Dockerhub](.github/workflows/build_and_push_dockerfile.yml), or [Update requirements.txt from pyproject.toml](.github/workflows/update_requirements_txt.yml)), the two above were the most impactful.
+
+All defined actions are located in [.github/workflows](.github/workflows).
 
 ## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
 ### 1. Overview of EDA
