@@ -27,18 +27,18 @@ def create_pipeline(**kwargs) -> Pipeline:
         # Node that splits the dataset into training and testing data
         Node(
             func=split_dataset,
-            inputs=["cleaned_bmarket", "params:model_training_parameters"],
+            inputs=["cleaned_bmarket", "params:parameters_model_training"],
             outputs=["X_train", "X_test", "y_train", "y_test"],
             name="split_dataset_node",
         )
     )
 
-    model_registry = parameters["model_registry"]
+    model_registry = parameters["model_registry_config"]
     for config in model_registry.values():
         if not config.get("train_now", True):
             continue
 
-        config_name = config["yaml_header"]
+        config_name = config["model_config_key"]
         model_name = config["name"]
         # Creates a node for each model that has train_now=True
         nodes.append(
@@ -48,7 +48,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "X_train",
                     "y_train",
                     f"params:{config_name}",
-                    "params:model_training_parameters",
+                    "params:parameters_model_training",
                 ],
                 outputs=[f"{model_name}_model_weights", f"{model_name}_best_params"],
                 name=f"train_{model_name}_node",

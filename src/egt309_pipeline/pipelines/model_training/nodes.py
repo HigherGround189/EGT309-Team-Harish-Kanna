@@ -172,7 +172,7 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
 
         If encoding is not specified as a parameter, One-Hot encoding will be applied by default.;
 
-        Defined in conf/base/parameters_model_config/*.yml under header 'model_params'
+        Defined in conf/base/parameters_model_config/*.yml under key 'model_params'
 
     Returns
     -------
@@ -290,7 +290,7 @@ def split_dataset(df: pd.DataFrame, options: Dict) -> Tuple:
 
     options: Dict
         Configuration that specifies train test split ratio and random state;
-        Defined in parameters_execution_configuration.yml under header 'execution_config'
+        Defined in parameters_execution_configuration.yml under key 'execution_config'
 
     Returns
     -------
@@ -326,10 +326,10 @@ def train_model(
         Targets of the training dataset
 
     model_config: Dict
-        Defined in conf/base/parameters_model_config/*.yml under header '<model_header>'
+        Defined in conf/base/parameters_model_config/*.yml under key '<model_header>'
 
     options: Dict
-        Defined in parameters_execution_configuration.yml under header 'execution_config'
+        Defined in parameters_execution_configuration.yml under key 'execution_config'
     """
 
     # Initialize model object

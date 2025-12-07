@@ -1,6 +1,6 @@
-##########################
-# AdaBoost Parameters (ADA) #
-##########################
+#######################
+# AdaBoost Parameters #
+#######################
 
 adaboost_config:
   class: sklearn.ensemble.AdaBoostClassifier

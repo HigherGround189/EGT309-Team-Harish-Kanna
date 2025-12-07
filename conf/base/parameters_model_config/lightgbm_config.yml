@@ -1,6 +1,6 @@
-########################
+#######################
 # LightGBM Parameters #
-########################
+#######################
 
 lightgbm_config:
   class: lightgbm.LGBMClassifier

@@ -90,7 +90,153 @@ If you want to <u>**build the image from source**</u> (instead of pulling it fro
 docker compose -f development.docker-compose.yml up --build
 ```
 
-### Modifying Model Schemas
+### Defining YAML configuration files for the pipeline
+The model training portion of the pipeline is designed such that you can train new models (as long as they inherit from scikit-learn's BaseEstimator class) solely by **specifying the model's configuration in YAML files** and **installing the required package**. This avoids the need to hardcode a new model class for each training run.
+
+> **Note**: The naming of individual configuration files doesn't matter, as Kedro concatenates all configuration files into a single configuration dictionary during loading. In fact, it is possible to combine all model configurations into a single YAML file. However, for better organization, I recommend defining each model's configuration in its own file, where the filename mirrors the root key (e.g., random_forest_config.yml for the root key named random_forest_config).
+
+#### Defining model training configuration
+I highly recommend specifying model configurations within the /conf/base/parameters_model_config directory. The root-level key for each model configuration can be named arbitrarily, as you'll reference it explicitly in the model_registry_config.yml file. However, I suggest following the format <model_name>_config (e.g., random_forest_config) to define your root key.
+
+**Each model configuration MUST follow this YAML schema:**
+*   class: str, required  
+        The full import path to the model's class (from scikit-learn or another library that inherits from scikit-learn's BaseEstimator class).
+
+*   data_encoding: {"ohe", "label", "none"}, default="ohe"  
+        Specifies the dataset encoding method. Offers "ohe" (One-Hot encoding), "label" (Lablel/Ordinal encoding) and "none" (no encoding on the dataset).
+
+*   requires_scaling: bool, default=False  
+        Set to true if the model is distance-based (e.g., KNN, SVM) and requires feature scaling for optimal performance. Defaults to false.
+
+*   model_params: dict, optional  
+        A nested dictionary of hyperparameters to pass to the model constructor. It should be all the parameters that will be kept constant and not passed to bayesian search. It should match the paramaters accepted by the model class __init__ method (e.g., warm_start=False for Random Forest). You can get the parameters from the model constructor's official documentation.
+
+*   search_space: dict, optional  
+        A nested dictionary defining the hyperparameter search space for bayesian hyperparameter optimization. Each key is a hyperparameter name, and it's value is a sub-dictionary with:
+    *   type: {"Real", "Integer", "Categorical"}, required  
+            One of "Real" (continuous floats), "Integer" (discrete ints), or "Categorical" (discrete categories). For more information, refer to original [documentation](https://scikit-optimize.github.io/stable/modules/generated/skopt.BayesSearchCV.html)
+    * low: float/int, required for "Real"/"Integer"  
+        Lower bound of the hyperparameter search space range.
+    * high: float/int, required for "Real"/"Integer"  
+        Upper bound of the hyperparameter search space range.
+    * prior: str, default="uniform", optional for "Real"  
+        Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
+    * categories: list[str], required for "Categorical"  
+        A list of possible category values.
+
+**Example**
+```yaml
+random_forest_config:
+  class: sklearn.ensemble.RandomForestClassifier
+
+  model_params:
+    n_jobs: -1
+    oob_score: True
+    warm_start: False
+
+  search_space:
+    max_features:
+      type: Categorical
+      categories: ["sqrt", "log2", null]
+    min_samples_split:
+      type: Integer
+      low: 2
+      high: 25
+    max_samples:
+      type: Real
+      low: 0.5
+      high: 1.0
+    class_weight:
+      type: Categorical
+      categories: ["balanced", null]
+    max_depth:
+      type: Integer
+      low: 10
+      high: 300
+    n_estimators:
+      type: Integer
+      low: 200
+      high: 1000
+```
+
+#### Defining the Model Registry
+After defining the model configuration, we now have to map it's root key in the model registry. It is **extremely important** that the model registry must have the root key *model_registry_config*.
+
+**model registry configuration schema:**
+*   name: str, required  
+        This field can be any string and is not strictly enforced to follow a specific format as only the nested content will be used by the pipeline.
+
+*   model_config_key: str, required  
+        Specify the model configuration root key here.
+
+*   train_now: bool, required
+        If True, the model will be trained in the pipeline, else if set to False, it will be ommited from training.
+
+*   evaluate_now: bool, required
+        If True, the model will be evaluated in the pipeline, else if set to False, it will be ommited from evaluation.
+
+**Example**
+```yaml
+model_registry_config:
+  random_forest:
+    name: RandomForestClassifier
+    model_config_key: random_forest_config
+    train_now: True
+    evaluate_now: True
+
+  xgboost:
+    name: XGBoostClassifier
+    model_config_key: xgboost_config
+    train_now: True
+    evaluate_now: True
+```
+
+#### Defining model training configuration
+Model training parameters have to be specified within the key *parameters_model_training*.
+
+**model training configuration schema (defined within the *parameters_model_training* key)**
+*   test_size: float, required  
+        Proportion of the dataset which will be allocated to the test set during train-test split. Must be between 0.0 and 1.0
+
+*   random_state: int, default=42 
+        Seed value to ensure reproducibility across runs
+
+*   cv_splits: int, required  
+        Number of folds for cross-validation
+
+*   bayes_search_n_iters: int, required  
+        The number of iterations for Bayesian hyperparameter optimization
+
+*   minimum_recall: float, default=0.85
+        The minimum acceptable recall score for the model during evaluation. The pipeline will adjust the model's decision threshold (e.g., for binary classification) as needed to ensure the recall meets or exceeds this value.
+
+**Example**
+```yaml
+parameters_model_training:
+  test_size: 0.2 # Train test split ratio
+  random_state: 42
+  cv_splits: 5 # Cross Validation splits
+  bayes_search_n_iters: 20 # Specify Bayes Search number of iterations
+  minimum_recall: 0.85
+```
+
+#### Defing model evaluation configuration
+Model evaluation parameters have to be specified within the key *parameters_model_evaluation*.
+
+**model evaluation configuration schema (defined within the *parameters_model_evaluation* key)**
+*   permutation_feature_importance_n_repeats: int, required  
+        Number of times each feature is randomly shuffled when computing permutation feature importance.
+*   random_state: int, default=42  
+        Seed value to ensure reproducibility across runs
+
+**Example**
+```yaml
+parameters_model_evaluation:
+  permutation_feature_importance_n_repeats: 5
+  random_state: 42
+```
+
+
 
 ## Section D - Pipeline Design & Flow
 
