@@ -1,7 +1,0 @@
-{
-  "model__depth": 6,
-  "model__iterations": 10,
-  "model__l2_leaf_reg": 0.0002519450743348048,
-  "model__learning_rate": 0.1856287075208162,
-  "model__subsample": 0.6
-}

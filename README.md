@@ -309,12 +309,25 @@ Kedro's Hooks allow for custom code to be ran after specific events in the Pipel
 In this pipeline, we create two custom hooks, `DisplayBannerBeforePipelineRuns` and `TrainingCompleteHook`.
 
 Hook | Event | Purpose
-|:---|:---:|:---:|
-`DisplayBannerBeforePipelineRuns` | `after_context_created` | 
+|:---|:---:|:---|
+`DisplayBannerBeforePipelineRuns` | `after_context_created` | Displays a banner with the words _"EGT309 Team Harish Kanna"_ before the pipeline run.
+`TrainingCompleteHook` | `after_pipeline_run` | Contacts the Visualisation Server's container to notify that training is complete, and displays a banner with the words _"Pipeline Complete"_ after the pipeline has concluded.
 
+### Visualisation Server
+
+This project includes a web app that displays all model graphs & metrics. This removes the need for users to navigate through folders to retrieve their model metrics, as well as providing an easy way to compare the performance between models.
+
+> [!TIP]
+> You can access the Visualisation Server at [http://127.0.0.1:5500](http://127.0.0.1:5500) after running `run.sh`.
+
+The Visualisation Server looks like this:
 
 
 ### Repository Automation
+
+To improve productivity, we heavily utilised **Github Actions** to automate mundane tasks. Of particular note are the two linters used, `ruff` and `prettier`.
+
+Linter | 
 
 ## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
 ### 1. Overview of EDA
