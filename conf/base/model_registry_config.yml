@@ -2,8 +2,8 @@ model_registry_config:
   random_forest:
     name: RandomForestClassifier
     model_config_key: random_forest_config
-    train_now: True
-    evaluate_now: True
+    train_now: False
+    evaluate_now: False
 
   xgboost:
     name: XGBoostClassifier
@@ -32,5 +32,5 @@ model_registry_config:
   catboost:
     name: CatBoostClassifier
     model_config_key: catboost_config
-    train_now: True
-    evaluate_now: True
+    train_now: False
+    evaluate_now: False
