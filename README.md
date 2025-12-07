@@ -170,8 +170,11 @@ After defining the model configuration, we now have to map it's root key in the 
 >It is **extremely important** that the model registry must have the root key `model_registry_config`.
 
 **model registry configuration schema:**
+> [!NOTE]
+> All model entries **must** be placed under the top-level key `model_registry_config`. The keys directly beneath `model_registry_config` (e.g., `random_forest`, `xgboost`, `my_custom_model_v2`, etc.) are **arbitrary and only serve as unique identifiers**. They are **not** used for folder names or logging. You can name them anything you want as long as they are unique within the file.
+
 *   `name: str`, required <br>
-        This field can be any string and is not strictly enforced to follow a specific format as only the nested content will be used by the pipeline.
+        This field can be any string and is not strictly enforced to follow a specific format. The folder that holds model weights and graphs will be stored in folder that uses this name.
 
 *   `model_config_key: str`, required <br>
         Specify the model configuration root key here.
