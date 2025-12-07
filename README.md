@@ -118,12 +118,12 @@ The Pipeline's model training is designed such that you can train new models (as
 *   `search_space: dict`, optional <br>
         A nested dictionary defining the hyperparameter search space for bayesian hyperparameter optimization. Each key is a hyperparameter name, and it's value is a sub-dictionary with:
     *   `type: {"Real", "Integer", "Categorical"}`, required <br>
-            One of "Real" (continuous floats), "Integer" (discrete ints), or "Categorical" (discrete categories). For more information, refer to original [documentation](https://scikit-optimize.github.io/stable/modules/generated/skopt.BayesSearchCV.html)
+            One of "Real" (continuous floats), "Integer" (discrete ints), or "Categorical" (discrete categories). For more information, refer to original [documentation](https://scikit-optimize.github.io/stable/modules/generated/skopt.BayesSearchCV.html).
     * `low: float/int`, required for `"Real"/"Integer"` <br>
         Lower bound of the hyperparameter search space range.
     * `high: float/int`, required for `"Real"/"Integer"` <br>
         Upper bound of the hyperparameter search space range.
-    * `prior: str`, *default="uniform"*, optional for `"Real"` <br>  
+    * `prior: str`, *default="uniform"*, optional for `"Real"`
         Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
     * `categories: list[str]`, required for `"Categorical"` <br>
         A list of possible category values.
