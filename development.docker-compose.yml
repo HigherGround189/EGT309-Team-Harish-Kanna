@@ -1,0 +1,9 @@
+services:
+    development-server:
+      container_name: development-server
+      build:
+        context: .
+        dockerfile: Development.Dockerfile
+      image: higherground189/egt309-team-harish-kanna-kedro-development-server
+      ports:
+        - "8888:8888"
