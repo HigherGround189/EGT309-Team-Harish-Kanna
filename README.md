@@ -123,8 +123,7 @@ The Pipeline's model training is designed such that you can train new models (as
         Lower bound of the hyperparameter search space range.
     * `high: float/int`, required for `"Real"/"Integer"` <br>
         Upper bound of the hyperparameter search space range.
-    * `prior: str`, *default="uniform"*, optional for `"Real"`
-        Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
+    * `prior: str`, *default="uniform"*, optional for `"Real"` <br> Specifies the sampling prior (e.g., "log-uniform"). Defaults to uniform if omitted.
     * `categories: list[str]`, required for `"Categorical"` <br>
         A list of possible category values.
 
