@@ -49,7 +49,7 @@ EGT309-Team-Harish-Kanna                Folder Explanations:
 └── visualisation-server                <-- Webapp to view Model Results
 ```
 
-## Section C - Execution Instructions
+## Section C - Instructions
 
 ### Prerequisites
 
@@ -89,6 +89,8 @@ If you want to <u>**build the image from source**</u> (instead of pulling it fro
 ```bash
 docker compose -f development.docker-compose.yml up --build
 ```
+
+### Modifying Model Schemas
 
 ## Section D - Pipeline Design & Flow
 
