@@ -12,10 +12,12 @@ SAVED_MODEL_DIR = Path(__file__).parent / "saved_models"
 # To track if training has finished
 current_training_status = "ongoing"
 
+
 # Home Route
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, "index.html")
+
 
 # Check current training status
 @app.route("/api/training-status")
@@ -72,6 +74,7 @@ def serve_file(model, filename):
         abort(404, f"File {filename} not found for model {model}")
 
     return send_file(file_path)
+
 
 # Notify frontend via websockets if training has completed
 @app.route("/training-complete")
