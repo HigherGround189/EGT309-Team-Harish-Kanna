@@ -292,12 +292,11 @@ Nodes | Purpose | Input | Output |
 |:---|:---|:---:|:---:|
 Data Processing (Namespaced Pipeline) | Cleans the dataset & imputes null values (based off conclusions in [eda.ipynb](eda.pdf)) | bmarket `(SQLTableDataset)` | cleaned_bmarket `(CSVDataset)`
 Split Dataset | Performs a stratified split of the dataset into train and test subsets. Split Ratio & Random state can be configured in   [parameters_model_training.yml.](conf/base/parameters_model_training.yml)   | cleaned_bmarket `(CSVDataset)` | X Train, X Test, Y Train, Y Test `(PickleDataset)`
-Train <u>**{MODEL}**</u> Node | Trains Selected Model <u>**{MODEL}**</u> using hyperparameters defined in [parameters_model_config](conf/base/parameters_model_config). | X Train, Y Train `(PickleDataset)` | <u>**{MODEL}**</u> Best Params `(JSONDataset)`, <u>**{MODEL}**</u>Weights `(PickleDataset)`
-Evaluate <u>**{MODEL}**</u> Node | Evaluates <u>**{MODEL}**</u> and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|<u>**{MODEL}**</u> Model Weights, X Test, Y Test `(PickleDataset)` | <u>**{MODEL}**</u> Metrics `(JSONDataset)`, <u>**{MODEL}**</u> Confusion Matrix, <u>**{MODEL}**</u> Auc Roc Curve, <u>**{MODEL}**</u> Feature Importance `(MatplotlibDataset)`
- 
-
+Train <u>**{MODEL}**</u> Node | Trains Selected Model <u>**{MODEL}**</u> using hyperparameters defined in [parameters_model_config](conf/base/parameters_model_config). | X Train, Y Train `(PickleDataset)` | <u>**{MODEL}**</u> Best Params `(JSONDataset)`, <u>**{MODEL}**</u> Weights `(PickleDataset)`
+Evaluate <u>**{MODEL}**</u> Node | Evaluates <u>**{MODEL}**</u> and generates visualisations and performance metrics. (saved to [saved_models](saved_models))|<u>**{MODEL}**</u> Model Weights, X Test, Y Test `(PickleDataset)` | <u>**{MODEL}**</u> Metrics `(JSONDataset)`, <u>**{MODEL}**</u> Confusion Matrix<br>, <u>**{MODEL}**</u> Auc Roc Curve<br>, <u>**{MODEL}**</u> Feature Importance `(MatplotlibDataset)`
 
 ### Pipeline Hooks
+
 
 ### Repository Automation
 
