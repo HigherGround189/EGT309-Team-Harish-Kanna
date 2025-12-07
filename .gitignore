@@ -1,6 +1,9 @@
 ##########################
 # KEDRO PROJECT
 
+saved_models/*/
+!saved_models/Submission*/
+
 # ignore all local configuration
 conf/local/**
 !conf/local/.gitkeep
