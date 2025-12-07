@@ -88,7 +88,7 @@ If you want to <u>**build the image from source**</u> (instead of pulling it fro
 docker compose -f development.docker-compose.yml up --build
 ```
 
-### Creating configuration files for training train models
+### Defining YAML configuration files for the pipeline
 The model training portion of the pipeline is designed such that you can train new models (as long as they inherit from scikit-learn's BaseEstimator class) solely by **specifying the model's configuration in YAML files** and **installing the required package**. This avoids the need to hardcode a new model class for each training run.
 
 > **Note**: The naming of individual configuration files doesn't matter, as Kedro concatenates all configuration files into a single configuration dictionary during loading. In fact, it is possible to combine all model configurations into a single YAML file. However, for better organization, I recommend defining each model's configuration in its own file, where the filename mirrors the root key (e.g., random_forest_config.yml for the root key named random_forest_config).
