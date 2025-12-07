@@ -323,7 +323,7 @@ This project includes a web app that displays all model graphs & metrics. This r
 > You can access the Visualisation Server at [http://127.0.0.1:5500](http://127.0.0.1:5500) after running `run.sh`.
 
 The Visualisation Server looks like this:
-
+![alt text](visualisation-server\vue-dist\assets\image.png)
 
 ### Repository Automation
 
