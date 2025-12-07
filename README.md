@@ -448,3 +448,5 @@ The original idea was that after attaining greater than 80% for recall, we would
 ## Section I - Model Deployment Considerations
 
 The model is optimized for 80% Recall (finding as many subscribers as possible). However, this means that it will inherently generate a higher rate of False Positives (predicting a client will subscribe when they actually won't).
+
+In addition, bank data is highly time sensitve. This means that we cannot stick to the same three models forever and have to continually collect data to train new models with the pipeline to keep with with recent trends.
