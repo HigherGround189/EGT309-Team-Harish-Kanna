@@ -94,6 +94,7 @@ docker compose -f development.docker-compose.yml up --build
 
 ## Section D - Pipeline Design & Flow
 
+### Simplified Pipeline Flowchart
 ```mermaid
 graph TD
     %% Data Source -> Data Processing -> Data Cleaned
@@ -131,6 +132,12 @@ graph TD
     F --> G5[("AdaBoost Graphs & Metrics")]
     F --> G6[("CatBoost Graphs & Metrics")]
 ```
+
+### Node Explanations
+
+### Pipeline Hooks
+
+### Repository Automation
 
 ## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
 ### 1. Overview of EDA
