@@ -327,7 +327,14 @@ The Visualisation Server looks like this:
 
 To improve productivity, we heavily utilised **Github Actions** to automate mundane tasks. Of particular note are the two linters used, `ruff` and `prettier`.
 
-Linter | 
+Linter | Language | Capabilities
+|:---|:---:|:---|
+`ruff` | Python | Lints and Formats code. Able to detect and fix errors in code, as well as enforcing a consistent code style across entire repo.
+`prettier` | YAML | Enforces consistent style across all YAML files, as well as detecting errors.
+
+While there were other github actions too (such as [Build & Push Docker Image to Dockerhub](.github/workflows/build_and_push_dockerfile.yml), or [Update requirements.txt from pyproject.toml](.github/workflows/update_requirements_txt.yml)), the two above were the most impactful.
+
+All defined actions are located in [.github/workflows](.github/workflows).
 
 ## Section E - Overview & key findings from Exploratory Data Analysis (EDA) 
 ### 1. Overview of EDA
