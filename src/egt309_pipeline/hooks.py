@@ -6,7 +6,7 @@ from rich.console import Console
 from rich_gradient import Gradient
 
 logger = logging.getLogger(__name__)
-console = Console(force_terminal=True, _environ={"COLUMNS": "112"}, color_system="256")
+console = Console(force_terminal=True, _environ={"COLUMNS": "100"}, color_system="256")
 
 
 class DisplayBannerBeforePipelineRuns:
