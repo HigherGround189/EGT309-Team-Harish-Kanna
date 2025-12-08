@@ -12,6 +12,8 @@
 - Pipeline Containerisation
 - Repository Automation
 
+_Files to be marked:_ [hooks.py](src/egt309_pipeline/hooks.py), [main.py](visualisation-server/main.py)
+
 ### Zhang Zhe Xiang - 232842C@mymail.nyp.edu.sg
 - Model Training
 - Model Tuning
