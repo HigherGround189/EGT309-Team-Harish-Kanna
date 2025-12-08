@@ -90,11 +90,11 @@ def list_models():
 def serve_file(model, filename):
     """
     Dyanamically returns requested file.
-    
+
     Args:
         model (str): The model which the filename belongs to.
         filename (str): The file being requested
-    
+
     Returns:
         Response: A response object containing the file data.
 

@@ -12,10 +12,11 @@ from rich_gradient import Gradient
 logger = logging.getLogger(__name__)
 console = Console(force_terminal=True, _environ={"COLUMNS": "100"}, color_system="256")
 
+
 def print_banner(large_banner_text: str, small_text_under: str):
     """
     Prints Large Banner Text with small text underneath.
-    
+
     Args:
         large_banner_text (str): Large Banner Text to be printed
         small_text_under: (str): Small text underneath the Large Banner Text
@@ -35,6 +36,7 @@ def print_banner(large_banner_text: str, small_text_under: str):
         Gradient(text=small_text_under, colors=text_colours),
         justify="center",
     )
+
 
 class DisplayBannerBeforePipelineRuns:
     @hook_impl
