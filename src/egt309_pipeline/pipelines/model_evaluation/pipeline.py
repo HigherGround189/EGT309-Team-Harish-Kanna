@@ -1,15 +1,10 @@
-"""
-This is a boilerplate pipeline 'model_evaluation'
-generated using Kedro 1.0.0
-"""
-
 from pathlib import Path
 
 from kedro.config import (
-    OmegaConfigLoader,  # https://docs.kedro.org/en/0.19.10/api/kedro.config.OmegaConfigLoader.html
+    OmegaConfigLoader,  # Docs: https://docs.kedro.org/en/0.19.10/api/kedro.config.OmegaConfigLoader.html
 )
 from kedro.framework.project import settings
-from kedro.pipeline import Node, Pipeline  # noqa
+from kedro.pipeline import Node, Pipeline
 
 from .nodes import evaluate_model
 

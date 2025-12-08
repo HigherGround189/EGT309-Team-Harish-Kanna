@@ -19,6 +19,8 @@ Files to be marked: [hooks.py](src/egt309_pipeline/hooks.py), [main.py](visualis
 - Model Tuning
 - Model Evaluation
 
+Files to be marked: [src/egt309_pipeline/pipelines/model_training/nodes.py](src/egt309_pipeline/pipelines/model_training/nodes.py), [src/egt309_pipeline/pipelines/model_evaluation/nodes.py](src/egt309_pipeline/pipelines/model_training/nodes.py)
+
 ## Section B - Folder Overview
 ```
 EGT309-Team-Harish-Kanna                Folder Explanations:

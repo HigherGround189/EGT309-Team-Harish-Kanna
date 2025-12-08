@@ -1,7 +1,6 @@
-"""
-This is a boilerplate pipeline 'model_training'
-generated using Kedro 1.0.0
-"""
+# File written by Zhang Zhexiang (232842C)
+# Autoformatted & Linted with Ruff
+# Docstrings follow numpy Python Docstring Format
 
 import importlib
 import logging
@@ -158,7 +157,7 @@ def _init_model(
 def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTransformer:
     """
     Creates dataset transformation object.
-    Used for applying One-Hit, Label (Oritental) encoding on the entire dataset.
+    Used for applying One-Hot, Label (Oritental) encoding on the entire dataset.
     You can also refuse to apply any encoding to the dataset.
 
     Parameters
@@ -193,6 +192,7 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         "data_encoding", "ohe"
     ).lower()  # Default encoding is one-hot encoding
 
+    # Applies One-Hot encoding to dataset
     if data_encoding == "ohe":
         logger.debug("Applying One-Hot Encoding")
         encoding_transformer = (
@@ -202,6 +202,7 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         )
         preprocessing_steps.append(encoding_transformer)
 
+    # Applies Label/Ordinal encoding to datset
     elif data_encoding == "label":
         logger.debug("Applying Label Encoding")
         encoding_transformer = (
@@ -211,11 +212,12 @@ def _build_preprocessor(X_train: pd.DataFrame, model_config: dict) -> ColumnTran
         )
         preprocessing_steps.append(encoding_transformer)
 
+    # Applies no encoding to dataset
     elif data_encoding == "none":
         logger.debug("Skipped encoding")
         pass
 
-    # Applies dataset scaling if required
+    # Applies dataset scaling to the data if required
     if model_config.get("requires_scaling", False):
         scaling_transformer = ("scaler", StandardScaler(), numerical_cols)
         preprocessing_steps.append(scaling_transformer)
@@ -253,8 +255,9 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
         self.base_estimator = base_estimator
         self.cv = cv
         self.min_recall = min_recall
-        self.threshold_ = 0.5
+        self.threshold_ = 0.5 # Default decision threshold (will be overwritten in fit)
 
+    # Determines the optimal probability threshold that achieves min_recall based on cv predictions
     def fit(self, X, y):
         y_proba = cross_val_predict(
             self.base_estimator, X, y, cv=self.cv, method="predict_proba"
@@ -266,10 +269,12 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
         best_index = valid_indices[-1]
         self.threshold_ = thresholds[best_index]
 
+    # Predict class labels using the tuned threshold
     def predict(self, X):
         probs = self.base_estimator.predict_proba(X)[:, 1]
         return (probs >= self.threshold_).astype(int)
 
+    # Return predicted probabilities
     def predict_proba(self, X):
         return self.base_estimator.predict_proba(X)
 
@@ -383,7 +388,7 @@ def train_model(
     final_model = RecallOptimizedClassifier(
         base_estimator=bs.best_estimator_,
         cv=options["cv_splits"],
-        min_recall=options["minimum_recall"],
+        min_recall=options.get("minimum_recall", 0.85),
     )
 
     final_model.fit(X_train, y_train)

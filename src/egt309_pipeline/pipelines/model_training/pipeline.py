@@ -1,7 +1,6 @@
-"""
-This is a boilerplate pipeline 'model_training'
-generated using Kedro 1.0.0
-"""
+# File written by Zhang Zhexiang (232842C)
+# Autoformatted & Linted with Ruff
+# Docstrings follow numpy Python Docstring Format
 
 from pathlib import Path
 

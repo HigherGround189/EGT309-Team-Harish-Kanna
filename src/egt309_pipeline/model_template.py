@@ -1,3 +1,7 @@
+# File written by Zhang Zhexiang (232842C)
+# Autoformatted & Linted with Ruff
+# Docstrings follow numpy Python Docstring Format
+
 import os
 
 from model_template_utils import *
