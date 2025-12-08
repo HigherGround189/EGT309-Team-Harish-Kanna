@@ -18,7 +18,7 @@ current_training_status = "ongoing"
 
 
 # Home Route
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
     """
     Home Route for app. Returns index.html from the static_folder "vue-dist".
@@ -27,7 +27,7 @@ def index():
 
 
 # Check current training status
-@app.route("/api/training-status")
+@app.route("/api/training-status", methods=["GET"])
 def training_status():
     """
     Route for frontend to check current model training status.
@@ -39,7 +39,7 @@ def training_status():
 
 
 # List all models in SAVED_MODEL_DIR
-@app.route("/api/models")
+@app.route("/api/models", methods=["GET"])
 def list_models():
     """
     Retrieve all models, including all urls for model resources
@@ -49,8 +49,8 @@ def list_models():
         Return Example:
         {
             "RandomForestClassifier": {
-                "RandomForestClassifier_auc_roc_curve.png": "/api/assets/RandomForestClassifier_auc_roc_curve.png",
-                "RandomForestClassifier_metrics.json": "/api/assets/RandomForestClassifier_metrics.json",
+                "RandomForestClassifier_auc_roc_curve.png": "/api/RandomForestClassifier_auc_roc_curve.png",
+                "RandomForestClassifier_metrics.json": "/api/RandomForestClassifier_metrics.json",
             }
         }
 
@@ -86,8 +86,8 @@ def list_models():
 
 
 # Dyanmic route for serving files (eg: parameters.json)
-@app.route("/api/<model>/<filename>")
-def serve_file(model, filename):
+@app.route("/api/<model>/<filename>", methods=["GET"])
+def serve_file(model: str, filename: str):
     """
     Dyanamically returns requested file.
 
@@ -119,7 +119,7 @@ def serve_file(model, filename):
 
 
 # Notify frontend via websockets if training has completed
-@app.route("/training-complete")
+@app.route("/training-complete", methods=["GET"])
 def update_frontend():
     """
     Emits websocket event to notify frontend that training is complete
