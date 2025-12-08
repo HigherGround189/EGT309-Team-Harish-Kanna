@@ -12,7 +12,7 @@
 - Pipeline Containerisation
 - Repository Automation
 
-_Files to be marked:_ [hooks.py](src/egt309_pipeline/hooks.py), [main.py](visualisation-server/main.py)
+Files to be marked: [hooks.py](src/egt309_pipeline/hooks.py), [main.py](visualisation-server/main.py)
 
 ### Zhang Zhe Xiang - 232842C@mymail.nyp.edu.sg
 - Model Training
@@ -329,6 +329,8 @@ This project includes a web app that displays all model graphs & metrics. This r
 
 The Visualisation Server looks like this:
 ![alt text](visualisation-server/vue-dist/assets/image.png)
+
+The Frontend code for the Visualisation Server is located [here](https://github.com/HigherGround189/EGT309-Team-Harish-Kanna/tree/model-visualisation/frontend).
 
 ### Repository Automation
 
