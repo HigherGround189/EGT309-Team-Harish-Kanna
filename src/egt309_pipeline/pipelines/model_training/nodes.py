@@ -255,7 +255,7 @@ class RecallOptimizedClassifier(BaseEstimator, ClassifierMixin):
         self.base_estimator = base_estimator
         self.cv = cv
         self.min_recall = min_recall
-        self.threshold_ = 0.5 # Default decision threshold (will be overwritten in fit)
+        self.threshold_ = 0.5  # Default decision threshold (will be overwritten in fit)
 
     # Determines the optimal probability threshold that achieves min_recall based on cv predictions
     def fit(self, X, y):
