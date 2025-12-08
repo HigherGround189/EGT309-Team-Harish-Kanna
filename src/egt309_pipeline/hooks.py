@@ -1,3 +1,7 @@
+# File written by Lee Ying Ray (233466E)
+# Autoformatted & Linted with Ruff
+# Docstrings follow Google's Python Docstring Format
+
 import logging
 
 import requests
@@ -8,6 +12,29 @@ from rich_gradient import Gradient
 logger = logging.getLogger(__name__)
 console = Console(force_terminal=True, _environ={"COLUMNS": "100"}, color_system="256")
 
+def print_banner(large_banner_text: str, small_text_under: str):
+    """
+    Prints Large Banner Text with small text underneath.
+    
+    Args:
+        large_banner_text (str): Large Banner Text to be printed
+        small_text_under: (str): Small text underneath the Large Banner Text
+    """
+    # Taken from https://uigradients.com/#SlightOceanView and https://uigradients.com/#Magic
+    banner_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
+    text_colours = ["#a8c0ff", "#a17fe0"]
+
+    # Print large_banner_text
+    console.print(
+        Gradient(text=large_banner_text, colors=banner_colours),
+        justify="center",
+    )
+
+    # Print small_text_under
+    console.print(
+        Gradient(text=small_text_under, colors=text_colours),
+        justify="center",
+    )
 
 class DisplayBannerBeforePipelineRuns:
     @hook_impl
@@ -35,19 +62,7 @@ class DisplayBannerBeforePipelineRuns:
 
         pipline_start_alert = "Pipeline Starting..."
 
-        # Taken from https://uigradients.com/#SlightOceanView and https://uigradients.com/#Magic
-        banner_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
-        text_colours = ["#a8c0ff", "#a17fe0"]
-
-        console.print(
-            Gradient(text=block_banner_text, colors=banner_colours),
-            justify="center",
-        )
-
-        console.print(
-            Gradient(text=pipline_start_alert, colors=text_colours),
-            justify="center",
-        )
+        print_banner(block_banner_text, pipline_start_alert)
 
 
 class TrainingCompleteHook:
@@ -95,19 +110,7 @@ class TrainingCompleteHook:
             http://127.0.0.1:5500/
             """
 
-            banner_colours = ["#a8c0ff", "#a17fe0", "#3f2b96"]
-            text_colours = ["#a8c0ff", "#a17fe0"]
-
-            console.print(
-                Gradient(text=block_banner_text, colors=banner_colours),
-                justify="center",
-            )
-
-            console.print(
-                Gradient(text=visualisation_server_alert, colors=text_colours),
-                justify="center",
-                style="underline",
-            )
+            print_banner(block_banner_text, visualisation_server_alert)
 
         except Exception as exception:
             # If visualisation-server:5500 can't be reached, we can assume that the pipeline is being ran outside a container.
@@ -123,6 +126,7 @@ class TrainingCompleteHook:
                 return response.json()
 
             except Exception as exception:
+                # Log if localhost cant be contacted either (which means Visualisation Server is not running at all).
                 logger.error(
                     f"Can't contact Localhost. Is flask server running?\nException: {exception}"
                 )

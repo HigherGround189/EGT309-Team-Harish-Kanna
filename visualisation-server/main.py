@@ -1,3 +1,7 @@
+# Written by Lee Ying Ray (233466E)
+# Autoformatted & Linted with Ruff
+# Docstrings follow Google's Python Docstring Format
+
 from pathlib import Path
 
 from flask import Flask, abort, jsonify, send_file, send_from_directory
@@ -16,18 +20,43 @@ current_training_status = "ongoing"
 # Home Route
 @app.route("/")
 def index():
+    """
+    Home Route for app. Returns index.html from the static_folder "vue-dist".
+    """
     return send_from_directory(app.static_folder, "index.html")
 
 
 # Check current training status
 @app.route("/api/training-status")
 def training_status():
+    """
+    Route for frontend to check current model training status.
+
+    Returns:
+        JSON: A JSON object containing a key-value pair of the current Training Status ("ongoing" | "completed")
+    """
     return jsonify({"Training status": current_training_status})
 
 
 # List all models in SAVED_MODEL_DIR
 @app.route("/api/models")
 def list_models():
+    """
+    Retrieve all models, including all urls for model resources
+
+    Returns:
+        JSON: A JSON object containing all models and their resources
+        Return Example:
+        {
+            "RandomForestClassifier": {
+                "RandomForestClassifier_auc_roc_curve.png": "/api/assets/RandomForestClassifier_auc_roc_curve.png",
+                "RandomForestClassifier_metrics.json": "/api/assets/RandomForestClassifier_metrics.json",
+            }
+        }
+
+    Route Example:
+        GET /api/models
+    """
     models = {}
 
     # Example:
@@ -59,6 +88,19 @@ def list_models():
 # Dyanmic route for serving files (eg: parameters.json)
 @app.route("/api/<model>/<filename>")
 def serve_file(model, filename):
+    """
+    Dyanamically returns requested file.
+    
+    Args:
+        model (str): The model which the filename belongs to.
+        filename (str): The file being requested
+    
+    Returns:
+        Response: A response object containing the file data.
+
+    Route Example:
+        GET /api/RandomForestClassifier/RandomForestClassifier_metrics.json
+    """
     # Create path for specific Model (eg: SAVED_MODEL_DIR/XGBoost/)
     model_dir = SAVED_MODEL_DIR / model
 
@@ -79,8 +121,13 @@ def serve_file(model, filename):
 # Notify frontend via websockets if training has completed
 @app.route("/training-complete")
 def update_frontend():
+    """
+    Emits websocket event to notify frontend that training is complete
+
+    Returns:
+        Str: Message indicating frontend is updated.
+    """
     global current_training_status
-    print(f"{current_training_status=}")
     current_training_status = "completed"
     socketio.emit("trainingComplete", {"key": current_training_status})
     return "Updated Frontend that training is complete"
